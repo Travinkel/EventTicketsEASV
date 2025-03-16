@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+
+<VBox fx:id="rootPane"
+      xmlns="http://javafx.com/javafx/23.0.1"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.example.eventticketsystem.controllers.AdminDashboardController"
+      style="-fx-background-color: #FAFAFA;">
+
+  <!-- Horizontal Layout for Sidebar + Main Content -->
+  <HBox spacing="0">
+
+    <!-- Include Sidebar -->
+    <fx:include source="Sidebar.fxml"/>
+
+    <!-- Main Content -->
+    <VBox fx:id="mainContent" spacing="20" style="-fx-padding: 20px;">
+
+      <!-- Include Top Navbar -->
+      <fx:include source="TopNavbar.fxml"/>
+
+      <!-- Dashboard Title -->
+      <Label style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Dashboard Overview" />
+
+      <!-- Action Buttons -->
+      <HBox spacing="10">
+        <Button fx:id="createUserBtn" styleClass="button-primary" text="Create User" />
+        <Button fx:id="addEventBtn" styleClass="button-secondary" text="Add New Event" />
+      </HBox>
+
+    </VBox>
+
+  </HBox>
+
+</VBox>

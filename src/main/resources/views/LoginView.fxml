@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<!-- Login Card as Root -->
+<VBox fx:id="loginCard"
+      alignment="CENTER"
+      prefHeight="450.0"
+      prefWidth="420.0"
+      spacing="15.0"
+      style="-fx-background-color: #FFFFFF;
+             -fx-border-color: rgba(0, 0, 0, 0.1);
+             -fx-border-width: 1px;
+             -fx-background-radius: 15px;
+             -fx-border-radius: 15px;
+             -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 15, 0, 0, 5);"
+      xmlns="http://javafx.com/javafx/23.0.1"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.example.eventticketsystem.controllers.LoginController">
+
+    <padding>
+        <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
+    </padding>
+
+    <children>
+        <!-- Close Button -->
+        <Button fx:id="closeButton"
+                onAction="#closeApp"
+                style="-fx-background-color: transparent;
+                       -fx-text-fill: #777;
+                       -fx-font-size: 18px;
+                       -fx-font-weight: bold;"
+                text="✕" />
+
+        <!-- Logo & Title -->
+        <ImageView fitWidth="45.0" preserveRatio="true">
+            <image>
+                <Image url="@../images/easv_logo.png" />
+            </image>
+        </ImageView>
+        <Label text="Sign In" textFill="#222222">
+            <font>
+                <Font name="Segoe UI Semibold" size="26.0" />
+            </font>
+        </Label>
+
+        <!-- Input Fields -->
+        <Label text="Username / Email" textFill="#222222" />
+        <TextField fx:id="usernameField"
+                   prefHeight="42.0" prefWidth="350.0"
+                   promptText="Enter your username"
+                   styleClass="input-field" />
+
+        <Label text="Password" textFill="#222222" />
+        <PasswordField fx:id="passwordField"
+                       prefHeight="42.0" prefWidth="350.0"
+                       promptText="Enter your password"
+                       styleClass="input-field" />
+
+        <!-- Buttons -->
+        <Button fx:id="loginButton"
+                prefHeight="50.0" prefWidth="350.0"
+                styleClass="button-primary"
+                text="Login"
+                onAction="#handleLogin"/>
+    </children>
+</VBox>

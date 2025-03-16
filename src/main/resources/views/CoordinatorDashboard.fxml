@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+
+<VBox fx:id="rootPane"
+      xmlns="http://javafx.com/javafx/23.0.1"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.example.eventticketsystem.controllers.CoordinatorDashboardController"
+      style="-fx-background-color: #FAFAFA;">
+
+  <HBox spacing="0">
+
+    <!-- Include Sidebar -->
+    <fx:include source="Sidebar.fxml"/>
+
+    <!-- Main Content -->
+    <VBox fx:id="mainContent" spacing="20" style="-fx-padding: 20px;">
+
+      <!-- Include Top Navbar -->
+      <fx:include source="TopNavbar.fxml"/>
+
+      <Label style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Event Management" />
+
+      <HBox spacing="10">
+        <Button fx:id="createEventBtn" styleClass="button-primary" text="Create Event" />
+        <Button fx:id="manageTicketsBtn" styleClass="button-secondary" text="Manage Tickets" />
+      </HBox>
+
+    </VBox>
+
+  </HBox>
+
+</VBox>
