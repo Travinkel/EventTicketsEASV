@@ -3,7 +3,9 @@ package org.example.eventticketsystem.utils;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import org.example.eventticketsystem.EventTicketSystemApp;
 
 import java.io.IOException;
@@ -35,6 +37,10 @@ public class Navigation {
             primaryStage.setWidth(width);
             primaryStage.setHeight(height);
             primaryStage.centerOnScreen();
+
+            // Enable full transparency to avoid sharp corners behind rounded elements
+            scene.setFill(Color.TRANSPARENT);
+            primaryStage.initStyle(StageStyle.TRANSPARENT);
 
             System.out.println("Scene switched successfully.");
 
