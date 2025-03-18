@@ -36,6 +36,6 @@ public class TicketViewController {
     @FXML
     private void logout() {
         System.out.println("🚪 Logging out...");
-        Navigation.loadScene("/views/LoginView.fxml", 420, 450);
+        Navigation.getInstance().loadScene("/views/LoginView.fxml", 420, 450);
     }
 }

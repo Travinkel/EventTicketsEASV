@@ -62,15 +62,15 @@ public class LoginController {
             switch (userRole) {
                 case "ADMIN" -> {
                     System.out.println("Navigating to AdminDashboard.fxml");
-                    Navigation.loadScene("/views/AdminDashboard.fxml", 1200, 800);
+                    Navigation.getInstance().loadScene("/views/AdminDashboard.fxml", 1200, 800);
                 }
                 case "COORDINATOR" -> {
                     System.out.println("Navigating to CoordinatorDashboard.fxml");
-                    Navigation.loadScene("/views/CoordinatorDashboard.fxml", 1200, 800);
+                    Navigation.getInstance().loadScene("/views/CoordinatorDashboard.fxml", 1200, 800);
                 }
                 case "USER" -> {
                     System.out.println("Navigating to TicketView.fxml");
-                    Navigation.loadScene("/views/TicketView.fxml", 900, 700);
+                    Navigation.getInstance().loadScene("/views/TicketView.fxml", 900, 700);
                 }
                 default -> {
                     System.out.println("ERROR: Unknown role assigned.");
