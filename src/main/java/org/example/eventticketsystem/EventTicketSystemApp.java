@@ -14,19 +14,15 @@ public class EventTicketSystemApp extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        // Initialize Navigation (manages the primary stage)
         Navigation.getInstance().initialize(primaryStage);
+
+        // Load the Login View
         Navigation.getInstance().loadScene("/views/LoginView.fxml", 420, 450);
 
-        // Set EASV Logo as Window Icon
-        primaryStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/easv_logo.png"))));
-
+        // Show the primary stage
         primaryStage.show();
-
-        // primaryStage = stage;
-        // stage.initStyle(StageStyle.UNDECORATED);
-        // stage.setTitle("Event Ticket System");
-
-         }
+    }
 
     public static void main(String[] args) {
         launch();
