@@ -8,79 +8,74 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import org.example.eventticketsystem.models.User;
+import org.example.eventticketsystem.services.UserService;
+import org.example.eventticketsystem.utils.INavigation;
 
 import java.io.IOException;
 import java.util.Objects;
 
 public class AdminDashboardController {
+    private final INavigation navigation;
+    private final UserService userService;
 
     @FXML private TextField searchField;
     @FXML private Button createUserButton;
-    @FXML private Button addNewButton;
-    private JFXPanel logoutButton;
+    @FXML private Button addEventButton;
+    @FXML private Button logoutButton;
+
+    @FXML private TableView<User> userTable;
+    @FXML private TableColumn<User, Integer> colId;
+    @FXML private TableColumn<User, String> colUsername;
+    @FXML private TableColumn<User, String> colEmail;
+    @FXML private TableColumn<User, String> colRole;
+
+
+
+    public AdminDashboardController(INavigation navigation, UserService userService) {
+        this.navigation = navigation;
+        this.userService = userService;
+    }
 
     /**
      * Initializes the dashboard controller.
      */
+
     @FXML
     public void initialize() {
-        System.out.println("Admin Dashboard Loaded!");
-        // Smooth fade-in animation
-        FadeTransition fadeIn = new FadeTransition(Duration.seconds(0.8));
-        fadeIn.setFromValue(0);
-        fadeIn.setToValue(1);
-        fadeIn.play();
+        System.out.println("✅ Admin Dashboard Loaded!");
+
+        // Bind Table Columns to User properties
+        colId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        colUsername.setCellValueFactory(new PropertyValueFactory<>("username"));
+        colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+        colRole.setCellValueFactory(new PropertyValueFactory<>("role"));
+
+        // Populate TableView with users
+        userTable.setItems(userService.getUsers());
     }
 
-    @FXML
-    private void navigateToDashboard() {
-        System.out.println("Navigating to Dashboard Overview...");
-    }
-
-    @FXML
-    private void navigateToUserManagement() {
-        System.out.println("Navigating to User Management...");
-    }
-
-    @FXML
-    private void navigateToManageEvents() {
-        System.out.println("Navigating to Event Management...");
-    }
-
-    @FXML
-    private void navigateToSettings() {
-        System.out.println("Navigating to Settings...");
-    }
-
+    /**
+     * Navigate to User Management
+     */
     @FXML
     private void handleCreateUser() {
-        System.out.println("Create User Clicked!");
-        // TODO: Load the Create User Page
+        System.out.println("👤 Create User Clicked!");
+        navigation.loadScene("/views/UserManagement.fxml");
     }
 
+    /**
+     * Handles Logout Action
+     */
     @FXML
-    private void handleAddNew() {
-        System.out.println("Add New Clicked!");
-        // TODO: Load the Add New Page
-    }
-    @FXML
-    private void logout(ActionEvent event) {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/LoginView.fxml"));
-            Parent loginRoot = fxmlLoader.load();
-
-            Stage stage = (Stage) logoutButton.getScene().getWindow();
-            Scene scene = new Scene(loginRoot, 420, 500);
-            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/global-style.css")).toExternalForm());
-
-            stage.setScene(scene);
-            stage.setTitle("Event Ticket System - Login");
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    private void handleLogout() {
+        System.out.println("🚪 Logging out...");
+        navigation.loadScene("/views/LoginView.fxml");
     }
 }

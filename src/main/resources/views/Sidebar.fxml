@@ -5,11 +5,9 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox fx:id="sidebar" prefWidth="250.0" spacing="12"
-      style="-fx-background-color: white;
-             -fx-border-color: rgba(0,0,0,0.1);
-             -fx-border-width: 0 1px 0 0;
-             -fx-padding: 20px;"
+<?import javafx.scene.layout.Pane?>
+<VBox fx:id="sidebar" prefWidth="250.0" maxHeight="Infinity" spacing="20"
+      styleClass="sidebar"
       xmlns="http://javafx.com/javafx/23.0.1"
       xmlns:fx="http://javafx.com/fxml/1">
 
@@ -20,15 +18,18 @@
     </image>
   </ImageView>
 
-  <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Admin Panel" />
+  <!-- Sidebar Title -->
+  <Label text="Admin Panel" styleClass="sidebar-title"/>
 
-  <!-- Sidebar Buttons -->
-  <VBox spacing="12">
-    <Button fx:id="dashboardBtn" styleClass="sidebar-button" text="🏆 Dashboard" />
-    <Button fx:id="userManagementBtn" styleClass="sidebar-button" text="👤 User Management" />
-    <Button fx:id="eventManagementBtn" styleClass="sidebar-button" text="📅 Manage Events" />
-    <Button fx:id="settingsBtn" styleClass="sidebar-button" text="⚙ Settings" />
-    <Button fx:id="logoutBtn" styleClass="sidebar-button-logout" text="🚪 Logout" />
-  </VBox>
+
+  <!-- Navigation Buttons -->
+  <Button fx:id="dashboardButton" text="Dashboard" styleClass="sidebar-button"/>
+  <Button fx:id="userManagementButton" text="User Management" styleClass="sidebar-button"/>
+  <Button fx:id="eventsButton" text="Manage Events" styleClass="sidebar-button"/>
+  <Button fx:id="settingsButton" text="Settings" styleClass="sidebar-button"/>
+
+  <!-- Spacer pushes logout button to the bottom -->
+  <Pane fx:id="spacer" VBox.vgrow="ALWAYS"/>
+  <Button fx:id="logoutButton" text="Logout" styleClass="sidebar-logout" />
 
 </VBox>

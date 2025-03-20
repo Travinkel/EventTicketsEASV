@@ -1,38 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Button?>
 
-<VBox fx:id="rootPane"
-      xmlns="http://javafx.com/javafx/23.0.1"
-      xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="org.example.eventticketsystem.controllers.AdminDashboardController"
-      styleClass="dashboard-root">
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
 
-  <!-- Horizontal Layout for Sidebar + Main Content -->
-  <HBox spacing="0">
+<?import javafx.scene.layout.BorderPane?>
+<BorderPane fx:id="adminDashboard"
+            xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.example.eventticketsystem.controllers.AdminDashboardController"
+            styleClass="dashboard-root"
+            prefWidth="1280" prefHeight="720" maxWidth="Infinity" maxHeight="Infinity">
 
-    <!-- Include Sidebar -->
-    <fx:include source="Sidebar.fxml"/>
+      <!-- Sidebar + Main Content -->
+    <left>
+          <fx:include fx:id="sidebar" source="Sidebar.fxml"/>
+</left>
 
-    <!-- Main Content -->
-    <VBox fx:id="mainContent" styleClass="main-content">
+    <!-- Include Top Navbar -->
+    <top>
+        <fx:include fx:id="topNavbar" source="TopNavbar.fxml"/>
+    </top>
+          <!-- Main Content Area -->
+    <center>
+          <VBox fx:id="mainContent" styleClass="main-content" alignment="CENTER" spacing="20.0">
 
-      <!-- Include Top Navbar -->
-      <fx:include source="TopNavbar.fxml"/>
+              <!-- Dashboard Title -->
+              <Label text="Admin Dashboard" styleClass="dashboard-title"/>
 
-      <!-- Dashboard Title -->
-      <Label text="Dashboard Overview" styleClass="dashboard-title"/>
+              <!-- Action Buttons -->
+              <HBox spacing="12">
+                  <Button fx:id="createUserButton" text="Create User" styleClass="button-primary"/>
+                  <Button fx:id="addEventButton" text="Add New Event" styleClass="button-secondary"/>
+              </HBox>
 
-      <!-- Action Buttons -->
-      <HBox spacing="12">
-        <Button fx:id="createUserBtn" styleClass="button-primary" text="Create User" />
-        <Button fx:id="addEventBtn" styleClass="button-secondary" text="Add New Event" />
-      </HBox>
-
-    </VBox>
-
-  </HBox>
-
-</VBox>
+              <!-- User Table -->
+              <Label text="User Management" styleClass="dashboard-subtitle"/>
+              <TableView fx:id="userTable" prefWidth="700">
+                  <columns>
+                      <TableColumn text="ID" fx:id="colId" prefWidth="50"/>
+                      <TableColumn text="Username" fx:id="colUsername" prefWidth="150"/>
+                      <TableColumn text="Email" fx:id="colEmail" prefWidth="250"/>
+                      <TableColumn text="Role" fx:id="colRole" prefWidth="120"/>
+                  </columns>
+              </TableView>
+          </VBox>
+    </center>
+</BorderPane>

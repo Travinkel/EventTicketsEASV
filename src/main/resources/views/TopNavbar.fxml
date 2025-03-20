@@ -5,17 +5,28 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 
-<HBox alignment="CENTER_RIGHT" spacing="10"
-      style="-fx-padding: 10px 20px;"
+<?import javafx.scene.control.Button?>
+<HBox fx:id="topNavbar"
+alignment="CENTER_LEFT"
+      styleClass="top-navbar"
+      prefHeight="60.0"
+      maxWidth="Infinity"
       xmlns="http://javafx.com/javafx/23.0.1"
-      xmlns:fx="http://javafx.com/fxml/1">
+      xmlns:fx="http://javafx.com/fxml/1" spacing="20">
 
-  <TextField fx:id="searchField" prefWidth="250.0" promptText="Search..." />
-  <Label fx:id="userNameLabel" style="-fx-font-size: 14px;" text="Admin Name" />
-  <ImageView fx:id="userAvatar" fitHeight="35.0" fitWidth="35.0" preserveRatio="true">
-    <image>
-      <Image url="@../images/easv_logo.png" />
-    </image>
-  </ImageView>
+  <!-- Search Field (Centered) -->
+  <HBox HBox.hgrow="ALWAYS">
+    <TextField fx:id="searchField" promptText="Search..." styleClass="search-field"/>
+  </HBox>
+
+  <!-- Admin Profile Info (Right-aligned) -->
+  <HBox spacing="10">
+    <Label fx:id="userNameLabel" style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Admin Name"/>
+    <ImageView fx:id="userAvatar" fitHeight="35.0" fitWidth="35.0" preserveRatio="true">
+      <image>
+        <Image url="@../images/easv_logo.png"/>
+      </image>
+    </ImageView>
+  </HBox>
 
 </HBox>

@@ -7,7 +7,7 @@
 <VBox fx:id="rootPane"
       xmlns="http://javafx.com/javafx/23.0.1"
       xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="org.example.eventticketsystem.controllers.CoordinatorDashboardController"
+      fx:controller="org.example.eventticketsystem.controllers.EventCoordinatorDashboardController"
       style="-fx-background-color: #FAFAFA;">
 
   <HBox spacing="0">

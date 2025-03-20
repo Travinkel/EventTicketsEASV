@@ -10,11 +10,13 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import org.example.eventticketsystem.services.UserService;
 import org.example.eventticketsystem.utils.INavigation;
 import org.example.eventticketsystem.utils.Navigation;
 
 public class LoginController {
     private final INavigation navigation;
+    private final UserService userService;
 
     @FXML private VBox loginCard;
     @FXML private TextField usernameField;
@@ -23,8 +25,9 @@ public class LoginController {
     @FXML private Button closeButton;
     @FXML private Label errorLabel;
 
-    public LoginController(INavigation navigation) {
+    public LoginController(INavigation navigation, UserService userService) {
         this.navigation = navigation;
+        this.userService = userService;
     }
 
     /**

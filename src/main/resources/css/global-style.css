@@ -2,9 +2,9 @@
     -fx-background-color: #FAFAFA;
 }
 
-/* Login Card -> Needs to be combined with dashboard-root into .rounded-container */
+/* Standard container with rounded corners */
 .rounded-container {
-    -fx-background-color: rgba(245, 245, 245, 1.0); /* Solid, not transparent */
+    -fx-background-color: rgba(245, 245, 245, 1.0);
     -fx-background-radius: 12px;
     -fx-border-radius: 12px;
     -fx-border-color: rgba(220, 220, 220, 0.6);
@@ -14,87 +14,120 @@
 
 /* Dashboard Root */
 .dashboard-root {
-    -fx-background-color: rgba(245, 245, 245, 1.0); /* Semi-transparent to keep corners rounded */
+    -fx-background-color: #F4F5F7; /* Matches Figma Style */
     -fx-background-radius: 12px;
     -fx-border-radius: 12px;
-    -fx-border-color: rgba(220, 220, 220, 0.6);
-    -fx-border-width: 1px;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 5);
 }
 
-/* Dashboard Title */
+/* Dashboard Titles */
 .dashboard-title {
-    -fx-font-size: 20px;
+    -fx-font-size: 24px;
     -fx-font-weight: bold;
-    -fx-text-fill: #333333;
+    -fx-text-fill: #2A3D66; /* Same color as Sidebar */
+    -fx-padding: 10px 0;
 }
 
 .main-content {
-    -fx-padding: 20px;
-    -fx-spacing: 24px; /* Style Guide: Section gaps */
-    -fx-background-radius: 12px;
-    -fx-border-radius: 12px;
+    -fx-padding: 30px;
+    -fx-spacing: 20px;
+    -fx-background-color: #FAFAFA; /* Soft light gray */
+    -fx-border-radius: 12px; /* Rounded but clean */
 }
 
+/* Sidebar */
+.sidebar {
+    -fx-background-color: #2A3D66; /* Dark Blue */
+    -fx-padding: 20px;
+    -fx-spacing: 15px;
+    -fx-border-radius: 20px 0 0 20px; /* Rounded only on the left */
+}
+
+/* Sidebar Title */
+.sidebar-title {
+    -fx-font-size: 20px;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 0;
+    -fx-border-color: rgba(255, 255, 255, 0.3);
+    -fx-border-width: 0 0 2px 0; /* Adds an underline */
+}
 
 
 /* Sidebar Buttons */
 .sidebar-button {
-    -fx-background-color: transparent;
-    -fx-text-fill: #333;
-    -fx-font-size: 16px;
-    -fx-border-radius: 6px;
-    -fx-padding: 10px;
-}
-
-.sidebar-button:hover {
-    -fx-background-color: rgba(0, 0, 0, 0.05);
-}
-
-.sidebar-button-logout {
-    -fx-background-color: #FF5757;
+    -fx-background-color: #1F2E50;
     -fx-text-fill: white;
     -fx-font-size: 16px;
-    -fx-border-radius: 6px;
+    -fx-padding: 10px 20px;
+    -fx-background-radius: 10px;
+}
+.sidebar-button:hover {
+    -fx-background-color: #3A4F7A;
+}
+/* Sidebar Logout Button - Red Color */
+.sidebar-logout {
+    -fx-background-color: #D9534F; /* Red background */
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-padding: 10px 20px;
+    -fx-background-radius: 10px;
+    -fx-font-weight: bold;
+}
+.sidebar-logout:hover {
+    -fx-background-color: #C9302C; /* Darker red when hovered */
+}
+
+
+
+
+/* Top Navbar */
+.top-navbar {
+    -fx-background-color: #FFFFFF; /* White */
+    -fx-border-radius: 20px 20px 0 0; /* Rounded only on top */
     -fx-padding: 10px;
 }
 
-.sidebar-button-logout:hover {
-    -fx-background-color: #CC0000;
+/* Navbar Title */
+.navbar-title {
+    -fx-font-size: 20px;
+    -fx-text-fill: #333;
+    -fx-font-weight: bold;
 }
 
-/* Top Navbar */
+
+
 #searchField {
     -fx-background-radius: 6px;
     -fx-padding: 5px;
 }
 
-/* Primary Buttons */
-.button-primary {
-    -fx-background-color: linear-gradient(to bottom, #009FE3, #007AC1);
-    -fx-text-fill: white;
-    -fx-font-size: 16px;
-    -fx-background-radius: 4px;
-    -fx-padding: 10px 20px;
+/* 📌 Buttons (Fully Rounded) */
+.button-primary, .button-secondary {
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
 }
 
+/* Buttons */
+.button-primary {
+    -fx-background-color: #007BFF;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-padding: 10px 20px;
+    -fx-background-radius: 10px;
+}
 .button-primary:hover {
-    -fx-background-color: #006BB2;
+    -fx-background-color: #0056b3;
 }
 
 .button-secondary {
-    -fx-background-color: transparent;
-    -fx-border-color: #009FE3;
-    -fx-text-fill: #009FE3;
-    -fx-font-size: 16px;
-    -fx-background-radius: 4px;
-    -fx-border-radius: 4px;
-    -fx-padding: 10px 20px;
-}
-
-.button-secondary:hover {
-    -fx-background-color: #009FE3;
+    -fx-background-color: #28A745;
     -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-padding: 10px 20px;
+    -fx-background-radius: 10px;
+}
+.button-secondary:hover {
+    -fx-background-color: #1E7E34;
 }
 
 
