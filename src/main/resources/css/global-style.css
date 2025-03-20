@@ -2,6 +2,42 @@
     -fx-background-color: #FAFAFA;
 }
 
+/* Login Card -> Needs to be combined with dashboard-root into .rounded-container */
+.rounded-container {
+    -fx-background-color: rgba(245, 245, 245, 1.0); /* Solid, not transparent */
+    -fx-background-radius: 12px;
+    -fx-border-radius: 12px;
+    -fx-border-color: rgba(220, 220, 220, 0.6);
+    -fx-border-width: 1px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 5);
+}
+
+/* Dashboard Root */
+.dashboard-root {
+    -fx-background-color: rgba(245, 245, 245, 1.0); /* Semi-transparent to keep corners rounded */
+    -fx-background-radius: 12px;
+    -fx-border-radius: 12px;
+    -fx-border-color: rgba(220, 220, 220, 0.6);
+    -fx-border-width: 1px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 5);
+}
+
+/* Dashboard Title */
+.dashboard-title {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+}
+
+.main-content {
+    -fx-padding: 20px;
+    -fx-spacing: 24px; /* Style Guide: Section gaps */
+    -fx-background-radius: 12px;
+    -fx-border-radius: 12px;
+}
+
+
+
 /* Sidebar Buttons */
 .sidebar-button {
     -fx-background-color: transparent;
@@ -38,7 +74,8 @@
     -fx-background-color: linear-gradient(to bottom, #009FE3, #007AC1);
     -fx-text-fill: white;
     -fx-font-size: 16px;
-    -fx-background-radius: 8px;
+    -fx-background-radius: 4px;
+    -fx-padding: 10px 20px;
 }
 
 .button-primary:hover {
@@ -47,16 +84,19 @@
 
 .button-secondary {
     -fx-background-color: transparent;
-    -fx-border-color: #007AC1;
-    -fx-text-fill: #007AC1;
+    -fx-border-color: #009FE3;
+    -fx-text-fill: #009FE3;
     -fx-font-size: 16px;
-    -fx-background-radius: 8px;
+    -fx-background-radius: 4px;
+    -fx-border-radius: 4px;
+    -fx-padding: 10px 20px;
 }
 
 .button-secondary:hover {
-    -fx-background-color: #007AC1;
+    -fx-background-color: #009FE3;
     -fx-text-fill: white;
 }
+
 
 /* TicketView Styles */
 #ticketListView {

@@ -7,99 +7,102 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import org.example.eventticketsystem.EventTicketSystemApp;
-import org.example.eventticketsystem.models.Event;
 
 import java.io.IOException;
 import java.util.Objects;
 
-// Singleton Navigation Manager
-
-public class Navigation {
-
-    // Singleton instance
-    private static Navigation instance;
-
-    // Store the primary stage reference
-    private Stage primaryStage;
+public class Navigation implements INavigation {
+    // Immutability, scenes are switched, while the primary stage remains constant. Avoids redundant object creation and ensures stability
+    private final Stage primaryStage;
 
     // Default window properties
     private int windowWidth = 420;
     private int windowHeight = 450;
 
-    // A private constructor prevents instantiation, enforces Singleton pattern
-    private Navigation() {}
+    // Default window properties
+    private static final int DEFAULT_WIDTH = 420;
+    private static final int DEFAULT_HEIGHT = 450;
 
-    /**
-     * Get the single instance of Navigation
-     * @return Navigation instance.
-     */
-
-    public static Navigation getInstance() {
-        if (instance == null) {
-            instance = new Navigation();
-        }
-        return instance;
+    // Constructor requires a stage for Dependency Injection
+    public Navigation(Stage primaryStage) {
+        this.primaryStage = primaryStage;
+        setupPrimaryStage();
     }
 
     // Handles one-time setup of the primary stage (icons, title, styles)
-    public void initialize(Stage stage) {
-        if (this.primaryStage == null) {
-            this.primaryStage = stage;
+    private void setupPrimaryStage() {
 
-            // Set title and styling
-            this.primaryStage.setTitle("Event Ticket System");
-            this.primaryStage.initStyle(StageStyle.UNDECORATED);
+        // Set title and styling
+        primaryStage.setTitle("Event Ticket System");
+        primaryStage.setResizable(false);
 
-            // Make window background transparent to support rounded corners
-            primaryStage.initStyle(StageStyle.TRANSPARENT);
 
-            // Set application icon
-            this.primaryStage.getIcons().add(new Image(Objects.requireNonNull(
-                    getClass().getResourceAsStream("/images/easv_logo.png"))));
+        // Make window background transparent to support rounded corners
+        primaryStage.initStyle(StageStyle.UNDECORATED);
+        primaryStage.initStyle(StageStyle.TRANSPARENT);
 
-            // Set default size
-            primaryStage.setHeight(windowHeight);
-            primaryStage.setWidth(windowWidth);
-        }
+            // Set application icon, check for null
+            var iconPath = getClass().getResourceAsStream("/images/easv_logo.png");
+            if (iconPath != null) {
+                this.primaryStage.getIcons().add(new Image(iconPath));
+            } else {
+                System.err.println("WARNING: Icon not found!");
+            }
+
+            // Apply default size
+        primaryStage.setWidth(DEFAULT_WIDTH);
+            primaryStage.setHeight(DEFAULT_HEIGHT);
     }
 
     /**
-     * Loads a new scene and sets it on the primary stage.
-     * This should *only* swap scenes, without modifying global stage properties like size and style
+     * Loads a new scene.
      * @param fxmlPath Path to the FXML file.
-     * @param width Width of the window.
-     * @param height Height of the window.
      */
 
-    public void loadScene(String fxmlPath, int width, int height) {
-        if (primaryStage == null) {
-            System.out.println("ERROR: Navigation not initialized. Call initialize() first.");
-            return;
-        }
-
+    @Override
+    public void loadScene(String fxmlPath) {
         try {
+
             System.out.println("Loading scene: " + fxmlPath);
 
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxmlPath));
-            Parent root = fxmlLoader.load();
-            Scene scene = new Scene(root, windowWidth, windowHeight);
 
-            // Apply global CSS styling
+            // Inject Navigation into controllers
+            fxmlLoader.setControllerFactory(param -> {
+                try {
+                    return param.getConstructor(INavigation.class).newInstance(this);
+                } catch (NoSuchMethodException e) {
+                    System.out.println("⚠ Controller has no matching constructor, using default.");
+                    try {
+                        return param.getDeclaredConstructor().newInstance();
+                    } catch (Exception ex) {
+                        throw new RuntimeException("Controller Injection Failed: " + param.getName(), ex);
+                    }
+                } catch (Exception e) {
+                    throw new RuntimeException("Controller Injection Failed: " + param.getName(), e);
+                }
+            });
+
+            Parent root = fxmlLoader.load();
+            Scene scene = new Scene(root, primaryStage.getWidth(), primaryStage.getHeight());
+
+
+            // Apply global CSS
             String cssPath = "/css/global-style.css";
             if (getClass().getResource(cssPath) != null) {
                 scene.getStylesheets().add(Objects.requireNonNull(
-                        Navigation.class.getResource(cssPath)).toExternalForm());
+                        getClass().getResource(cssPath)).toExternalForm());
             } else {
                 System.err.println("WARNING: Could not load CSS file: " + cssPath);
             }
 
-            // Keep transparency setting for sharp corners
+            // Set transparency at scene level (not stage level)
             scene.setFill(Color.TRANSPARENT);
 
-            // Set the scene on the primary stage
+            // Apply scene
             primaryStage.setScene(scene);
             primaryStage.centerOnScreen();
+
 
             System.out.println("Scene switched successfully.");
 
@@ -109,21 +112,27 @@ public class Navigation {
         }
     }
 
+    /**
+     * Gets the primary stage.
+     */
+    @Override
+    public Stage getPrimaryStage() {
+        return primaryStage;
+    }
+
+    @Override
     public void setWindowSize(int width, int height) {
-        this.windowWidth = width;
-        this.windowHeight = height;
         if (primaryStage != null) {
             primaryStage.setWidth(width);
             primaryStage.setHeight(height);
         }
     }
 
-    /**
-     * Gets the primary stage.
-     */
-    public Stage getPrimaryStage() {
-        return primaryStage;
-    }
+    @Override
+public void closeApplication() {
+        primaryStage.close();
+}
+
 }
 
 

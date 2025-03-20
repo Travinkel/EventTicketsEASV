@@ -4,14 +4,21 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
+import org.example.eventticketsystem.utils.INavigation;
 import org.example.eventticketsystem.utils.Navigation;
 
 public class TicketViewController {
+
+    private final INavigation navigation;
 
     @FXML private ListView<String> ticketListView;
     @FXML private Button printTicketButton;
     @FXML private Button emailTicketButton;
     @FXML private Button logoutButton;
+
+    public TicketViewController(INavigation navigation) {
+        this.navigation = navigation;
+    }
 
     @FXML
     public void initialize() {
@@ -36,6 +43,6 @@ public class TicketViewController {
     @FXML
     private void logout() {
         System.out.println("🚪 Logging out...");
-        Navigation.getInstance().loadScene("/views/LoginView.fxml", 420, 450);
+        navigation.loadScene("/views/LoginView.fxml");
     }
 }

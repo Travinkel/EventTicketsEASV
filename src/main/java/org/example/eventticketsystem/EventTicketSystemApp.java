@@ -2,25 +2,24 @@ package org.example.eventticketsystem;
 
 import javafx.application.Application;
 
+import javafx.scene.Scene;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.scene.image.Image;
 import javafx.stage.StageStyle;
+import org.example.eventticketsystem.utils.INavigation;
 import org.example.eventticketsystem.utils.Navigation;
 
-import java.util.Objects;
 
 public class EventTicketSystemApp extends Application {
-    private static Stage primaryStage;
+    private INavigation navigation;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        // Initialize Navigation (manages the primary stage)
-        Navigation.getInstance().initialize(primaryStage);
+        navigation = new Navigation(primaryStage);
+        navigation.loadScene("/views/LoginView.fxml");
 
-        // Load the Login View
-        Navigation.getInstance().loadScene("/views/LoginView.fxml", 420, 450);
-
-        // Show the primary stage
         primaryStage.show();
     }
 

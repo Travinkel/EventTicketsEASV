@@ -16,19 +16,14 @@
       prefHeight="450.0"
       prefWidth="420.0"
       spacing="15.0"
-      style="-fx-background-color: #FFFFFF;
-             -fx-border-color: rgba(0, 0, 0, 0.1);
-             -fx-border-width: 1px;
-             -fx-background-radius: 15px;
-             -fx-border-radius: 15px;
-             -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 15, 0, 0, 5);"
+      styleClass="rounded-container"
       xmlns="http://javafx.com/javafx/23.0.1"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="org.example.eventticketsystem.controllers.LoginController">
-
     <padding>
         <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
     </padding>
+
 
     <children>
         <!-- Close Button -->

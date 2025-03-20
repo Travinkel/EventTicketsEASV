@@ -2,13 +2,15 @@ package org.example.eventticketsystem.models;
 
 public class User {
     private int id;
+    private String username;
     private String name;
     private String email;
     private String password;
     private String role;
 
-    public User(int id, String name, String email, String password, String role) {
+    public User(int id, String username, String name, String email, String password, String role) {
         this.id = id;
+        this.username = username;
         this.name = name;
         this.email = email;
         this.password = password;
@@ -20,6 +22,10 @@ public class User {
     public void setId(int id) {
         this.id = id;
     }
+    public String getUsername() {
+        return username;
+    }
+    public void setUsername(String username) {}
     public String getName() {
         return name;
     }

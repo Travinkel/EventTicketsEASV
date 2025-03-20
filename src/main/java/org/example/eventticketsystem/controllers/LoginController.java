@@ -10,9 +10,11 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import org.example.eventticketsystem.utils.INavigation;
 import org.example.eventticketsystem.utils.Navigation;
 
 public class LoginController {
+    private final INavigation navigation;
 
     @FXML private VBox loginCard;
     @FXML private TextField usernameField;
@@ -20,6 +22,10 @@ public class LoginController {
     @FXML private Button loginButton;
     @FXML private Button closeButton;
     @FXML private Label errorLabel;
+
+    public LoginController(INavigation navigation) {
+        this.navigation = navigation;
+    }
 
     /**
      * Initializes the Login View with a smooth fade-in animation.
@@ -62,15 +68,15 @@ public class LoginController {
             switch (userRole) {
                 case "ADMIN" -> {
                     System.out.println("Navigating to AdminDashboard.fxml");
-                    Navigation.getInstance().loadScene("/views/AdminDashboard.fxml", 1200, 800);
+                    navigation.loadScene("/views/AdminDashboard.fxml");
                 }
                 case "COORDINATOR" -> {
                     System.out.println("Navigating to CoordinatorDashboard.fxml");
-                    Navigation.getInstance().loadScene("/views/CoordinatorDashboard.fxml", 1200, 800);
+                    navigation.loadScene("/views/CoordinatorDashboard.fxml");
                 }
                 case "USER" -> {
                     System.out.println("Navigating to TicketView.fxml");
-                    Navigation.getInstance().loadScene("/views/TicketView.fxml", 900, 700);
+                    navigation.loadScene("/views/TicketView.fxml");
                 }
                 default -> {
                     System.out.println("ERROR: Unknown role assigned.");
