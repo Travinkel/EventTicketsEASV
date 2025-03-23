@@ -7,10 +7,7 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import org.example.eventticketsystem.controllers.AdminDashboardController;
-import org.example.eventticketsystem.controllers.EventCoordinatorDashboardController;
-import org.example.eventticketsystem.controllers.LoginController;
-import org.example.eventticketsystem.controllers.UserManagementController;
+import org.example.eventticketsystem.controllers.*;
 import org.example.eventticketsystem.models.User;
 import org.example.eventticketsystem.services.UserService;
 
@@ -73,15 +70,18 @@ public class Navigation implements INavigation {
             fxmlLoader.setControllerFactory(param -> {
                 try {
                     if (param.equals(LoginController.class)) {
-                        return new LoginController(this, userService); // Inject Navigation
+                        return new LoginController(this, userService);
                     } else if (param.equals(AdminDashboardController.class) ||
                             param.equals(EventCoordinatorDashboardController.class)) {
                         return param.getConstructor(INavigation.class, UserService.class)
-                                .newInstance(this, userService); // Inject Navigation + UserService
+                                .newInstance(this, userService);
                     } else if (param.equals(UserManagementController.class)) {
-                        return param.getConstructor(UserService.class).newInstance(userService); // Inject UserService
+                        return param.getConstructor(UserService.class).newInstance(userService);
+                    } else if (param.equals(TopNavbarController.class) || param.equals(SidebarController.class)) {
+                        return param.getConstructor(INavigation.class, UserService.class)
+                                .newInstance(this, userService);
                     }
-                    return param.getDeclaredConstructor().newInstance(); // Default constructor
+                    return param.getDeclaredConstructor().newInstance(); // Default constructor if needed
                 } catch (NoSuchMethodException e) {
                     System.out.println("⚠ No matching constructor for " + param.getName() + ", using default.");
                     try {

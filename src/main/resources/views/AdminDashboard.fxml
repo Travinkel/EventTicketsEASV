@@ -1,53 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.control.cell.*?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Button?>
 
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TableColumn?>
-
-<?import javafx.scene.layout.BorderPane?>
-<BorderPane fx:id="adminDashboard"
-            xmlns="http://javafx.com/javafx/23.0.1"
+<BorderPane xmlns="http://javafx.com/javafx/23.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="org.example.eventticketsystem.controllers.AdminDashboardController"
-            styleClass="dashboard-root"
-            prefWidth="1280" prefHeight="720" maxWidth="Infinity" maxHeight="Infinity">
+            prefWidth="1280" prefHeight="720"
+            styleClass="dashboard-root">
 
-      <!-- Sidebar + Main Content -->
+    <!-- Sidebar in the left pane (fixed width) -->
     <left>
-          <fx:include fx:id="sidebar" source="Sidebar.fxml"/>
-</left>
+        <BorderPane prefWidth="250.0" maxWidth="250.0" minWidth="250.0" style="-fx-background-color: #2A3D66; -fx-background-radius: 15px; -fx-border-radius: 15px;">
+            <center>
+                <fx:include fx:id="sidebar" source="Sidebar.fxml"/>
+            </center>
+        </BorderPane>
+    </left>
 
-    <!-- Include Top Navbar -->
-    <top>
-        <fx:include fx:id="topNavbar" source="TopNavbar.fxml"/>
-    </top>
-          <!-- Main Content Area -->
+    <!-- Right content area: includes topNavbar and mainContent -->
     <center>
-          <VBox fx:id="mainContent" styleClass="main-content" alignment="CENTER" spacing="20.0">
+        <BorderPane>
+            <top>
+                <fx:include fx:id="topNavbar" source="TopNavbar.fxml"/>
+            </top>
+            <center>
+                <VBox fx:id="mainContent" styleClass="main-content" alignment="TOP_CENTER" spacing="20.0">
+                    <padding>
+                        <Insets top="20" left="20" right="20" bottom="20"/>
+                    </padding>
 
-              <!-- Dashboard Title -->
-              <Label text="Admin Dashboard" styleClass="dashboard-title"/>
+                    <!-- Title -->
+                    <Label text="Brugere" styleClass="dashboard-subtitle"/>
 
-              <!-- Action Buttons -->
-              <HBox spacing="12">
-                  <Button fx:id="createUserButton" text="Create User" styleClass="button-primary"/>
-                  <Button fx:id="addEventButton" text="Add New Event" styleClass="button-secondary"/>
-              </HBox>
+                    <!-- Action Buttons -->
+                    <HBox spacing="12">
+                        <Button fx:id="createUserButton" text="➕" styleClass="button-icon"/>
+                    </HBox>
 
-              <!-- User Table -->
-              <Label text="User Management" styleClass="dashboard-subtitle"/>
-              <TableView fx:id="userTable" prefWidth="700">
-                  <columns>
-                      <TableColumn text="ID" fx:id="colId" prefWidth="50"/>
-                      <TableColumn text="Username" fx:id="colUsername" prefWidth="150"/>
-                      <TableColumn text="Email" fx:id="colEmail" prefWidth="250"/>
-                      <TableColumn text="Role" fx:id="colRole" prefWidth="120"/>
-                  </columns>
-              </TableView>
-          </VBox>
+                    <!-- User Table -->
+                    <TableView fx:id="userTable" prefWidth="700">
+                        <columns>
+                            <TableColumn fx:id="colUsername" text="Navn" prefWidth="150"/>
+                            <TableColumn fx:id="colEmail" text="Email" prefWidth="250"/>
+                            <TableColumn fx:id="colRole" text="Role" prefWidth="120"/>
+                        </columns>
+                    </TableView>
+                </VBox>
+            </center>
+        </BorderPane>
     </center>
 </BorderPane>

@@ -31,7 +31,6 @@ public class AdminDashboardController {
     @FXML private Button logoutButton;
 
     @FXML private TableView<User> userTable;
-    @FXML private TableColumn<User, Integer> colId;
     @FXML private TableColumn<User, String> colUsername;
     @FXML private TableColumn<User, String> colEmail;
     @FXML private TableColumn<User, String> colRole;
@@ -52,7 +51,6 @@ public class AdminDashboardController {
         System.out.println("✅ Admin Dashboard Loaded!");
 
         // Bind Table Columns to User properties
-        colId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colUsername.setCellValueFactory(new PropertyValueFactory<>("username"));
         colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
         colRole.setCellValueFactory(new PropertyValueFactory<>("role"));

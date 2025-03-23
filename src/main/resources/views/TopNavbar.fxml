@@ -6,27 +6,37 @@
 <?import javafx.scene.layout.HBox?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.Pane?>
 <HBox fx:id="topNavbar"
-alignment="CENTER_LEFT"
+      alignment="CENTER_LEFT"
       styleClass="top-navbar"
       prefHeight="60.0"
       maxWidth="Infinity"
       xmlns="http://javafx.com/javafx/23.0.1"
-      xmlns:fx="http://javafx.com/fxml/1" spacing="20">
+      xmlns:fx="http://javafx.com/fxml/1" spacing="20" fx:controller="org.example.eventticketsystem.controllers.TopNavbarController">
 
   <!-- Search Field (Centered) -->
-  <HBox HBox.hgrow="ALWAYS">
-    <TextField fx:id="searchField" promptText="Search..." styleClass="search-field"/>
+  <HBox alignment="TOP_RIGHT" spacing="10">
+    <TextField fx:id="searchField" promptText="Search users..." prefWidth="200"/>
   </HBox>
 
   <!-- Admin Profile Info (Right-aligned) -->
-  <HBox spacing="10">
-    <Label fx:id="userNameLabel" style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Admin Name"/>
+  <HBox alignment="TOP_RIGHT" spacing="10" styleClass="top-navbar">
+    <Label fx:id="adminNameLabel" style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Admin Name"/>
+    <Button fx:id="logoutButton" text="Logout" onAction="#handleLogout" styleClass="logout-btn"/>
     <ImageView fx:id="userAvatar" fitHeight="35.0" fitWidth="35.0" preserveRatio="true">
       <image>
         <Image url="@../images/easv_logo.png"/>
       </image>
     </ImageView>
   </HBox>
+
+
+  <Pane HBox.hgrow="ALWAYS"/> <!-- pushes the X button to the right -->
+  <Button fx:id="closeButton"
+          text="✕"
+          onAction="#handleCloseApp"
+          style="-fx-background-color: transparent; -fx-font-size: 18px; -fx-text-fill: #999;"/>
+
 
 </HBox>

@@ -17,6 +17,9 @@
     -fx-background-color: #F4F5F7; /* Matches Figma Style */
     -fx-background-radius: 12px;
     -fx-border-radius: 12px;
+    -fx-border-color: rgba(220, 220, 220, 0.6);
+    -fx-border-width: 1px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 5);
 }
 
 /* Dashboard Titles */
@@ -38,8 +41,10 @@
 .sidebar {
     -fx-background-color: #2A3D66; /* Dark Blue */
     -fx-padding: 20px;
-    -fx-spacing: 15px;
+    -fx-spacing: 10px;
     -fx-border-radius: 20px 0 0 20px; /* Rounded only on the left */
+    -fx-background-radius: 20px 0 0 20px; /* Must match border-radius */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0.1, 0, 2);
 }
 
 /* Sidebar Title */
@@ -153,4 +158,38 @@
     -fx-font-size: 16px;
     -fx-background-radius: 8px;
     -fx-border-radius: 8px;
+}
+
+#closeButton {
+    -fx-background-color: transparent;
+    -fx-text-fill: #888;
+    -fx-font-size: 16px;
+}
+
+#closeButton:hover {
+    -fx-text-fill: #FF5F57;
+}
+
+.close-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #777;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-alignment: top-right;
+}
+
+.logout-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #333;
+    -fx-font-size: 14px;
+}
+
+.button-icon {
+    -fx-background-color: transparent;
+    -fx-font-size: 18px;
+}
+
+.logout-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill: #555;
 }

@@ -1,11 +1,6 @@
 package org.example.eventticketsystem;
 
 import javafx.application.Application;
-
-import javafx.scene.Scene;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.example.eventticketsystem.utils.INavigation;

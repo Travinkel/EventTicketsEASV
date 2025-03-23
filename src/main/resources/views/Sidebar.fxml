@@ -6,10 +6,13 @@
 <?import javafx.scene.layout.VBox?>
 
 <?import javafx.scene.layout.Pane?>
-<VBox fx:id="sidebar" prefWidth="250.0" maxHeight="Infinity" spacing="20"
+<VBox fx:id="sidebar"
+      prefWidth="250.0"
+      VBox.vgrow="ALWAYS"
       styleClass="sidebar"
       xmlns="http://javafx.com/javafx/23.0.1"
-      xmlns:fx="http://javafx.com/fxml/1">
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.example.eventticketsystem.controllers.SidebarController">
 
   <!-- Logo -->
   <ImageView fitWidth="100.0" preserveRatio="true">
@@ -30,6 +33,6 @@
 
   <!-- Spacer pushes logout button to the bottom -->
   <Pane fx:id="spacer" VBox.vgrow="ALWAYS"/>
-  <Button fx:id="logoutButton" text="Logout" styleClass="sidebar-logout" />
+  <Button fx:id="logoutButton" text="Logout" onAction="#handleLogout" styleClass="sidebar-logout" />
 
 </VBox>
