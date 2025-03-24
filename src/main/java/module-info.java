@@ -2,6 +2,7 @@ module org.example.eventticketsystem {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.swing;
+    requires java.sql;
 
     opens org.example.eventticketsystem to javafx.fxml;
     opens org.example.eventticketsystem.controllers to javafx.fxml;
