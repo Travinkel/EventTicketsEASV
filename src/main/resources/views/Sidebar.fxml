@@ -1,18 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<?import javafx.scene.layout.Pane?>
-<VBox fx:id="sidebar"
-      prefWidth="250.0"
-      VBox.vgrow="ALWAYS"
-      styleClass="sidebar"
-      xmlns="http://javafx.com/javafx/23.0.1"
-      xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="org.example.eventticketsystem.controllers.SidebarController">
+<VBox fx:id="sidebar" maxHeight="Infinity" prefWidth="250.0" spacing="20" styleClass="sidebar" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.eventticketsystem.controllers.SideBarController">
 
   <!-- Logo -->
   <ImageView fitWidth="100.0" preserveRatio="true">
@@ -22,17 +17,17 @@
   </ImageView>
 
   <!-- Sidebar Title -->
-  <Label text="Admin Panel" styleClass="sidebar-title"/>
+  <Label styleClass="sidebar-title" text="Admin Panel" />
 
 
   <!-- Navigation Buttons -->
-  <Button fx:id="dashboardButton" text="Dashboard" styleClass="sidebar-button"/>
-  <Button fx:id="userManagementButton" text="User Management" styleClass="sidebar-button"/>
-  <Button fx:id="eventsButton" text="Manage Events" styleClass="sidebar-button"/>
-  <Button fx:id="settingsButton" text="Settings" styleClass="sidebar-button"/>
+  <Button fx:id="dashboardButton" styleClass="sidebar-button" text="Dashboard" />
+  <Button fx:id="userManagementButton" styleClass="sidebar-button" text="User Management" />
+  <Button fx:id="eventsButton" styleClass="sidebar-button" text="Manage Events" />
+  <Button fx:id="settingsButton" styleClass="sidebar-button" text="Settings" />
 
   <!-- Spacer pushes logout button to the bottom -->
-  <Pane fx:id="spacer" VBox.vgrow="ALWAYS"/>
-  <Button fx:id="logoutButton" text="Logout" onAction="#handleLogout" styleClass="sidebar-logout" />
+  <Pane fx:id="spacer" VBox.vgrow="ALWAYS" />
+  <Button fx:id="logoutButton" onAction="#onLogoutButtonClick" styleClass="sidebar-logout" text="Logout" />
 
 </VBox>
