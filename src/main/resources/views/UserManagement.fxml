@@ -6,7 +6,7 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/23.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="org.example.eventticketsystem.controllers.AdminDashboardController"
+            fx:controller="org.example.eventticketsystem.controllers.UserManagementController"
             prefWidth="1280" prefHeight="720"
             styleClass="dashboard-root">
 
@@ -35,8 +35,32 @@
                     <Label text="Brugere" styleClass="dashboard-subtitle"/>
 
                     <!-- Action Buttons -->
-                    <HBox spacing="12">
-                        <Button fx:id="createUserButton" text="➕" styleClass="button-icon"/>
+                    <HBox spacing="12" alignment="CENTER_LEFT">
+                        <TextField fx:id="searchField" promptText="Søg bruger..." prefWidth="200"/>
+
+                        <Button fx:id="createUserButton"
+                                text="➕"
+                                styleClass="crud-btn-create">
+                            <tooltip>
+                                <Tooltip text="Create User"/>
+                            </tooltip>
+                        </Button>
+
+                        <Button fx:id="editUserButton"
+                                text="✎"
+                                styleClass="crud-btn-edit">
+                            <tooltip>
+                                <Tooltip text="Edit User"/>
+                            </tooltip>
+                        </Button>
+
+                        <Button fx:id="deleteUserButton"
+                                text="🗑"
+                                styleClass="crud-btn-delete">
+                            <tooltip>
+                                <Tooltip text="Delete User"/>
+                            </tooltip>
+                        </Button>
                     </HBox>
 
                     <!-- User Table -->

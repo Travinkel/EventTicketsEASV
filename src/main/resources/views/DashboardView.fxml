@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.eventticketsystem.controllers.DashboardController"
+            prefWidth="800" prefHeight="600">
+
+  <!-- Common Title -->
+  <Label fx:id="dashboardTitle"
+         layoutX="20" layoutY="20"
+         text="Dashboard" />
+
+  <!-- Admin-only section (initially hidden) -->
+  <VBox fx:id="adminSection" layoutX="20" layoutY="80" spacing="10" visible="false">
+    <Label text="Admin Stats" style="-fx-font-size:16; -fx-font-weight:bold;"/>
+
+    <!-- Quick Stats: users, events, tickets -->
+    <Label fx:id="usersCountLabel" text="Users: ..." />
+    <Label fx:id="eventsCountLabel" text="Events: ..." />
+    <Label fx:id="ticketsCountLabel" text="Tickets: ..." />
+
+    <Button fx:id="refreshStatsButton" text="Refresh Stats" onAction="#handleRefreshStats" />
+  </VBox>
+
+  <!-- Coordinator-only section (initially hidden) -->
+  <VBox fx:id="coordinatorSection" layoutX="20" layoutY="240" spacing="10" visible="false">
+    <Label text="Coordinator Tools" style="-fx-font-size:16; -fx-font-weight:bold;"/>
+    <!-- Future coordinator UI goes here... -->
+  </VBox>
+
+</AnchorPane>

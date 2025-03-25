@@ -1,20 +1,19 @@
 package org.example.eventticketsystem.controllers;
 
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import org.example.eventticketsystem.models.User;
+import org.example.eventticketsystem.models.UserRole;
 import org.example.eventticketsystem.services.UserService;
 
 public class UserManagementController {
-    // TODO: UserManagementController is to be used by both Event Coordinator Dashboard and Admin Dashboard
     private final UserService userService;
 
     @FXML private TextField usernameField;
     @FXML private TextField nameField;
     @FXML private TextField emailField;
     @FXML private PasswordField passwordField;
-    @FXML private ComboBox<String> roleComboBox;
+    @FXML private ComboBox<UserRole> roleComboBox;
     @FXML private Button addUserButton;
     @FXML private ListView<User> userListView;
 
@@ -26,21 +25,34 @@ public class UserManagementController {
     private void initialize() {
         System.out.println("✅ User Management Controller Initialized");
 
-        // Set up roles in the ComboBox
-        roleComboBox.getItems().addAll("ADMIN", "COORDINATOR", "USER");
-        roleComboBox.setValue("USER");
+        setupRoleComboBox();
+        bindUserListView();
+    }
 
-        // Bind user list to ListView
+    private void setupRoleComboBox() {
+        roleComboBox.getItems().setAll(UserRole.values());
+
+        // Optionally filter roles for Event Coordinators
+        // Example: remove ADMIN option if the current user shouldn't see it
+        // roleComboBox.getItems().remove(UserRole.ADMIN);
+
+        roleComboBox.setValue(UserRole.CUSTOMER);
+    }
+
+    private void bindUserListView() {
         userListView.setItems(userService.getUsers());
 
-        // Customize the ListView Display
         userListView.setCellFactory(param -> new ListCell<>() {
             @Override
             protected void updateItem(User user, boolean empty) {
                 super.updateItem(user, empty);
-                setText((empty || user == null) ? null : user.getUsername());
+                setText((empty || user == null) ? null : formatUser(user));
             }
         });
+    }
+
+    private String formatUser(User user) {
+        return String.format("%s (%s)", user.getUsername(), user.getRole());
     }
 
     @FXML
@@ -49,16 +61,19 @@ public class UserManagementController {
         String name = nameField.getText().trim();
         String email = emailField.getText().trim();
         String password = passwordField.getText().trim();
-        String role = roleComboBox.getValue();
+        UserRole role = roleComboBox.getValue();
 
-
-        if (username.isEmpty() || name.isEmpty() || email.isEmpty() || password.isEmpty()) {
-            showAlert("Error", "All fields are required.");
+        if (username.isEmpty() || name.isEmpty() || email.isEmpty() || password.isEmpty() || role == null) {
+            showAlert(Alert.AlertType.ERROR, "All fields are required.");
             return;
         }
 
-        userService.addUser(username, name, email, password, role);
-        clearFields();
+        boolean success = userService.addUser(username, name, email, password, role);
+        if (success) {
+            clearFields();
+        } else {
+            showAlert(Alert.AlertType.ERROR, "Failed to add user. Username might already exist.");
+        }
     }
 
     private void clearFields() {
@@ -66,12 +81,12 @@ public class UserManagementController {
         nameField.clear();
         emailField.clear();
         passwordField.clear();
-        roleComboBox.setValue("USER");
+        roleComboBox.setValue(UserRole.CUSTOMER);
     }
 
-    private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(title);
+    private void showAlert(Alert.AlertType type, String message) {
+        Alert alert = new Alert(type);
+        alert.setTitle(type == Alert.AlertType.ERROR ? "Error" : "Info");
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();

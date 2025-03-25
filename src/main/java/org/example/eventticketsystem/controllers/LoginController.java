@@ -1,7 +1,6 @@
 package org.example.eventticketsystem.controllers;
 
 import javafx.animation.FadeTransition;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -12,7 +11,6 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.example.eventticketsystem.services.UserService;
 import org.example.eventticketsystem.utils.INavigation;
-import org.example.eventticketsystem.utils.Navigation;
 
 public class LoginController {
     private final INavigation navigation;
@@ -53,68 +51,27 @@ public class LoginController {
         String username = usernameField.getText().trim();
         String password = passwordField.getText().trim();
 
-        System.out.println("Login Attempt: " + username + " / " + password);
-
         if (username.isEmpty() || password.isEmpty()) {
-            System.out.println("ERROR: Fields cannot be empty.");
             showError("Username and password cannot be empty.");
             return;
         }
 
-        String userRole = authenticateUser(username, password);
+        userService.authenticate(username, password).ifPresentOrElse(user -> {
+            navigation.setCurrentUser(user);
 
-        if (userRole == null) {
-            System.out.println("ERROR: Invalid credentials.");
-            showError("Invalid credentials. Please try again.");
-        } else {
-            System.out.println("SUCCESS: User authenticated as " + userRole);
-            switch (userRole) {
-                case "ADMIN" -> {
-                    System.out.println("Navigating to AdminDashboard.fxml");
-                    navigation.loadScene("/views/AdminDashboard.fxml");
-                }
-                case "COORDINATOR" -> {
-                    System.out.println("Navigating to CoordinatorDashboard.fxml");
-                    navigation.loadScene("/views/CoordinatorDashboard.fxml");
-                }
-                case "USER" -> {
-                    System.out.println("Navigating to TicketView.fxml");
-                    navigation.loadScene("/views/TicketView.fxml");
-                }
-                default -> {
-                    System.out.println("ERROR: Unknown role assigned.");
-                    showError("Unknown role assigned. Contact support.");
-                }
+            switch (user.getRole()) {
+                case ADMIN, COORDINATOR -> navigation.loadScene("/views/ControlPanelView.fxml");
+                case CUSTOMER -> navigation.loadScene("/views/TicketView.fxml");
+                default -> showError("Unknown role assigned. Contact support.");
             }
-        }
+        }, () -> showError("Invalid credentials. Please try again."));
     }
 
-    /**
-     * Simulates authentication logic.
-     * TODO: Replace this with a database lookup.
-     */
-    private String authenticateUser(String username, String password) {
-        if ("admin".equals(username) && "password".equals(password)) return "ADMIN";
-        if ("coordinator".equals(username) && "password".equals(password)) return "COORDINATOR";
-        if ("user".equals(username) && "password".equals(password)) return "USER";
-        return null;
+    private void showError(String s) {
     }
-
-    /**
-     * Closes the application when the close button is clicked.
-     */
     @FXML
-    private void closeApp(ActionEvent event) {
-        System.out.println("Closing application...");
+    private void closeApp() {
         Stage stage = (Stage) closeButton.getScene().getWindow();
         stage.close();
-    }
-
-    /**
-     * Displays error messages in the UI.
-     */
-    private void showError(String message) {
-        errorLabel.setText(message);
-        errorLabel.setStyle("-fx-text-fill: red;");
     }
 }

@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.VBox?>
 
 <?import javafx.scene.layout.Pane?>
-<VBox fx:id="sidebar"
+<VBox fx:id="sidebarContainer"
       prefWidth="250.0"
       VBox.vgrow="ALWAYS"
       styleClass="sidebar"
@@ -15,24 +15,22 @@
       fx:controller="org.example.eventticketsystem.controllers.SidebarController">
 
   <!-- Logo -->
-  <ImageView fitWidth="100.0" preserveRatio="true">
+  <ImageView fitWidth="120.0" preserveRatio="true">
     <image>
       <Image url="@../images/easv_logo.png" />
     </image>
   </ImageView>
 
-  <!-- Sidebar Title -->
-  <Label text="Admin Panel" styleClass="sidebar-title"/>
+  <!-- Brugernavn Placeholder -->
+  <Label fx:id="nameLabel" text="Name Label Placeholder" styleClass="sidebar-title"/>
 
 
-  <!-- Navigation Buttons -->
-  <Button fx:id="dashboardButton" text="Dashboard" styleClass="sidebar-button"/>
-  <Button fx:id="userManagementButton" text="User Management" styleClass="sidebar-button"/>
-  <Button fx:id="eventsButton" text="Manage Events" styleClass="sidebar-button"/>
-  <Button fx:id="settingsButton" text="Settings" styleClass="sidebar-button"/>
+  <!-- Spacer -->
+  <Pane maxHeight="40"/>
 
-  <!-- Spacer pushes logout button to the bottom -->
-  <Pane fx:id="spacer" VBox.vgrow="ALWAYS"/>
-  <Button fx:id="logoutButton" text="Logout" onAction="#handleLogout" styleClass="sidebar-logout" />
+
+  <!-- Button Holder -->
+  <VBox fx:id="buttonContainer" spacing="10" alignment="TOP_CENTER"/>
+
 
 </VBox>

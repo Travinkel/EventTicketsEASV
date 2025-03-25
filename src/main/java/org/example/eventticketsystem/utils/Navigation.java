@@ -1,13 +1,15 @@
 package org.example.eventticketsystem.utils;
 
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import org.example.eventticketsystem.controllers.*;
+import javafx.util.Callback;
 import org.example.eventticketsystem.models.User;
 import org.example.eventticketsystem.services.UserService;
 
@@ -17,7 +19,12 @@ import java.util.Objects;
 public class Navigation implements INavigation {
     // Immutability, scenes are switched, while the primary stage remains constant. Avoids redundant object creation and ensures stability
     private final Stage primaryStage;
-    private final UserService userService;
+
+
+    private final DependencyRegistry registry;
+    private final AppControllerFactory controllerFactory;
+
+    private User currentUser;
 
     // Default window properties
     private int windowWidth = 420;
@@ -30,8 +37,34 @@ public class Navigation implements INavigation {
     // Constructor requires a stage for Dependency Injection
     public Navigation(Stage primaryStage) {
         this.primaryStage = primaryStage;
-        this.userService = new UserService();
+
+        // Opsæt dependencies
+        this.registry = new DependencyRegistry();
+        this.registry.register(INavigation.class, this);
+        this.registry.register(UserService.class, new UserService());
+
+        this.controllerFactory = new AppControllerFactory(registry);
+
         setupPrimaryStage();
+    }
+
+    // Set/get current logged-in user
+    public void setCurrentUser(User user) {
+        System.out.println("Navigation@" + System.identityHashCode(this)
+                + ": setCurrentUser(" + user + ")");
+        this.currentUser = user;
+    }
+
+    @Override
+    public User getCurrentUser() {
+        System.out.println("Navigation@" + System.identityHashCode(this)
+                + ": getCurrentUser() -> " + currentUser);
+        return currentUser;
+    }
+
+    @Override
+    public Callback<Class<?>, Object> getControllerFactory() {
+        return controllerFactory;
     }
 
     // Handles one-time setup of the primary stage (icons, title, styles)
@@ -64,43 +97,17 @@ public class Navigation implements INavigation {
 
             System.out.println("Loading scene: " + fxmlPath);
 
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxmlPath));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
 
-            // Inject Navigation into controllers
-            fxmlLoader.setControllerFactory(param -> {
-                try {
-                    if (param.equals(LoginController.class)) {
-                        return new LoginController(this, userService);
-                    } else if (param.equals(AdminDashboardController.class) ||
-                            param.equals(EventCoordinatorDashboardController.class)) {
-                        return param.getConstructor(INavigation.class, UserService.class)
-                                .newInstance(this, userService);
-                    } else if (param.equals(UserManagementController.class)) {
-                        return param.getConstructor(UserService.class).newInstance(userService);
-                    } else if (param.equals(TopNavbarController.class) || param.equals(SidebarController.class)) {
-                        return param.getConstructor(INavigation.class, UserService.class)
-                                .newInstance(this, userService);
-                    }
-                    return param.getDeclaredConstructor().newInstance(); // Default constructor if needed
-                } catch (NoSuchMethodException e) {
-                    System.out.println("⚠ No matching constructor for " + param.getName() + ", using default.");
-                    try {
-                        return param.getDeclaredConstructor().newInstance();
-                    } catch (Exception ex) {
-                        throw new RuntimeException("❌ Controller Injection Failed: " + param.getName(), ex);
-                    }
-                } catch (Exception e) {
-                    throw new RuntimeException("❌ Controller Injection Failed: " + param.getName(), e);
-                }
-            });
+            loader.setControllerFactory(controllerFactory);
 
-            Parent root = fxmlLoader.load();
+            Parent root = loader.load();
 
             // Dynamically Set Window Size Based on Scene
             switch (fxmlPath) {
                 case "/views/LoginView.fxml" -> setWindowSize(420, 450);
-                case "/views/AdminDashboard.fxml" -> setWindowSize(1280, 800);  // Wider for admin
-                case "/views/CoordinatorDashboard.fxml" -> setWindowSize(1280, 800);  // Standard size
+                case "/views/ControlPanelView.fxml" -> setWindowSize(1280, 800);  // Wider for admin
+                case "/views/DashboardView.fxml" -> setWindowSize(1280, 800);  // Standard size
                 case "/views/TicketView.fxml" -> setWindowSize(1024, 720);  // Smaller window for users
                 default -> setWindowSize(420, 450);  // Default fallback size
             }
@@ -131,6 +138,18 @@ public class Navigation implements INavigation {
         }
     }
 
+    @Override
+    public Node loadViewNode(String fxmlPath) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            loader.setControllerFactory(controllerFactory);
+            return loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new Label("❌ Failed to load view: " + fxmlPath);
+        }
+    }
+
     /**
      * Gets the primary stage.
      */
@@ -149,10 +168,8 @@ public class Navigation implements INavigation {
     }
 
     @Override
-public void closeApplication() {
+    public void closeApplication() {
         primaryStage.close();
 }
 
 }
-
-
