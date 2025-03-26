@@ -36,4 +36,8 @@ public class Ticket {
     public void setQrCode(String qrCode) {
         this.qrCode = qrCode;
     }
+
+    public Class<Object> getEvent() {
+        return Object.class;
+    }
 }

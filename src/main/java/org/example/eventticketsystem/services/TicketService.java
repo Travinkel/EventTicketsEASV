@@ -4,6 +4,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class TicketService {
 
     @FXML private TextField searchField;
@@ -28,5 +31,12 @@ public class TicketService {
     private void handleAddNew() {
         System.out.println("Add New Clicked!");
         // TODO: Load the Add New Page
+    }
+
+    @FXML
+    public Map<String, Integer> getMonthlyTicketSales() {
+        Map<String, Integer> map = new HashMap<>();
+        map.put(searchField.getText(), 0);
+        return map;
     }
 }

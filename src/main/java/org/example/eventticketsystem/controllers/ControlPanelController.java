@@ -14,17 +14,14 @@ import org.example.eventticketsystem.utils.INavigation;
 import java.io.IOException;
 
 
-public class ControlPanelController {
-    private final INavigation navigation;
-    private final UserService userService;
+public class ControlPanelController extends BaseController<Void> {
 
     @FXML private StackPane sidebarPlaceholder;
     @FXML private StackPane topNavbarPlaceholder;
     @FXML private StackPane contentArea;
 
     public ControlPanelController(INavigation navigation, UserService userService) {
-        this.navigation = navigation;
-        this.userService = userService;
+        super(navigation, userService);
     }
 
     /**

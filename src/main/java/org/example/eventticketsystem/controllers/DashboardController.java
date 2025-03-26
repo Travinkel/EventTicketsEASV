@@ -3,6 +3,10 @@ package org.example.eventticketsystem.controllers;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
@@ -16,9 +20,10 @@ import org.example.eventticketsystem.services.EventService;
 
 
 import java.io.IOException;
+import java.util.Map;
 
 
-public class DashboardController extends BaseController {
+public class DashboardController extends BaseController<User> {
 
     @FXML
     private Label dashboardTitle;
@@ -37,9 +42,12 @@ public class DashboardController extends BaseController {
     @FXML
     private Button refreshStatsButton;
 
-    // If you have extra services for events/tickets, inject them in the constructor:
     private final EventService eventService;    // optional
     private final TicketService ticketService;  // optional
+
+    @FXML private BarChart<String, Number> ticketSalesChart;
+    @FXML private CategoryAxis monthAxis;
+    @FXML private NumberAxis salesAxis;
 
 
     public DashboardController(INavigation navigation, UserService userService) {
@@ -71,6 +79,7 @@ public class DashboardController extends BaseController {
                 dashboardTitle.setText("Admin Oversigt");
                 // Initialize stats right away
                 loadAdminStats();
+                loadTicketSalesChart();
             }
             case COORDINATOR -> {
                 adminSection.setVisible(false);
@@ -89,6 +98,7 @@ public class DashboardController extends BaseController {
     @FXML
     private void handleRefreshStats() {
         loadAdminStats();
+        loadTicketSalesChart();
     }
 
     /**
@@ -109,5 +119,22 @@ public class DashboardController extends BaseController {
         // For now, if we don't have real services, just do placeholders:
         eventsCountLabel.setText("Events: 3");
         ticketsCountLabel.setText("Tickets: 10");
+    }
+
+    private void loadTicketSalesChart() {
+        // Clear old data each time so you don't stack new bars
+        ticketSalesChart.getData().clear();
+
+        // Suppose we have a method getMonthlyTicketSales() that returns
+        // Map<String, Integer> like { "Jan" -> 12, "Feb"-> 20, ... }
+        // We'll do placeholders for now
+        Map<String, Integer> monthlySales = ticketService.getMonthlyTicketSales();
+        XYChart.Series<String, Number> series = new XYChart.Series<>();
+        series.setName("Ticket Sales 2025");
+
+        for (Map.Entry<String, Integer> entry : monthlySales.entrySet()) {
+            series.getData().add(new XYChart.Data<>(entry.getKey(), entry.getValue()));
+        }
+        ticketSalesChart.getData().add(series);
     }
 }
