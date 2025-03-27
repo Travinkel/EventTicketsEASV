@@ -12,6 +12,7 @@ import org.example.eventticketsystem.models.View;
 import org.example.eventticketsystem.services.UserService;
 import org.example.eventticketsystem.utils.ContentViewUtils;
 import org.example.eventticketsystem.utils.INavigation;
+import org.example.eventticketsystem.utils.ViewPaths;
 
 public class SidebarController extends BaseController implements IContentView {
     @FXML private Label nameLabel;
@@ -65,14 +66,14 @@ public class SidebarController extends BaseController implements IContentView {
         if (user == null) return;
 
         if (user.getRole() == UserRole.ADMIN) {
-            ContentViewUtils.setContent(this.navigation.loadViewNode("/views/DashboardView.fxml"));
+            ContentViewUtils.setContent(this.navigation.loadViewNode(ViewPaths.DASHBOARD));
         } else if (user.getRole() == UserRole.COORDINATOR) {
-            ContentViewUtils.setContent(this.navigation.loadViewNode("/views/Dashboard.fxml"));
+            ContentViewUtils.setContent(this.navigation.loadViewNode(ViewPaths.DASHBOARD));
         }
     }
 
     private void handleUserManagement() {
-        Node view = this.navigation.loadViewNode("/views/UserManagement.fxml");
+        Node view = this.navigation.loadViewNode(ViewPaths.USER_MANAGEMENT);
         ContentViewUtils.setContent(view);
     }
 

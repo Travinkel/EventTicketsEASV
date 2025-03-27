@@ -68,7 +68,9 @@ public class UserManagementController {
             return;
         }
 
-        boolean success = userService.addUser(username, name, email, password, role);
+        User newUser = new User(0, username, name, email, password, role);
+        boolean success = userService.addUser(newUser);
+
         if (success) {
             clearFields();
         } else {

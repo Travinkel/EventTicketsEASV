@@ -10,6 +10,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Callback;
+import org.example.eventticketsystem.dao.UserDAO;
 import org.example.eventticketsystem.models.User;
 import org.example.eventticketsystem.services.UserService;
 
@@ -39,9 +40,8 @@ public class Navigation implements INavigation {
         this.primaryStage = primaryStage;
 
         // Opsæt dependencies
-        this.registry = new DependencyRegistry();
+        this.registry = DependencyRegistry.getInstance();
         this.registry.register(INavigation.class, this);
-        this.registry.register(UserService.class, new UserService());
 
         this.controllerFactory = new AppControllerFactory(registry);
 

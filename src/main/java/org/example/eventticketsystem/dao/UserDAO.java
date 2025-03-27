@@ -8,18 +8,12 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDAO implements IUserDAO {
+public class UserDAO {
 
-    private Connection connection;
-
-    public UserDAO() {
-        connection = DBConnection.getInstance().getConnection();
-    }
-
-    @Override
     public User findByUsername(String username) {
         String sql = "SELECT * FROM Users WHERE username = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (Connection connection = DBConnection.getInstance().getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, username);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
@@ -30,12 +24,13 @@ public class UserDAO implements IUserDAO {
         }
         return null;
     }
-    @Override
+
     public List<User> getAllUsers() {
         List<User> users = new ArrayList<>();
         String sql = "SELECT * FROM Users";
-        try (Statement stmt = connection.createStatement()) {
-            ResultSet rs = stmt.executeQuery(sql);
+        try (Connection connection = DBConnection.getInstance().getConnection();
+             Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
                 users.add(extractUserFromResultSet(rs));
             }
@@ -45,14 +40,14 @@ public class UserDAO implements IUserDAO {
         return users;
     }
 
-    @Override
     public boolean saveUser(User user) {
-        String sql = "INSERT INTO Users (username, name, email, password, role) VALUES (?, ?, ?, ?, ?)";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+        String sql = "INSERT INTO Users (username, name, email, passwordHash, role) VALUES (?, ?, ?, ?, ?)";
+        try (Connection connection = DBConnection.getInstance().getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, user.getUsername());
             stmt.setString(2, user.getName());
             stmt.setString(3, user.getEmail());
-            stmt.setString(4, user.getPassword());
+            stmt.setString(4, user.getPasswordHash());
             stmt.setString(5, user.getRole().name());
             return stmt.executeUpdate() == 1;
         } catch (SQLException e) {
@@ -61,13 +56,13 @@ public class UserDAO implements IUserDAO {
         return false;
     }
 
-    @Override
     public boolean updateUser(User user) {
-        String sql = "UPDATE Users SET name=?, email=?, password=?, role=? WHERE username=?";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+        String sql = "UPDATE Users SET name=?, email=?, passwordHash=?, role=? WHERE username=?";
+        try (Connection connection = DBConnection.getInstance().getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, user.getName());
             stmt.setString(2, user.getEmail());
-            stmt.setString(3, user.getPassword());
+            stmt.setString(3, user.getPasswordHash());
             stmt.setString(4, user.getRole().name());
             stmt.setString(5, user.getUsername());
             return stmt.executeUpdate() == 1;
@@ -77,11 +72,10 @@ public class UserDAO implements IUserDAO {
         return false;
     }
 
-
-    @Override
     public boolean deleteUser(int id) {
         String sql = "DELETE FROM Users WHERE id = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (Connection connection = DBConnection.getInstance().getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, id);
             return stmt.executeUpdate() == 1;
         } catch (SQLException e) {
@@ -96,7 +90,7 @@ public class UserDAO implements IUserDAO {
                 rs.getString("username"),
                 rs.getString("name"),
                 rs.getString("email"),
-                rs.getString("password"),
+                rs.getString("passwordHash"),
                 UserRole.valueOf(rs.getString("role").toUpperCase())
         );
     }
