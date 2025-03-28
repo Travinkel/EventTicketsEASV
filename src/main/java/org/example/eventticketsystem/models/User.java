@@ -8,6 +8,7 @@ public class User {
     private String password;
     private UserRole role;
 
+    // TODO: UserRole: Not optimal, use database, if scalability is an issue
     public User(int id, String username, String name, String email, String password, UserRole role) {
         this.id = id;
         this.username = username;

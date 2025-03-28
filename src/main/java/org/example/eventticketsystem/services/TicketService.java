@@ -1,42 +1,49 @@
+/*
 package org.example.eventticketsystem.services;
 
-import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+import org.example.eventticketsystem.dao.EventDAO;
+import org.example.eventticketsystem.models.Event;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
-public class TicketService {
+public class EventService {
 
-    @FXML private TextField searchField;
-    @FXML private Button createUserButton;
-    @FXML private Button addNewButton;
+    private final EventDAO eventDAO;
 
-    /**
-     * Initializes the dashboard controller.
-     */
-    @FXML
-    public void initialize() {
-        System.out.println("Admin Dashboard Loaded!");
+    public EventService(EventDAO eventDAO) {
+        this.eventDAO = eventDAO;
     }
 
-    @FXML
-    private void handleCreateUser() {
-        System.out.println("Create User Clicked!");
-        // TODO: Load the Create User Page
+    public List<Event> getAllEvents() {
+        return eventDAO.getAllEvents();
     }
 
-    @FXML
-    private void handleAddNew() {
-        System.out.println("Add New Clicked!");
-        // TODO: Load the Add New Page
+    public boolean saveEvent(Event event) {
+        return eventDAO.saveEvent(event);
     }
 
-    @FXML
-    public Map<String, Integer> getMonthlyTicketSales() {
-        Map<String, Integer> map = new HashMap<>();
-        map.put(searchField.getText(), 0);
-        return map;
+    public boolean deleteEvent(int eventId) {
+        return eventDAO.deleteEvent(eventId);
+    }
+
+    public void sendTicketToCustomer(Ticket ticket, User customer) {
+        if (customer.getRole() != UserRole.CUSTOMER) {
+            System.err.println("❌ Not a customer: " + customer.getUsername());
+            return;
+        }
+        try {
+            byte[] pdfData = PDFGenerator.generalTicketPDF(ticket,customer);
+            EmailService.sendEmailWithAttachment(
+                    customer.getEmail(),
+                    "Din billet til arrangement",
+                    "Tak for din bestilling. Din billet er vedhæftet som PDF.",
+                    pdfData, "EASV_Billet.pdf"
+            );
+            System.out.println("✅ Ticket sent to: " + customer.getEmail());
+        } catch (IOException | MessagingException e) {
+            e.printStackTrace();
+            System.err.println("❌ Failed to send ticket email to: " + customer.getEmail());
+        }
     }
 }
+*/

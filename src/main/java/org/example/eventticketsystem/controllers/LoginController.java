@@ -61,7 +61,6 @@ public class LoginController {
 
             switch (user.getRole()) {
                 case ADMIN, COORDINATOR -> navigation.loadScene("/views/ControlPanelView.fxml");
-                case CUSTOMER -> navigation.loadScene("/views/TicketView.fxml");
                 default -> showError("Unknown role assigned. Contact support.");
             }
         }, () -> showError("Invalid credentials. Please try again."));

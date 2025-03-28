@@ -8,14 +8,10 @@ import org.example.eventticketsystem.models.UserRole;
 import java.util.Optional;
 
 public class UserService {
-    private final ObservableList<User> users = FXCollections.observableArrayList();
     private int nextUserId = 4;
 
     public UserService() {
-        // Predefined users for testing
-        users.add(new User(1, "admin", "Admin User", "admin@example.com", "password", UserRole.ADMIN));
-        users.add(new User(2, "coordinator", "Event Coordinator", "coordinator@example.com", "password", UserRole.COORDINATOR));
-        users.add(new User(3, "user", "Regular User", "user@example.com", "password", UserRole.CUSTOMER));
+
     }
 
     /**
