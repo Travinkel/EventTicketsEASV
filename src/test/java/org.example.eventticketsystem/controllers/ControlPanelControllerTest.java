@@ -1,8 +1,6 @@
 package org.example.eventticketsystem.controllers;
 
-import org.example.eventticketsystem.models.User;
-import org.example.eventticketsystem.models.UserRole;
-import org.example.eventticketsystem.services.UserService;
+import org.example.eventticketsystem.bll.UserService;
 import org.example.eventticketsystem.utils.INavigation;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

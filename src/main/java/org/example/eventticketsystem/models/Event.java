@@ -1,38 +1,38 @@
 package org.example.eventticketsystem.models;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
-public class Event {
-    private int id;
+public class Event extends BaseEntity {
     private String name;
-    private Date date;
+    private String description;
     private String location;
-    private String notes;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
+    private int coordinatorId;
 
-    public Event(int id, String name, Date date, String location, String notes) {
+    public Event(int id, String name, String description, String location,
+                 LocalDateTime startTime, LocalDateTime endTime, int coordinatorId) {
         this.id = id;
         this.name = name;
-        this.date = date;
+        this.description = description;
         this.location = location;
-        this.notes = notes;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.coordinatorId = coordinatorId;
     }
-    public int getId() {
-        return id;
-    }
-    public void setId(int id) {
-        this.id = id;
-    }
+
     public String getName() {
         return name;
     }
     public void setName(String name) {
         this.name = name;
     }
-    public Date getDate() {
-        return date;
+    public String getDescription() {
+        return description;
     }
-    public void setDate(Date date) {
-        this.date = date;
+    public void setDescription(String description) {
+        this.description = description;
     }
     public String getLocation() {
         return location;
@@ -40,10 +40,25 @@ public class Event {
     public void setLocation(String location) {
         this.location = location;
     }
-    public String getNotes() {
-        return notes;
+    public LocalDateTime getStartTime() {
+        return startTime;
     }
-    public void setNotes(String notes) {
-        this.notes = notes;
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+    public LocalDateTime getEndTime() {
+        return endTime;
+    }
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
+    }
+    public int getCoordinatorId() {
+        return coordinatorId;
+    }
+    public void setCoordinatorId(int coordinatorId) {
+        this.coordinatorId = coordinatorId;
+    }
+    public Class<Object> getCoordinator() {
+        return Object.class;
     }
 }

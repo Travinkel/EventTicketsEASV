@@ -10,9 +10,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Callback;
-import org.example.eventticketsystem.dao.UserDAO;
 import org.example.eventticketsystem.models.User;
-import org.example.eventticketsystem.services.UserService;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -105,9 +103,9 @@ public class Navigation implements INavigation {
 
             // Dynamically Set Window Size Based on Scene
             switch (fxmlPath) {
-                case "/views/LoginView.fxml" -> setWindowSize(420, 450);
-                case "/views/ControlPanelView.fxml" -> setWindowSize(1280, 800);  // Wider for admin
-                case "/views/DashboardView.fxml" -> setWindowSize(1280, 800);  // Standard size
+                case "/views/shared/LoginView.fxml" -> setWindowSize(420, 450);
+                case "/views/shared/ControlPanelView.fxml" -> setWindowSize(1280, 800);  // Wider for admin
+                case "/views/admin/AdminDashboardView.fxml" -> setWindowSize(1280, 800);  // Standard size
                 case "/views/TicketView.fxml" -> setWindowSize(1024, 720);  // Smaller window for users
                 default -> setWindowSize(420, 450);  // Default fallback size
             }
@@ -136,6 +134,16 @@ public class Navigation implements INavigation {
             e.printStackTrace();
             System.err.println("ERROR: Failed to load scene: " + fxmlPath);
         }
+    }
+
+    @Override
+    public void loadSceneFromConfig(String configKey) {
+        String path = Config.get(configKey);
+        if (path == null || path.isEmpty()) {
+            System.err.println("❌ Config key not found or empty: " + configKey);
+            return;
+        }
+        loadScene(path);
     }
 
     @Override

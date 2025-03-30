@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<?import javafx.scene.layout.VBox?>
+<GridPane fx:id="dashboardGrid" xmlns="http://javafx.com/javafx"
+          xmlns:fx="http://javafx.com/fxml"
+          fx:controller="org.example.eventticketsystem.gui.DashboardController"
+          hgap="20" vgap="20" style="-fx-padding: 20;">
+
+  <!-- Row/Column Constraints for Layout -->
+  <columnConstraints>
+    <ColumnConstraints percentWidth="50"/>
+    <ColumnConstraints percentWidth="50"/>
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints percentHeight="50"/>
+    <RowConstraints percentHeight="50"/>
+  </rowConstraints>
+
+  <!-- Top Left: System Overview -->
+  <VBox fx:id="systemOverviewBox" GridPane.rowIndex="0" GridPane.columnIndex="0" spacing="10">
+    <Label text="System Overview" style="-fx-font-size:16; -fx-font-weight:bold;" />
+    <Label fx:id="usersCountLabel" text="Users: ..." />
+    <Label fx:id="ticketsCountLabel" text="Tickets: ..." />
+    <Label fx:id="coordinatorCountLabel" text="Coordinators: ..." />
+    <Label fx:id="adminCountLabel" text="Admins: ..." />
+  </VBox>
+
+  <!-- Top Right: Ticket Sales Chart -->
+  <BarChart fx:id="ticketSalesChart" title="Ticket Sales (Monthly)"
+            categoryGap="10" barGap="5"
+            GridPane.rowIndex="0" GridPane.columnIndex="1">
+    <xAxis>
+      <CategoryAxis fx:id="monthAxis" label="Month" />
+    </xAxis>
+    <yAxis>
+      <NumberAxis fx:id="salesAxis" label="Tickets Sold" />
+    </yAxis>
+  </BarChart>
+
+  <!-- Bottom Left: Role Distribution Pie Chart -->
+  <PieChart fx:id="roleDistributionChart" title="User Role Distribution"
+            GridPane.rowIndex="1" GridPane.columnIndex="0" />
+
+  <!-- Bottom Right: Placeholder for Additional Admin Stats -->
+  <VBox fx:id="adminExtraBox" GridPane.rowIndex="1" GridPane.columnIndex="1" spacing="10">
+    <Label text="System Logs (Coming Soon)" style="-fx-font-size:16; -fx-font-weight:bold;" />
+    <Label text="Audit tracking or login history could go here." />
+  </VBox>
+</GridPane>

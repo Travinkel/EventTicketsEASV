@@ -6,13 +6,16 @@ import javafx.util.Callback;
 import org.example.eventticketsystem.models.User;
 
 public interface INavigation {
-    void loadScene(String fxml);
-    Stage getPrimaryStage();
+    void loadScene(String fxmlPath); // still useful
+    void loadSceneFromConfig(String configKey); // NEW
+    Node loadViewNode(String fxmlPath);
+
     void setWindowSize(int width, int height);
     void closeApplication();
-    Node loadViewNode(String s);
-    void setCurrentUser(User user);
-    User getCurrentUser();
 
+    Stage getPrimaryStage();
+    void setCurrentUser(User user);
+
+    User getCurrentUser();
     Callback<Class<?>, Object> getControllerFactory();
 }

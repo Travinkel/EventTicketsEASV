@@ -1,33 +1,38 @@
 package org.example.eventticketsystem.models;
 
-public class Ticket {
-    private int id;
-    private String eventId;
-    private String userId;
-    private String qrCode;
+import java.time.LocalDateTime;
 
-    public Ticket(int id, String eventId, String userId, String qrCode) {
+public class Ticket extends BaseEntity {
+    private int eventId;
+    private int userId;
+    private String qrCode;
+    private LocalDateTime issuedAt;
+
+    public Ticket(int id, int eventId, int userId, String qrCode, LocalDateTime issuedAt) {
         this.id = id;
         this.eventId = eventId;
         this.userId = userId;
         this.qrCode = qrCode;
+        this.issuedAt = issuedAt;
     }
+
+
     public int getId() {
         return id;
     }
     public void setId(int id) {
         this.id = id;
     }
-    public String getEventId() {
+    public int getEventId() {
         return eventId;
     }
-    public void setEventId(String eventId) {
+    public void setEventId(int eventId) {
         this.eventId = eventId;
     }
-    public String getUserId() {
+    public int getUserId() {
         return userId;
     }
-    public void setUserId(String userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
     public String getQrCode() {
@@ -36,6 +41,10 @@ public class Ticket {
     public void setQrCode(String qrCode) {
         this.qrCode = qrCode;
     }
+
+    public LocalDateTime getIssuedAt() { return issuedAt; }
+    public void setIssuedAt(LocalDateTime issuedAt) { this.issuedAt = issuedAt; }
+
 
     public Class<Object> getEvent() {
         return Object.class;
