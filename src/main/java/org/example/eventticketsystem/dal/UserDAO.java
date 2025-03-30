@@ -1,6 +1,7 @@
 package org.example.eventticketsystem.dal;
 
 import org.example.eventticketsystem.models.User;
+import org.example.eventticketsystem.utils.PasswordUtil;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -98,5 +99,17 @@ public class UserDAO implements IDAO<User> {
         String email = rs.getString("email");
         String role = rs.getString("role");
         return new User(id, username, password, name, email, role);
+    }
+    public void updatePassword(int userId, String newPassword) {
+        String sql = "UPDATE Users SET passwordHash = ? WHERE id = ?";
+        String hashed = PasswordUtil.hashPassword(newPassword);
+
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, hashed);
+            ps.setInt(2, userId); // ✅ Correct: index 2 is for userId
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

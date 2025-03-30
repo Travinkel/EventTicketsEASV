@@ -3,6 +3,7 @@ package org.example.eventticketsystem.utils;
 import javafx.util.Callback;
 import org.example.eventticketsystem.bll.UserService;
 import org.example.eventticketsystem.gui.admin.AdminDashboardController;
+import org.example.eventticketsystem.gui.admin.AdminSettingsController;
 import org.example.eventticketsystem.gui.admin.UserManagementController;
 import org.example.eventticketsystem.gui.shared.ControlPanelController;
 import org.example.eventticketsystem.gui.shared.LoginController;
@@ -34,6 +35,8 @@ public class AppControllerFactory implements Callback<Class<?>, Object> {
             return new SidebarController(navigation, userService);
         } else if (param == TopNavbarController.class) {
             return new TopNavbarController(navigation, userService);
+        } else if (param == AdminSettingsController.class) {
+            return new AdminSettingsController(navigation, userService);
         }
 
         // If no match, fallback:

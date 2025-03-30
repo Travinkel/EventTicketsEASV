@@ -1,15 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.*?>
 
-<VBox xmlns="http://javafx.com/javafx/23.0.1"
-      xmlns:fx="http://javafx.com/fxml/1"
-      spacing="20" alignment="CENTER">
-    <padding>
-        <Insets top="40" left="40" right="40" bottom="40"/>
-    </padding>
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.eventticketsystem.gui.admin.AdminSettingsController"
+            prefWidth="800" prefHeight="600"
+            styleClass="settings-root">
 
-    <Label text="Welcome to the Admin Dashboard!" styleClass="dashboard-title"/>
-    <Button text="Go to User Management" />
-</VBox>
+    <VBox spacing="24" AnchorPane.topAnchor="30" AnchorPane.leftAnchor="30" AnchorPane.rightAnchor="30">
+
+        <!-- Heading -->
+        <Label text="⚙️ Admin Indstillinger" styleClass="heading-1"/>
+
+        <!-- Password Section -->
+        <VBox spacing="15" styleClass="settings-card">
+            <Label text="Skift adgangskode" styleClass="heading-2"/>
+
+            <VBox spacing="12">
+                <PasswordField fx:id="newPasswordField" promptText="Ny adgangskode" styleClass="form-input"/>
+                <PasswordField fx:id="confirmPasswordField" promptText="Gentag adgangskode" styleClass="form-input"/>
+                <Button fx:id="changePasswordButton" text="Opdater adgangskode" styleClass="primary-button"/>
+                <Label fx:id="statusLabel" text="" styleClass="status-label"/>
+            </VBox>
+        </VBox>
+
+        <!-- Theme Switcher -->
+        <VBox spacing="15" styleClass="settings-card">
+            <Label text="Tema" styleClass="heading-2"/>
+            <HBox spacing="15">
+                <ChoiceBox fx:id="themeChoiceBox" prefWidth="150"/>
+                <Button text="Anvend tema" fx:id="applyThemeButton" styleClass="primary-button"/>
+            </HBox>
+        </VBox>
+
+        <!-- Notifications -->
+        <VBox spacing="15" styleClass="settings-card">
+            <Label text="E-mail Notifikationer" styleClass="heading-2"/>
+            <CheckBox fx:id="emailNotificationCheckbox" text="Aktiver notifikationer for billetkøb" />
+        </VBox>
+
+        <!-- Current User Info -->
+        <VBox spacing="15" styleClass="settings-card">
+            <Label text="Brugerinformation" styleClass="heading-2"/>
+            <Label fx:id="usernameLabel" styleClass="body-text"/>
+            <Label fx:id="emailLabel" styleClass="body-text"/>
+            <Label fx:id="roleLabel" styleClass="body-text"/>
+        </VBox>
+
+    </VBox>
+</AnchorPane>

@@ -281,3 +281,64 @@
     -fx-padding: 30;
     -fx-background-color: #FAFAFA;
 }
+
+
+/* === Settings === */
+.settings-root {
+    -fx-background-color: #FAFAFA;
+}
+
+.settings-card {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #DADADA;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 30;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0.1, 0, 4);
+}
+
+.heading-1 {
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-font-size: 28px;
+    -fx-text-fill: #333333;
+}
+
+.heading-2 {
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-font-size: 24px;
+    -fx-text-fill: #333333;
+}
+
+.body-text {
+    -fx-font-family: "Segoe UI Regular";
+    -fx-font-size: 16px;
+    -fx-text-fill: #333333;
+}
+
+.status-label {
+    -fx-font-family: "Segoe UI Light";
+    -fx-font-size: 14px;
+    -fx-text-fill: #009FE3;
+}
+
+.form-input {
+    -fx-font-family: "Segoe UI Regular";
+    -fx-font-size: 16px;
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #DADADA;
+    -fx-border-radius: 4;
+    -fx-padding: 8;
+}
+
+.primary-button {
+    -fx-background-color: #009FE3;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-font-size: 16px;
+    -fx-background-radius: 4;
+    -fx-padding: 10 20;
+}
+
+.primary-button:hover {
+    -fx-background-color: #0077B6;
+}

@@ -38,8 +38,10 @@ public class SidebarController extends BaseController<User> {
             createButton("👥 Brugere", this::handleUserManagement);
         }
 
-        createButton("🎟️ Billetter", this::handleTicketManagement);
-        createButton("📅 Arrangementer", this::handleEventManagement);
+        if (role.equals("coordinator")) {
+            createButton("🎟️ Billetter", this::handleTicketManagement);
+            createButton("📅 Arrangementer", this::handleEventManagement);
+        }
 
         if (role.equals("admin")) {
             createButton("⚙️ Admin Indstillinger", this::handleAdminSettings);

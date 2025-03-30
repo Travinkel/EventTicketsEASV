@@ -87,4 +87,8 @@ public class UserService {
                         Collectors.counting()
                 ));
     }
+    public void updatePassword(int userId, String newPassword) {
+        userDAO.updatePassword(userId, newPassword); // hash inside DAO ideally
+    }
+
 }
