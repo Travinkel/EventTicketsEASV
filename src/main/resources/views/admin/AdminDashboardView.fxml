@@ -4,51 +4,53 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
-
 <?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.control.Button?>
 <GridPane fx:id="dashboardGrid" xmlns="http://javafx.com/javafx"
           xmlns:fx="http://javafx.com/fxml"
-          fx:controller="org.example.eventticketsystem.gui.DashboardController"
-          hgap="20" vgap="20" style="-fx-padding: 20;">
+          hgap="24" vgap="24"
+          styleClass="grid-container"
+          fx:controller="org.example.eventticketsystem.gui.admin.AdminDashboardController">
 
-  <!-- Row/Column Constraints for Layout -->
-  <columnConstraints>
-    <ColumnConstraints percentWidth="50"/>
-    <ColumnConstraints percentWidth="50"/>
-  </columnConstraints>
-  <rowConstraints>
-    <RowConstraints percentHeight="50"/>
-    <RowConstraints percentHeight="50"/>
-  </rowConstraints>
+    <!-- Row/Column Constraints for Layout -->
+    <columnConstraints>
+        <ColumnConstraints percentWidth="50"/>
+        <ColumnConstraints percentWidth="50"/>
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints percentHeight="50"/>
+        <RowConstraints percentHeight="50"/>
+    </rowConstraints>
 
-  <!-- Top Left: System Overview -->
-  <VBox fx:id="systemOverviewBox" GridPane.rowIndex="0" GridPane.columnIndex="0" spacing="10">
-    <Label text="System Overview" style="-fx-font-size:16; -fx-font-weight:bold;" />
-    <Label fx:id="usersCountLabel" text="Users: ..." />
-    <Label fx:id="ticketsCountLabel" text="Tickets: ..." />
-    <Label fx:id="coordinatorCountLabel" text="Coordinators: ..." />
-    <Label fx:id="adminCountLabel" text="Admins: ..." />
-  </VBox>
+    <!-- Top Left: User Summary -->
+    <VBox fx:id="userStatsBox" GridPane.rowIndex="0" GridPane.columnIndex="0" spacing="15" styleClass="card">
+        <Label text="Systemoversigt" styleClass="heading"/>
+        <Label fx:id="usersCountLabel" text="Brugere: ..." styleClass="body-text"/>
+        <Label fx:id="adminCountLabel" text="Admins: ..." styleClass="body-text"/>
+        <Label fx:id="coordinatorCountLabel" text="Koordinatorer: ..." styleClass="body-text"/>
+    </VBox>
 
-  <!-- Top Right: Ticket Sales Chart -->
-  <BarChart fx:id="ticketSalesChart" title="Ticket Sales (Monthly)"
-            categoryGap="10" barGap="5"
-            GridPane.rowIndex="0" GridPane.columnIndex="1">
-    <xAxis>
-      <CategoryAxis fx:id="monthAxis" label="Month" />
-    </xAxis>
-    <yAxis>
-      <NumberAxis fx:id="salesAxis" label="Tickets Sold" />
-    </yAxis>
-  </BarChart>
+    <!-- Top Right: Role Distribution -->
+    <VBox GridPane.rowIndex="0" GridPane.columnIndex="1" spacing="15" styleClass="card">
+        <Label text="Rollefordeling" styleClass="heading"/>
+        <PieChart title="Fordeling af Roller" fx:id="roleDistributionChart" prefHeight="200"/>
+    </VBox>
 
-  <!-- Bottom Left: Role Distribution Pie Chart -->
-  <PieChart fx:id="roleDistributionChart" title="User Role Distribution"
-            GridPane.rowIndex="1" GridPane.columnIndex="0" />
+    <!-- Bottom Left: Login Activity -->
+    <VBox GridPane.rowIndex="1" GridPane.columnIndex="0" spacing="15" styleClass="card">
+        <Label text="Seneste loginaktivitet" styleClass="heading"/>
+        <Label fx:id="lastLoginSummary" text="Seneste 24 timer: ..." styleClass="body-light"/>
+    </VBox>
 
-  <!-- Bottom Right: Placeholder for Additional Admin Stats -->
-  <VBox fx:id="adminExtraBox" GridPane.rowIndex="1" GridPane.columnIndex="1" spacing="10">
-    <Label text="System Logs (Coming Soon)" style="-fx-font-size:16; -fx-font-weight:bold;" />
-    <Label text="Audit tracking or login history could go here." />
-  </VBox>
+    <!-- Bottom Right: System Status -->
+    <VBox fx:id="systemStatusBox" GridPane.rowIndex="1" GridPane.columnIndex="1" spacing="15" styleClass="card">
+        <Label text="Systemstatus" styleClass="heading"/>
+        <Label fx:id="dbStatusLabel" text="Database: ..." styleClass="body-text"/>
+        <Label fx:id="pingLabel" text="Seneste ping: ..." styleClass="body-text"/>
+        <Label fx:id="connectionLabel" text="Aktive forbindelser: ..." styleClass="body-text"/>
+        <Label fx:id="lastUpdatedLabel" text="Sidst opdateret: ..." styleClass="body-light"/>
+        <Button text="🔄 Opdater" fx:id="refreshDashboardButton"/>
+    </VBox>
+
 </GridPane>

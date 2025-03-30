@@ -1,4 +1,4 @@
-package org.example.eventticketsystem.gui;
+package org.example.eventticketsystem.gui.shared;
 
 import javafx.animation.FadeTransition;
 import javafx.fxml.FXML;
@@ -6,13 +6,14 @@ import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import org.example.eventticketsystem.bll.UserService;
+import org.example.eventticketsystem.gui.BaseController;
 import org.example.eventticketsystem.models.User;
 import org.example.eventticketsystem.utils.Config;
 import org.example.eventticketsystem.utils.INavigation;
 
 import java.util.Optional;
 
-public class LoginController extends BaseController<User>{
+public class LoginController extends BaseController<User> {
 
 
     @FXML private VBox loginCard;

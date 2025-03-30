@@ -5,6 +5,7 @@ import org.example.eventticketsystem.models.User;
 import org.example.eventticketsystem.utils.PasswordUtil;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -77,5 +78,13 @@ public class UserService {
 
     public long getTotalUserCount() {
         return userDAO.findAll().size();
+    }
+
+    public Map<String, Long> countUsersByRole() {
+        return userDAO.findAll().stream()
+                .collect(Collectors.groupingBy(
+                        user -> user.getRole().toUpperCase(), // Normalize roles
+                        Collectors.counting()
+                ));
     }
 }

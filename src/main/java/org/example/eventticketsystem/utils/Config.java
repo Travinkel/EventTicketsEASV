@@ -23,15 +23,6 @@ public class Config {
         return props.getProperty(key);
     }
 
-    public static int getInt(String key) {
-        return Integer.parseInt(props.getProperty(key));
-    }
-
-    public static boolean getBoolean(String key) {
-        return Boolean.parseBoolean(props.getProperty(key));
-    }
-
-    // View Path helpers
     public static String loginView() {
         return get("views.login");
     }
@@ -44,28 +35,51 @@ public class Config {
         return get("views.admin.dashboard");
     }
 
-    public static String dashboardView() {
-        return get("views.dashboard");
+    public static String userManagementView() {
+        return get("views.admin.userManagement");
+    }
+
+    public static String userFormView() {
+        return get("views.admin.userForm");
+    }
+
+    public static String adminSettingsView() {
+        return get("views.admin.settings");
+    }
+
+    public static String coordinatorSettingsView() {
+        return get("views.coordinator.settings");
+    }
+
+    public static String coordinatorDashboardView() {
+        return get("views.coordinator.dashboard");
+    }
+
+    public static String ticketManagementView() {
+        return get("views.coordinator.ticketManagement");
+    }
+
+    public static String ticketDetailsView() {
+        return get("views.coordinator.ticketDetails");
+    }
+
+    public static String eventManagementView() {
+        return get("views.coordinator.eventManagement");
+    }
+
+    public static String eventFormView() {
+        return get("views.coordinator.eventForm");
+    }
+
+    public static String confirmDialogView() {
+        return get("views.shared.confirmDialog");
     }
 
     public static String sidebarView() {
-        return get("views.sidebar");
+        return get("views.shared.sidebar");
     }
 
     public static String topNavbarView() {
-        return get("views.topNavbar");
-    }
-
-    public static String userManagementView() {
-        return get("views.userManagement");
-    }
-
-    // Future-proof in-case mailgun needs new keys
-    public static void validateKeys(String... keys) {
-        for (String key : keys) {
-            if (!props.containsKey(key)) {
-                throw new IllegalArgumentException("Missing config key: " + key);
-            }
-        }
+        return get("views.shared.topNavbar");
     }
 }

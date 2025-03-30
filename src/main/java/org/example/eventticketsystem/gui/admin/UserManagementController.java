@@ -1,15 +1,15 @@
-package org.example.eventticketsystem.gui;
+package org.example.eventticketsystem.gui.admin;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
+import org.example.eventticketsystem.gui.BaseController;
 import org.example.eventticketsystem.models.User;
 import org.example.eventticketsystem.bll.UserService;
 import org.example.eventticketsystem.utils.Config;
 import org.example.eventticketsystem.utils.INavigation;
 
-import java.util.Arrays;
 import java.util.List;
 import javafx.scene.Node;
 

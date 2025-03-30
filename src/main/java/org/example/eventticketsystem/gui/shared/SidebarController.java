@@ -1,26 +1,25 @@
-package org.example.eventticketsystem.gui;
+package org.example.eventticketsystem.gui.shared;
 
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import org.example.eventticketsystem.gui.BaseController;
 import org.example.eventticketsystem.models.User;
 import org.example.eventticketsystem.bll.UserService;
 import org.example.eventticketsystem.utils.Config;
 import org.example.eventticketsystem.utils.ContentViewUtils;
 import org.example.eventticketsystem.utils.INavigation;
 
-public class SidebarController extends BaseController implements IContentView {
+public class SidebarController extends BaseController<User> {
     @FXML private Label nameLabel;
-    @FXML
-    private VBox sidebarContainer;
-    @FXML VBox buttonContainer;
+    @FXML private VBox sidebarContainer;
+    @FXML private VBox buttonContainer;
 
     public SidebarController(INavigation navigation, UserService userService) {
         super(navigation, userService);
     }
-
 
     @FXML
     public void initialize() {
@@ -58,7 +57,21 @@ public class SidebarController extends BaseController implements IContentView {
     }
 
     private void handleDashboard() {
-        ContentViewUtils.setContent(navigation.loadViewNode(Config.dashboardView()));
+        User user = this.navigation.getCurrentUser();
+        if (user == null) return;
+
+        String role = user.getRole().toLowerCase();
+
+
+        String path = switch (role) {
+            case "admin" -> Config.adminDashboardView();
+            case "event_coordinator" -> Config.coordinatorDashboardView();
+            default -> null;
+        };
+
+        if (path != null) {
+            ContentViewUtils.setContent(navigation.loadViewNode(path));
+        }
     }
 
     private void handleUserManagement() {
@@ -66,28 +79,18 @@ public class SidebarController extends BaseController implements IContentView {
     }
 
     private void handleTicketManagement() {
-        ContentViewUtils.setContent(navigation.loadViewNode("/views/TicketManagement.fxml"));
+        ContentViewUtils.setContent(navigation.loadViewNode(Config.ticketManagementView()));
     }
 
     private void handleEventManagement() {
-        ContentViewUtils.setContent(navigation.loadViewNode("/views/EventManagement.fxml"));
+        ContentViewUtils.setContent(navigation.loadViewNode(Config.eventManagementView()));
     }
 
     private void handleAdminSettings() {
-        ContentViewUtils.setContent(navigation.loadViewNode("/views/admin/AdminSettingsView.fxml"));
+        ContentViewUtils.setContent(navigation.loadViewNode(Config.adminSettingsView()));
     }
 
     private void handleCoordinatorSettings() {
-        ContentViewUtils.setContent(navigation.loadViewNode("/views/coordinator/CoordinatorSettingsView.fxml"));
-    }
-
-    @Override
-    public void loadView() {
-
-    }
-
-    @Override
-    public void updateView(Node node) {
-
+        ContentViewUtils.setContent(navigation.loadViewNode(Config.coordinatorSettingsView()));
     }
 }

@@ -1,0 +1,15 @@
+CoordinatorSettingsView.fxml<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx/23.0.1"
+      xmlns:fx="http://javafx.com/fxml/1"
+      spacing="20" alignment="CENTER">
+    <padding>
+        <Insets top="40" left="40" right="40" bottom="40"/>
+    </padding>
+
+    <Label text="Welcome to the Admin Dashboard!" styleClass="dashboard-title"/>
+    <Button text="Go to User Management" />
+</VBox>

@@ -13,7 +13,7 @@
       prefHeight="60.0"
       maxWidth="Infinity"
       xmlns="http://javafx.com/javafx/23.0.1"
-      xmlns:fx="http://javafx.com/fxml/1" spacing="20" fx:controller="org.example.eventticketsystem.gui.TopNavbarController">
+      xmlns:fx="http://javafx.com/fxml/1" spacing="20" fx:controller="org.example.eventticketsystem.gui.shared.TopNavbarController">
 
   <!-- Admin Profile Info (Right-aligned) -->
   <HBox alignment="CENTER_RIGHT" spacing="8">

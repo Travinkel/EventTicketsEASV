@@ -1,4 +1,4 @@
-package org.example.eventticketsystem.gui;
+package org.example.eventticketsystem.gui.shared;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

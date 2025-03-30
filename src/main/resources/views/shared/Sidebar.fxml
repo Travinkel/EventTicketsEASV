@@ -12,7 +12,7 @@
       styleClass="sidebar"
       xmlns="http://javafx.com/javafx/23.0.1"
       xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="org.example.eventticketsystem.gui.SidebarController">
+      fx:controller="org.example.eventticketsystem.gui.shared.SidebarController">
 
   <!-- Logo -->
   <ImageView fitWidth="120.0" preserveRatio="true">

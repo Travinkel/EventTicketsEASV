@@ -149,6 +149,7 @@ public class Navigation implements INavigation {
     @Override
     public Node loadViewNode(String fxmlPath) {
         try {
+            System.out.println("Loading view: " + fxmlPath);
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             loader.setControllerFactory(controllerFactory);
             return loader.load();

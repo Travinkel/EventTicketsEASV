@@ -1,6 +1,7 @@
 package org.example.eventticketsystem.controllers;
 
 import org.example.eventticketsystem.bll.UserService;
+import org.example.eventticketsystem.gui.shared.ControlPanelController;
 import org.example.eventticketsystem.utils.INavigation;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

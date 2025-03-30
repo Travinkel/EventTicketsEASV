@@ -1,10 +1,11 @@
-package org.example.eventticketsystem.gui;
+package org.example.eventticketsystem.gui.shared;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.layout.StackPane;
 
+import org.example.eventticketsystem.gui.BaseController;
 import org.example.eventticketsystem.models.User;
 import org.example.eventticketsystem.bll.UserService;
 import org.example.eventticketsystem.utils.Config;

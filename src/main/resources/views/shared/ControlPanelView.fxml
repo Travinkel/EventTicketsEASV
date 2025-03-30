@@ -5,7 +5,7 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/23.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="org.example.eventticketsystem.gui.ControlPanelController"
+            fx:controller="org.example.eventticketsystem.gui.shared.ControlPanelController"
             prefWidth="1280" prefHeight="720"
             styleClass="dashboard-root">
 

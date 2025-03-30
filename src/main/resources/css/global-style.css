@@ -245,3 +245,39 @@
     -fx-background-color: #DC3545; /* Saturated red */
     -fx-text-fill: white;
 }
+
+
+/* === Typography === */
+.heading {
+    -fx-font-size: 24px;
+    -fx-font-family: 'Segoe UI Semibold';
+    -fx-text-fill: #333333;
+}
+
+.body-text {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-font-family: 'Segoe UI Regular';
+}
+
+.body-light {
+    -fx-font-size: 16px;
+    -fx-font-family: 'Segoe UI Light';
+}
+
+/* === Card Style === */
+.card {
+    -fx-background-color: white;
+    -fx-border-radius: 12;
+    -fx-background-radius: 12;
+    -fx-border-color: #DADADA;
+    -fx-border-width: 1;
+    -fx-padding: 30;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 10, 0.2, 0, 4);
+}
+
+/* === Grid Padding === */
+.grid-container {
+    -fx-padding: 30;
+    -fx-background-color: #FAFAFA;
+}
