@@ -342,3 +342,15 @@
 .primary-button:hover {
     -fx-background-color: #0077B6;
 }
+
+/* === Google Material Font === */
+
+@font-face {
+    font-family: 'Material Icons';
+    src: url('/fonts/MaterialIcons-Regular.ttf'); /* adjust path */
+}
+
+.material-icon {
+    -fx-font-family: 'Material Icons';
+    -fx-font-size: 16px;
+}

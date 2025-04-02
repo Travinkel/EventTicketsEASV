@@ -1,4 +1,11 @@
-CoordinatorSettingsView.fxml<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.geometry.Insets?>
@@ -9,6 +16,12 @@ CoordinatorSettingsView.fxml<?xml version="1.0" encoding="UTF-8"?>
     <padding>
         <Insets top="40" left="40" right="40" bottom="40"/>
     </padding>
+
+    <Button fx:id="createEventBtn">
+        <graphic>
+            <FontIcon iconLiteral="mdi2p-plus" />
+        </graphic>
+    </Button>
 
     <Label text="Welcome to the Admin Dashboard!" styleClass="dashboard-title"/>
     <Button text="Go to User Management" />

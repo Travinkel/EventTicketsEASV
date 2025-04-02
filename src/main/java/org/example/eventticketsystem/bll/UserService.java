@@ -1,6 +1,7 @@
 package org.example.eventticketsystem.bll;
 
 import org.example.eventticketsystem.dal.UserDAO;
+import org.example.eventticketsystem.di.Injectable;
 import org.example.eventticketsystem.models.User;
 import org.example.eventticketsystem.utils.PasswordUtil;
 
@@ -9,6 +10,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Injectable
 public class UserService {
     private final UserDAO userDAO;
     private final PasswordUtil passwordUtil;

@@ -6,7 +6,12 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class DBConnection {
+    private static final Logger logger = LoggerFactory.getLogger(DBConnection.class.getName());
+
     private static DBConnection instance;
     private Connection connection;
 
@@ -17,10 +22,9 @@ public class DBConnection {
 
         try {
             connection = DriverManager.getConnection(url, user, pass);
-            System.out.println("✅ Connected to the database successfully!");
+            logger.info("✅ Connected to the database successfully!");
         } catch (SQLException ex) {
-            System.err.println("❌ Failed to connect to database:");
-            ex.printStackTrace();
+            logger.error("❌ Failed to connect to database", ex);
         }
     }
 

@@ -10,7 +10,11 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Callback;
+import org.example.eventticketsystem.di.ControllerFactory;
+import org.example.eventticketsystem.di.Injector;
 import org.example.eventticketsystem.models.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -19,44 +23,36 @@ public class Navigation implements INavigation {
     // Immutability, scenes are switched, while the primary stage remains constant. Avoids redundant object creation and ensures stability
     private final Stage primaryStage;
 
+    private static final Logger logger = LoggerFactory.getLogger(Navigation.class);
 
-    private final DependencyRegistry registry;
-    private final AppControllerFactory controllerFactory;
+
+    private final Injector registry;
+    private final ControllerFactory controllerFactory;
 
     private User currentUser;
-
-    // Default window properties
-    private int windowWidth = 420;
-    private int windowHeight = 450;
-
-    // Default window properties
-    private static final int DEFAULT_WIDTH = 420;
-    private static final int DEFAULT_HEIGHT = 450;
 
     // Constructor requires a stage for Dependency Injection
     public Navigation(Stage primaryStage) {
         this.primaryStage = primaryStage;
 
         // Opsæt dependencies
-        this.registry = DependencyRegistry.getInstance();
+        this.registry = Injector.getInstance();
         this.registry.register(INavigation.class, this);
 
-        this.controllerFactory = new AppControllerFactory(registry);
+        this.controllerFactory = new ControllerFactory(registry);
 
         setupPrimaryStage();
     }
 
     // Set/get current logged-in user
     public void setCurrentUser(User user) {
-        System.out.println("Navigation@" + System.identityHashCode(this)
-                + ": setCurrentUser(" + user + ")");
         this.currentUser = user;
+        logger.debug("Set current user: {}", user);
     }
 
     @Override
     public User getCurrentUser() {
-        System.out.println("Navigation@" + System.identityHashCode(this)
-                + ": getCurrentUser() -> " + currentUser);
+        logger.debug("Getting current user: {}", currentUser);
         return currentUser;
     }
 
@@ -80,7 +76,7 @@ public class Navigation implements INavigation {
         if (iconPath != null) {
             this.primaryStage.getIcons().add(new Image(iconPath));
         } else {
-            System.err.println("WARNING: Icon not found!");
+            logger.warn("Application icon not found at /images/easv_logo.png");
         }
     }
 
@@ -92,8 +88,7 @@ public class Navigation implements INavigation {
     @Override
     public void loadScene(String fxmlPath) {
         try {
-
-            System.out.println("Loading scene: " + fxmlPath);
+            logger.info("Loading scene: {}", fxmlPath);
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
 
@@ -115,12 +110,12 @@ public class Navigation implements INavigation {
             scene.setFill(Color.TRANSPARENT);
 
             // Apply global CSS
-            String cssPath = "/css/global-style.css";
+            String cssPath = Config.get("global.css");
             if (getClass().getResource(cssPath) != null) {
                 scene.getStylesheets().add(Objects.requireNonNull(
                         getClass().getResource(cssPath)).toExternalForm());
             } else {
-                System.err.println("WARNING: Could not load CSS file: " + cssPath);
+                logger.warn("CSS not found at {}", cssPath);
             }
 
 
@@ -128,11 +123,10 @@ public class Navigation implements INavigation {
             // Apply scene
             primaryStage.setScene(scene);
             primaryStage.centerOnScreen();
-            System.out.println("Scene switched successfully.");
+            logger.info("Scene loaded and switched to: {}", fxmlPath);
 
         } catch (IOException e) {
-            e.printStackTrace();
-            System.err.println("ERROR: Failed to load scene: " + fxmlPath);
+            logger.error("Failed to load scene: {}", fxmlPath, e);
         }
     }
 
@@ -140,7 +134,7 @@ public class Navigation implements INavigation {
     public void loadSceneFromConfig(String configKey) {
         String path = Config.get(configKey);
         if (path == null || path.isEmpty()) {
-            System.err.println("❌ Config key not found or empty: " + configKey);
+            logger.error("Config key not found or empty: {}", configKey);
             return;
         }
         loadScene(path);
@@ -149,12 +143,12 @@ public class Navigation implements INavigation {
     @Override
     public Node loadViewNode(String fxmlPath) {
         try {
-            System.out.println("Loading view: " + fxmlPath);
+            logger.info("Loading view node: {}", fxmlPath);
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             loader.setControllerFactory(controllerFactory);
             return loader.load();
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("Failed to load view: {}", fxmlPath, e);
             return new Label("❌ Failed to load view: " + fxmlPath);
         }
     }
@@ -173,11 +167,13 @@ public class Navigation implements INavigation {
             primaryStage.setWidth(width);
             primaryStage.setHeight(height);
             primaryStage.centerOnScreen();
+            logger.debug("Window size set to {}x{}", width, height);
         }
     }
 
     @Override
     public void closeApplication() {
+        logger.info("Closing application...");
         primaryStage.close();
 }
 

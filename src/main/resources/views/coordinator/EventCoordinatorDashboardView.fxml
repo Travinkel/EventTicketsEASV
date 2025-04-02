@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane fx:id="dashboardGrid"
+          xmlns="http://javafx.com/javafx"
+          xmlns:fx="http://javafx.com/fxml"
+          fx:controller="org.example.eventticketsystem.gui.coordinator.EventCoordinatorDashboardController"
+          hgap="24" vgap="24"
+          styleClass="grid-container">
+
+    <columnConstraints>
+        <ColumnConstraints percentWidth="50"/>
+        <ColumnConstraints percentWidth="50"/>
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints percentHeight="50"/>
+        <RowConstraints percentHeight="50"/>
+    </rowConstraints>
+
+    <!-- Top Left: Personal Event Summary -->
+    <VBox spacing="15" GridPane.rowIndex="0" GridPane.columnIndex="0" styleClass="card">
+        <Label text="Mine Events" styleClass="heading"/>
+        <Label fx:id="eventCountLabel" text="Events: ..." styleClass="body-text"/>
+        <Label fx:id="totalTicketsLabel" text="Solgte billetter: ..." styleClass="body-text"/>
+    </VBox>
+
+    <!-- Top Right: Pie Chart of Ticket Sales Per Event -->
+    <VBox spacing="15" GridPane.rowIndex="0" GridPane.columnIndex="1" styleClass="card">
+        <Label text="Billetter per event" styleClass="heading"/>
+        <PieChart fx:id="ticketDistributionChart" title="Billetfordeling" prefHeight="200"/>
+    </VBox>
+
+    <!-- Bottom Left: Bar Chart of Revenue -->
+    <VBox spacing="15" GridPane.rowIndex="1" GridPane.columnIndex="0" styleClass="card">
+        <Label text="Omsætning" styleClass="heading"/>
+        <BarChart fx:id="revenueBarChart"
+                  title="Omsætning per event"
+                  categoryGap="20">
+            <xAxis>
+                <CategoryAxis fx:id="revenueXAxis"/>
+            </xAxis>
+            <yAxis>
+                <NumberAxis fx:id="revenueYAxis"/>
+            </yAxis>
+        </BarChart>
+    </VBox>
+
+    <!-- Bottom Right: System Status -->
+    <VBox spacing="15" GridPane.rowIndex="1" GridPane.columnIndex="1" styleClass="card">
+        <Label text="Systemstatus" styleClass="heading"/>
+        <Label fx:id="dbStatusLabel" text="Database: ..." styleClass="body-text"/>
+        <Label fx:id="pingLabel" text="Ping: ..." styleClass="body-text"/>
+        <Label fx:id="lastUpdatedLabel" text="Opdateret: ..." styleClass="body-light"/>
+        <Button fx:id="refreshDashboardButton" text="🔄 Opdater"/>
+    </VBox>
+
+</GridPane>

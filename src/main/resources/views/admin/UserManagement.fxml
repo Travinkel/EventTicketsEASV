@@ -19,16 +19,18 @@
 
     <HBox spacing="12" alignment="CENTER_LEFT">
         <TextField fx:id="searchField" promptText="Søg bruger..." prefWidth="200"/>
-        <Button fx:id="createUserButton" text="➕" styleClass="crud-btn-create"/>
-        <Button fx:id="editUserButton" text="✎" styleClass="crud-btn-edit"/>
-        <Button fx:id="deleteUserButton" text="🗑" styleClass="crud-btn-delete"/>
+        <Button fx:id="createUserButton" text="&#xe145;" styleClass="crud-btn-create, material-icon"/>
+        <Button fx:id="editUserButton" text="&#xe3c9;" styleClass="crud-btn-edit, material-icon"/>
+        <Button fx:id="deleteUserButton" text="&#xe872;" styleClass="crud-btn-delete, material-icon"/>
     </HBox>
 
-    <TableView fx:id="userTable" prefWidth="700">
+    <TableView fx:id="userTable" prefWidth="700" VBox.vgrow="ALWAYS">
         <columns>
-            <TableColumn fx:id="colUsername" text="Navn" prefWidth="150"/>
+            <TableColumn fx:id="colUsername" text="Brugernavn" prefWidth="150"/>
+            <TableColumn fx:id="colFullName" text="Navn" prefWidth="200"/>
             <TableColumn fx:id="colEmail" text="Email" prefWidth="250"/>
-            <TableColumn fx:id="colRole" text="Role" prefWidth="120"/>
+            <TableColumn fx:id="colRole" text="Rolle" prefWidth="120"/>
+            <TableColumn fx:id="colActions" text="Handlinger" prefWidth="120"/>
         </columns>
     </TableView>
 

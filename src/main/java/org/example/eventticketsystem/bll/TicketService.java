@@ -1,6 +1,7 @@
 package org.example.eventticketsystem.bll;
 
 import org.example.eventticketsystem.dal.TicketDAO;
+import org.example.eventticketsystem.models.Event;
 import org.example.eventticketsystem.models.Ticket;
 
 import java.time.LocalDate;
@@ -15,9 +16,12 @@ import java.util.stream.Collectors;
 public class TicketService {
 
     private final TicketDAO ticketDAO;
+    private final EventService eventService;
 
-    public TicketService(TicketDAO ticketDAO) {
+
+    public TicketService(TicketDAO ticketDAO, EventService eventService) {
         this.ticketDAO = ticketDAO;
+        this.eventService = eventService;
     }
 
     // CRUD Operations
@@ -113,4 +117,40 @@ public class TicketService {
         return ticketDAO.findAll().stream()
                 .anyMatch(ticket -> ticket.getUserId() == userId && ticket.getEventId() == eventId);
     }
+    public long countTicketsByCoordinator(int coordinatorId) {
+        List<Event> coordinatorEvents = eventService.getEventsByCoordinator(coordinatorId);
+        Set<Integer> eventIds = coordinatorEvents.stream()
+                .map(Event::getId)
+                .collect(Collectors.toSet());
+
+        return ticketDAO.findAll().stream()
+                .filter(t -> eventIds.contains(t.getEventId()))
+                .count();
+    }
+
+    public Map<String, Long> getTicketCountPerEvent(int coordinatorId) {
+        List<Event> coordinatorEvents = eventService.getEventsByCoordinator(coordinatorId);
+
+        return coordinatorEvents.stream()
+                .collect(Collectors.toMap(
+                        Event::getTitle,
+                        event -> ticketDAO.findAll().stream()
+                                .filter(t -> t.getEventId() == event.getId())
+                                .count()
+                ));
+    }
+
+    public Map<String, Double> getRevenuePerEvent(int coordinatorId) {
+        List<Event> coordinatorEvents = eventService.getEventsByCoordinator(coordinatorId);
+
+        return coordinatorEvents.stream()
+                .collect(Collectors.toMap(
+                        Event::getTitle,
+                        event -> ticketDAO.findAll().stream()
+                                .filter(t -> t.getEventId() == event.getId())
+                                .mapToDouble(t -> event.getPrice()) // Assume fixed price per event
+                                .sum()
+                ));
+    }
+
 }

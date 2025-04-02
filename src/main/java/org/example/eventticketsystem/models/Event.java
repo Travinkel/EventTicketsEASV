@@ -10,9 +10,12 @@ public class Event extends BaseEntity {
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private int coordinatorId;
+    private double price;
+
 
     public Event(int id, String name, String description, String location,
-                 LocalDateTime startTime, LocalDateTime endTime, int coordinatorId) {
+                 LocalDateTime startTime, LocalDateTime endTime,
+                 int coordinatorId, double price) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -20,6 +23,7 @@ public class Event extends BaseEntity {
         this.startTime = startTime;
         this.endTime = endTime;
         this.coordinatorId = coordinatorId;
+        this.price = price;
     }
 
     public String getName() {
@@ -61,4 +65,16 @@ public class Event extends BaseEntity {
     public Class<Object> getCoordinator() {
         return Object.class;
     }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+    public String getTitle() {
+        return name; // or return a formatted version if needed
+    }
+
 }
