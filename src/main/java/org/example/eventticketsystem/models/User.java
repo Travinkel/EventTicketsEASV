@@ -1,6 +1,7 @@
 package org.example.eventticketsystem.models;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class User extends BaseEntity {
     private String username;
@@ -10,6 +11,8 @@ public class User extends BaseEntity {
     private String role;
     private String phone;
     private LocalDateTime createdAt;
+    private List<String> globalRoles;
+    private List<Event> coordinatedEvents;
 
     public String getUsername() {
         return username;

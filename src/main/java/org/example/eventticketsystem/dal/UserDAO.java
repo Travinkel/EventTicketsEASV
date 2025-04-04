@@ -1,6 +1,7 @@
 package org.example.eventticketsystem.dal;
 
 import org.example.eventticketsystem.di.Injectable;
+import org.example.eventticketsystem.models.Event;
 import org.example.eventticketsystem.models.User;
 import org.example.eventticketsystem.utils.PasswordUtil;
 
@@ -13,7 +14,7 @@ import java.util.Optional;
 @Injectable
 public class UserDAO implements IDAO<User> {
 
-    private final Connection connection;
+    private Connection connection;
 
     public UserDAO() {
         this.connection = DBConnection.getInstance().getConnection();
@@ -110,6 +111,8 @@ public class UserDAO implements IDAO<User> {
                 rs.getTimestamp("createdAt").toLocalDateTime()
         );
     }
+
+
 
     public void updatePassword(int userId, String hashedPassword) {
         String sql = "UPDATE Users SET hashedPassword = ? WHERE id = ?";
