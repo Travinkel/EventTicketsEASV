@@ -1,41 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<BorderPane fx:id="topNavbar"
-            styleClass="top-navbar"
-            xmlns="http://javafx.com/javafx/23.0.1"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="org.example.eventticketsystem.gui.shared.TopNavbarController"
-            prefHeight="60.0">
+<HBox fx:id="topNavbar"
+      alignment="CENTER_LEFT"
+      spacing="20"
+      prefHeight="60.0"
+      maxWidth="Infinity"
+      xmlns="http://javafx.com/javafx/23.0.1"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.example.eventticketsystem.gui.shared.TopNavbarController"
+      styleClass="top-navbar">
 
+  <!-- Left Side Spacer -->
+  <Pane HBox.hgrow="ALWAYS" />
 
-  <!-- Right-aligned controls -->
-  <right>
-    <HBox alignment="CENTER_RIGHT" spacing="12">
-      <!-- Logout Icon Button -->
-      <Button fx:id="logoutButton" styleClass="logout-btn" onAction="#handleLogout">
-        <graphic>
-          <FontIcon iconLiteral="mdi2l-logout" iconSize="18"/>
-        </graphic>
-      </Button>
+  <!-- Middle: Admin info -->
+  <HBox spacing="10" alignment="CENTER">
+    <ImageView fx:id="userAvatar"
+               fitHeight="40"
+               fitWidth="40"
+               preserveRatio="true">
+      <image>
+        <Image url="@../../images/omni_man.png"/>
+      </image>
+    </ImageView>
+    <Label fx:id="adminNameLabel"
+           text="Stefan"
+           styleClass="admin-name"/>
+  </HBox>
 
-      <!-- Admin name -->
-      <Label fx:id="adminNameLabel" text="Stefan" styleClass="admin-name"/>
+  <!-- Right Side: Logout and Close buttons -->
+  <HBox spacing="10" alignment="CENTER_RIGHT">
+    <Button fx:id="logoutButton" onAction="#handleLogout" styleClass="logout-btn">
+      <graphic>
+        <FontIcon iconLiteral="mdi2l-logout" iconSize="18"/>
+      </graphic>
+    </Button>
 
-      <!-- Avatar -->
-      <ImageView fx:id="userAvatar"
-                 fitHeight="35" fitWidth="35"
-                 preserveRatio="true">
-        <image>
-          <Image url="@../../images/omni_man.png"/>
-        </image>
-      </ImageView>
-
-      <!-- Close app button -->
-      <Button fx:id="closeButton" text="✕" styleClass="close-button" onAction="#handleCloseApp"/>
-    </HBox>
-  </right>
-</BorderPane>
+    <Button fx:id="closeButton" onAction="#handleCloseApp" text="✕" styleClass="close-button"/>
+  </HBox>
+</HBox>

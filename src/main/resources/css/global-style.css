@@ -115,11 +115,12 @@
 .close-button {
     -fx-background-color: transparent;
     -fx-cursor: hand;
-    -fx-text-fill: #666;
+    -fx-text-fill: #888;
 }
 
 .logout-btn {
     -fx-background-color: #F5C6CB;
+    -fx-text-fill: #721C24;
     -fx-background-radius: 6px;
     -fx-padding: 6px;
     -fx-min-width: 40px;
@@ -139,6 +140,7 @@
 .admin-name {
     -fx-font-weight: bold;
     -fx-font-size: 14px;
+    -fx-text-fill: #333;
 }
 
 .profile-image {
