@@ -1,20 +1,15 @@
 package org.example.eventticketsystem.models;
 
+import java.time.LocalDateTime;
+
 public class User extends BaseEntity {
     private String username;
-    private String password;
+    private String hashedPassword;
     private String name;
     private String email;
     private String role;
-
-    public User(int id, String username, String password, String name, String email, String role) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.name = name;
-        this.email = email;
-        this.role = role;
-    }
+    private String phone;
+    private LocalDateTime createdAt;
 
     public String getUsername() {
         return username;
@@ -24,12 +19,12 @@ public class User extends BaseEntity {
         this.username = username;
     }
 
-    public String getPassword() {
-        return password;
+    public String getHashedPassword() {
+        return hashedPassword;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setHashedPassword(String hashedPassword) {
+        this.hashedPassword = hashedPassword;
     }
 
     public String getName() {
@@ -56,14 +51,41 @@ public class User extends BaseEntity {
         this.role = role;
     }
 
+    public String getPhone() {
+        return phone;
+    }
 
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public User(int id, String username, String hashedPassword, String name, String email, String role, String phone, LocalDateTime createdAt) {
+        this.id = id;
+        this.username = username;
+        this.hashedPassword = hashedPassword;
+        this.name = name;
+        this.email = email;
+        this.role = role;
+        this.phone = phone;
+        this.createdAt = createdAt;
+    }
+
+    // Getters and setters...
 
     @Override
     public String toString() {
-        return "User{ " +
+        return "User{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", role=" + role +
-                " }";
+                '}';
     }
 }

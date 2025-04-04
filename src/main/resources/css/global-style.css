@@ -89,17 +89,6 @@
     -fx-background-color: #C9302C; /* Darker red when hovered */
 }
 
-
-
-
-/* Top Navbar */
-.top-navbar {
-    -fx-background-color: #FFFFFF; /* White */
-    -fx-alignment: TOP_CENTER;
-    -fx-border-radius: 20px 20px 0 0; /* Rounded only on top */
-    -fx-padding: 5px 15px;
-}
-
 /* Navbar Title */
 .navbar-title {
     -fx-font-size: 20px;
@@ -107,11 +96,45 @@
     -fx-font-weight: bold;
 }
 
+/* Top Navbar */
 
+.top-navbar {
+    -fx-background-color: #FAFAFA;
+    -fx-padding: 0 20;
+    -fx-border-color: #DADADA;
+    -fx-border-width: 0 0 1 0;
+}
 
-#searchField {
-    -fx-background-radius: 6px;
-    -fx-padding: 5px;
+.logout-btn {
+    -fx-background-color: #F8D7DA;
+    -fx-padding: 6 10;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+    -fx-cursor: hand;
+}
+
+.logout-btn:hover {
+    -fx-background-color: #f44336;
+}
+
+.admin-name {
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-font-size: 16px;
+    -fx-text-fill: #333333;
+}
+
+.profile-image {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 2, 0.2, 0, 1);
+}
+
+.close-button {
+    -fx-background-color: transparent;
+    -fx-font-size: 18px;
+    -fx-text-fill: #999999;
+    -fx-cursor: hand;
+}
+.close-button:hover {
+    -fx-text-fill: #CC0000;
 }
 
 /* 📌 Buttons (Fully Rounded) */
@@ -353,4 +376,8 @@
 .material-icon {
     -fx-font-family: 'Material Icons';
     -fx-font-size: 16px;
+}
+
+.white-icon {
+    -fx-fill: white;
 }

@@ -5,10 +5,13 @@ import javafx.scene.chart.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import org.example.eventticketsystem.di.Injectable;
 import org.example.eventticketsystem.gui.BaseController;
 import org.example.eventticketsystem.models.User;
 import org.example.eventticketsystem.bll.UserService;
 import org.example.eventticketsystem.utils.INavigation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 //import org.example.eventticketsystem.services.TicketService;
 
 
@@ -16,8 +19,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
-
+@Injectable
 public class AdminDashboardController extends BaseController<User> {
+    private static final Logger LOGGER = LoggerFactory.getLogger(AdminDashboardController.class);
 
     @FXML private Label usersCountLabel;
 
@@ -42,16 +46,12 @@ public class AdminDashboardController extends BaseController<User> {
 
     @FXML
     public void initialize() {
-        System.out.println("✅ AdminDashboardController initialized");
+        LOGGER.info("✅ AdminDashboardController initialized");
 
-        User user = navigation.getCurrentUser();
-        if (user == null || !"ADMIN".equalsIgnoreCase(user.getRole())) return;
-
-        populateUserStats();
-        updateRoleDistribution();
-        updateSystemStatus();
+        if (!"ADMIN".equalsIgnoreCase(navigation.getCurrentUser().getRole())) return;
 
         refreshDashboardButton.setOnAction(e -> handleRefreshDashboard());
+        handleRefreshDashboard();
     }
 
 
@@ -64,6 +64,8 @@ public class AdminDashboardController extends BaseController<User> {
 
     @FXML
     private void handleRefreshDashboard() {
+        LOGGER.debug("Refreshing dashboard stats...");
+
         populateUserStats();
         updateRoleDistribution();
         updateSystemStatus();

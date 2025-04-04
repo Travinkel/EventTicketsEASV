@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.HBox?>
+<VBox spacing="12" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.example.eventticketsystem.gui.admin.UserFormDialogController">
+    <TextField fx:id="usernameField" promptText="Brugernavn"/>
+    <PasswordField fx:id="passwordField" promptText="Adgangskode (valgfri ved redigering)"/>
+    <TextField fx:id="nameField" promptText="Fulde Navn"/>
+    <TextField fx:id="emailField" promptText="Email"/>
+    <ComboBox fx:id="roleComboBox" promptText="Vælg Rolle"/>
+    <HBox spacing="10">
+        <Button fx:id="confirmButton" text="Bekræft"/>
+        <Button fx:id="cancelButton" text="Annuller"/>
+    </HBox>
+</VBox>

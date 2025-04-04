@@ -5,6 +5,7 @@ import org.example.eventticketsystem.di.Injectable;
 import org.example.eventticketsystem.models.User;
 import org.example.eventticketsystem.utils.PasswordUtil;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -15,9 +16,11 @@ public class UserService {
     private final UserDAO userDAO;
     private final PasswordUtil passwordUtil;
 
-    public UserService(UserDAO userDAO) {
+    public UserService(UserDAO userDAO, PasswordUtil passwordUtil) {
         this.userDAO = userDAO;
-        this.passwordUtil = new PasswordUtil();
+        this.passwordUtil = passwordUtil;
+        System.out.println("✅ UserService constructor called with: " + userDAO + " and " + passwordUtil);
+
     }
 
     // === Authentication ===
@@ -25,15 +28,15 @@ public class UserService {
     public Optional<User> authenticate(String username, String plainTextPassword) {
         return userDAO.findAll().stream()
                 .filter(u -> u.getUsername().equalsIgnoreCase(username))
-                .filter(u -> passwordUtil.verifyPassword(plainTextPassword, u.getPassword()))
+                .filter(u -> passwordUtil.verifyPassword(plainTextPassword, u.getHashedPassword()))
                 .findFirst();
     }
 
     // === CRUD ===
 
-    public boolean addUser(String username, String plainTextPassword, String name, String email, String role) {
+    public boolean addUser(String username, String plainTextPassword, String name, String email, String role, String phone, LocalDateTime createdAt) {
         String hashed = passwordUtil.hashPassword(plainTextPassword);
-        User newUser = new User(0, username, hashed, name, email, role);
+        User newUser = new User(0, username, hashed, name, email, role, phone, createdAt);
         return userDAO.save(newUser);
     }
 
@@ -90,7 +93,8 @@ public class UserService {
                 ));
     }
     public void updatePassword(int userId, String newPassword) {
-        userDAO.updatePassword(userId, newPassword); // hash inside DAO ideally
+        String hashed = passwordUtil.hashPassword(newPassword);
+        userDAO.updatePassword(userId, hashed);
     }
 
 }

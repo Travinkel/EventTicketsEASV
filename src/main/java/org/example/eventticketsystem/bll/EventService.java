@@ -79,8 +79,9 @@ public class EventService {
                         && !e.getEndTime().toLocalDate().isBefore(start))
                 .collect(Collectors.toList());
     }
+
     public long countEventsByCoordinator(int userId) {
-        return eventDAO.findAll().stream()
+        return eventDAO.getAllEvents().stream()
                 .filter(e -> e.getCoordinatorId() == userId)
                 .count();
     }

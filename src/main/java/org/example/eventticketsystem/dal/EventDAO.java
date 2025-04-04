@@ -1,13 +1,18 @@
 package org.example.eventticketsystem.dal;
 
+import org.example.eventticketsystem.di.Injectable;
 import org.example.eventticketsystem.models.Event;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+@Injectable
 public class EventDAO {
+    private static final Logger LOGGER = LoggerFactory.getLogger(EventDAO.class);
 
     public List<Event> getAllEvents() {
         List<Event> events = new ArrayList<>();
@@ -22,7 +27,7 @@ public class EventDAO {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.error("Failed to XYZ", e);
         }
 
         return events;
@@ -53,7 +58,7 @@ public class EventDAO {
             return true;
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.error("Failed to XYZ", e);
         }
 
         return false;
@@ -67,21 +72,87 @@ public class EventDAO {
                 rs.getString("location"),
                 rs.getTimestamp("startTime").toLocalDateTime(),
                 rs.getTimestamp("endTime").toLocalDateTime(),
-                rs.getInt("coordinatorId")
+                rs.getInt("coordinatorId"),
+                rs.getInt("price"),
+                rs.getBoolean("isPublic")
         );
     }
 
-    public boolean deleteEvent(int eventId) { return true;
+    public boolean deleteEvent(int eventId) {
+        String sql = "DELETE FROM Events WHERE id = ?";
+
+        try (Connection connection = DBConnection.getInstance().getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
+
+            stmt.setInt(1, eventId);
+            return stmt.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            LOGGER.error("Failed to XYZ", e);
+            return false;
+        }
     }
 
     public List<Event> getEventsByCoordinatorId(int coordinatorId) {
-        return new ArrayList<>();
+        List<Event> events = new ArrayList<>();
+        String sql = "SELECT * FROM Events WHERE coordinatorId = ?";
+
+        try (Connection connection = DBConnection.getInstance().getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
+
+            stmt.setInt(1, coordinatorId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    events.add(extractEventFromResultSet(rs));
+                }
+            }
+
+        } catch (SQLException e) {
+            LOGGER.error("Failed to XYZ", e);
+        }
+
+        return events;
     }
 
     public boolean updateEvent(Event event) {
-        return true;
+        String sql = "UPDATE Events SET name=?, description=?, location=?, startTime=?, endTime=?, coordinatorId=? WHERE id=?";
+
+        try (Connection connection = DBConnection.getInstance().getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
+
+            stmt.setString(1, event.getName());
+            stmt.setString(2, event.getDescription());
+            stmt.setString(3, event.getLocation());
+            stmt.setTimestamp(4, Timestamp.valueOf(event.getStartTime()));
+            stmt.setTimestamp(5, Timestamp.valueOf(event.getEndTime()));
+            stmt.setInt(6, event.getCoordinatorId());
+            stmt.setInt(7, event.getId());
+
+            return stmt.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            LOGGER.error("Failed to XYZ", e);
+            return false;
+        }
     }
 
-    public Optional<Event> getEventById(int eventId) { return Optional.empty();
+    public Optional<Event> getEventById(int eventId) {
+        String sql = "SELECT * FROM Events WHERE id = ?";
+
+        try (Connection connection = DBConnection.getInstance().getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
+
+            stmt.setInt(1, eventId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return Optional.of(extractEventFromResultSet(rs));
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return Optional.empty();
     }
 }

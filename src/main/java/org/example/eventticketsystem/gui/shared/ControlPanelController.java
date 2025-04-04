@@ -5,17 +5,21 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.layout.StackPane;
 
+import org.example.eventticketsystem.di.Injectable;
 import org.example.eventticketsystem.gui.BaseController;
 import org.example.eventticketsystem.models.User;
 import org.example.eventticketsystem.bll.UserService;
 import org.example.eventticketsystem.utils.Config;
 import org.example.eventticketsystem.utils.ContentViewUtils;
 import org.example.eventticketsystem.utils.INavigation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
-
+@Injectable
 public class ControlPanelController extends BaseController<Void> {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ControlPanelController.class);
 
     @FXML private StackPane sidebarPlaceholder;
     @FXML private StackPane topNavbarPlaceholder;
@@ -31,8 +35,7 @@ public class ControlPanelController extends BaseController<Void> {
 
     @FXML
     public void initialize() {
-        System.out.println("ControlPanelController@" + this.hashCode()
-                + "  navigation: " + System.identityHashCode(navigation));
+        LOGGER.info("✅ ControlPanelController initialized");
 
         User user = navigation.getCurrentUser();
 

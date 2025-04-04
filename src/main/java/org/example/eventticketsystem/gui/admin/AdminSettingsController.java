@@ -3,12 +3,17 @@ package org.example.eventticketsystem.gui.admin;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import org.example.eventticketsystem.bll.UserService;
+import org.example.eventticketsystem.di.Injectable;
 import org.example.eventticketsystem.gui.BaseController;
 import org.example.eventticketsystem.models.User;
 import org.example.eventticketsystem.utils.INavigation;
 import org.example.eventticketsystem.utils.ContentViewUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+@Injectable
 public class AdminSettingsController extends BaseController<User> {
+    private static final Logger LOGGER = LoggerFactory.getLogger(AdminSettingsController.class);
 
     @FXML private PasswordField newPasswordField;
     @FXML private PasswordField confirmPasswordField;
@@ -28,6 +33,8 @@ public class AdminSettingsController extends BaseController<User> {
 
     @FXML
     public void initialize() {
+        LOGGER.info("✅ AdminSettingsController initialized");
+
         User current = navigation.getCurrentUser();
         if (current != null) {
             usernameLabel.setText("Brugernavn: " + current.getUsername());

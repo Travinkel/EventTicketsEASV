@@ -11,11 +11,11 @@ public class Event extends BaseEntity {
     private LocalDateTime endTime;
     private int coordinatorId;
     private double price;
-
+    private boolean isPublic;
 
     public Event(int id, String name, String description, String location,
                  LocalDateTime startTime, LocalDateTime endTime,
-                 int coordinatorId, double price) {
+                 int coordinatorId, double price, boolean isPublic) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -24,6 +24,7 @@ public class Event extends BaseEntity {
         this.endTime = endTime;
         this.coordinatorId = coordinatorId;
         this.price = price;
+        this.isPublic = isPublic;
     }
 
     public String getName() {

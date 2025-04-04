@@ -1,25 +1,18 @@
 package org.example.eventticketsystem.di;
 
-import io.github.classgraph.ClassGraph;
-import io.github.classgraph.ClassInfo;
-import io.github.classgraph.ScanResult;
-import org.example.eventticketsystem.bll.EmailService;
-import org.example.eventticketsystem.bll.EventService;
-import org.example.eventticketsystem.bll.TicketPurchaseService;
-import org.example.eventticketsystem.bll.TicketService;
-import org.example.eventticketsystem.bll.UserService;
-import org.example.eventticketsystem.dal.EventDAO;
-import org.example.eventticketsystem.dal.TicketDAO;
-import org.example.eventticketsystem.dal.UserDAO;
+import org.example.eventticketsystem.exceptions.DependencyInjectionException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.Comparator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class Injector {
-
+public final class Injector {
+    private static final Logger LOGGER = LoggerFactory.getLogger(Injector.class);
     private static Injector instance;
     private final Map<Class<?>, Object> dependencies = new ConcurrentHashMap<>();
 
@@ -32,7 +25,8 @@ public class Injector {
         return instance;
     }
 
-    public <T> void register(Class<T> clazz, T instance ) {
+    public <T> void register(Class<T> clazz, T instance) {
+        LOGGER.debug("Registering dependency: {}", clazz.getSimpleName());
         dependencies.put(clazz, instance);
     }
 
@@ -41,17 +35,32 @@ public class Injector {
         return (T) dependencies.get(clazz);
     }
 
+    @SuppressWarnings("unchecked")
     public <T> T createInstance(Class<T> clazz) {
         try {
-            Constructor<?> constructor = clazz.getConstructors()[0];
+            LOGGER.debug("Creating instance for: {}", clazz.getSimpleName());
+
+            // ✅ FIXED: Pick constructor with most parameters
+            var constructor = Arrays.stream(clazz.getConstructors())
+                    .max(Comparator.comparingInt(Constructor::getParameterCount))
+                    .orElseThrow(() -> new DependencyInjectionException("No suitable constructor found for " + clazz.getName(), null));
+
             Object[] params = Arrays.stream(constructor.getParameterTypes())
-                    .map(this::get)
+                    .map(param -> {
+                        Object dep = get(param);
+                        if (dep == null) {
+                            dep = createInstance(param); // lazy-create missing dependencies
+                        }
+                        return dep;
+                    })
                     .toArray();
-            T instance = (T) constructor.newInstance(params);
-            register(clazz, instance);
-            return instance;
-        } catch (Exception e) {
-            throw new RuntimeException("Failed to instantiate " + clazz.getName(), e);
+
+            T createdInstance = (T) constructor.newInstance(params);
+            register(clazz, createdInstance);
+            return createdInstance;
+
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
+            throw new DependencyInjectionException("Failed to instantiate " + clazz.getName(), e);
         }
     }
 }

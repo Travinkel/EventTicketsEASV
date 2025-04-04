@@ -1,7 +1,9 @@
 package org.example.eventticketsystem.utils;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
+import org.example.eventticketsystem.di.Injectable;
 
+@Injectable
 public class PasswordUtil {
 
     public static String hashPassword(String plainPassword) {

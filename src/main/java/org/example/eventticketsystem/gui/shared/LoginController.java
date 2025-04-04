@@ -6,15 +6,19 @@ import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import org.example.eventticketsystem.bll.UserService;
+import org.example.eventticketsystem.di.Injectable;
 import org.example.eventticketsystem.gui.BaseController;
 import org.example.eventticketsystem.models.User;
 import org.example.eventticketsystem.utils.Config;
 import org.example.eventticketsystem.utils.INavigation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Optional;
 
+@Injectable
 public class LoginController extends BaseController<User> {
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(LoginController.class);
 
     @FXML private VBox loginCard;
     @FXML private TextField usernameField;
@@ -32,7 +36,7 @@ public class LoginController extends BaseController<User> {
      */
     @FXML
     public void initialize() {
-        System.out.println("✅ LoginController initialized");
+        LOGGER.info("✅ LoginController initialized");
         FadeTransition fadeIn = new FadeTransition(Duration.seconds(1), loginCard);
         fadeIn.setFromValue(0);
         fadeIn.setToValue(1);
@@ -46,14 +50,18 @@ public class LoginController extends BaseController<User> {
     private void handleLogin() {
         String username = usernameField.getText().trim();
         String password = passwordField.getText().trim();
+        LOGGER.debug("Attempting login for: {}", username);
 
         Optional<User> user = userService.authenticate(username, password);
+
         if (user.isPresent()) {
+            LOGGER.info("Login successful for user: {}", user.get().getUsername());
+
             navigation.setCurrentUser(user.get());
             navigation.loadScene(Config.controlPanelView());
 
         } else {
-        showError("Login failed! Invalid username or password.");
+            LOGGER.warn("Login failed for username: {}", username);
         }
     }
 
@@ -62,10 +70,15 @@ public class LoginController extends BaseController<User> {
         navigation.closeApplication();
     }
 
-    private void showError(String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Loginfejl");
-        alert.setContentText(message);
-        alert.showAndWait();
+    @Override
+    public String toString() {
+        return "LoginController{" +
+                "loginCard=" + loginCard +
+                ", usernameField=" + usernameField +
+                ", passwordField=" + passwordField +
+                ", loginButton=" + loginButton +
+                ", closeButton=" + closeButton +
+                ", errorLabel=" + errorLabel +
+                '}';
     }
 }

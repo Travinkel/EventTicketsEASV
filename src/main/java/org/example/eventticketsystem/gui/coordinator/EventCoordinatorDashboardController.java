@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import org.example.eventticketsystem.bll.EventService;
 import org.example.eventticketsystem.bll.TicketService;
 import org.example.eventticketsystem.bll.UserService;
+import org.example.eventticketsystem.di.Injectable;
 import org.example.eventticketsystem.models.User;
 import org.example.eventticketsystem.gui.BaseController;
 import org.example.eventticketsystem.utils.INavigation;
@@ -17,6 +18,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
+@Injectable
 public class EventCoordinatorDashboardController extends BaseController<User> {
 
     private static final Logger logger = LoggerFactory.getLogger(EventCoordinatorDashboardController.class);

@@ -1,12 +1,16 @@
 package org.example.eventticketsystem.dal;
 
+import org.example.eventticketsystem.di.Injectable;
 import org.example.eventticketsystem.models.Ticket;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+@Injectable
 public class TicketDAO implements IDAO<Ticket> {
 
     private final Connection connection;
@@ -44,12 +48,15 @@ public class TicketDAO implements IDAO<Ticket> {
 
     @Override
     public boolean save(Ticket ticket) {
-        String sql = "INSERT INTO Tickets (eventId, userId, qrCode, issuedAt) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO Tickets (eventId, userId, qrCode, issuedAt, checkedIn, priceAtPurchase) VALUES (?, ?, ?, ?, ?, ?)";
+
         try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setInt(1, ticket.getEventId());
             ps.setInt(2, ticket.getUserId());
             ps.setString(3, ticket.getQrCode());
             ps.setTimestamp(4, Timestamp.valueOf(ticket.getIssuedAt()));
+            ps.setBoolean(5, ticket.isCheckedIn());
+            ps.setDouble(6, ticket.getPriceAtPurchase());
             int rows = ps.executeUpdate();
             if (rows == 0) return false;
             try (ResultSet keys = ps.getGeneratedKeys()) {
@@ -158,7 +165,37 @@ public class TicketDAO implements IDAO<Ticket> {
                 rs.getInt("eventId"),
                 rs.getInt("userId"),
                 rs.getString("qrCode"),
-                rs.getTimestamp("issuedAt").toLocalDateTime()
+                rs.getTimestamp("issuedAt").toLocalDateTime(),
+                rs.getBoolean("checkedIn"),
+                rs.getDouble("priceAtPurchase")
         );
+    }
+
+    public boolean saveTicket(Ticket ticket) {
+        String sql = "INSERT INTO Tickets (eventId, userId, qrCode, issuedAt) VALUES (?, ?, ?, ?)";
+
+        try (Connection connection = DBConnection.getInstance().getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+            stmt.setInt(1, ticket.getEventId());
+            stmt.setInt(2, ticket.getUserId());
+            stmt.setString(3, ticket.getQrCode());
+            stmt.setTimestamp(4, Timestamp.valueOf(ticket.getIssuedAt()));
+
+            int rows = stmt.executeUpdate();
+            if (rows == 0) return false;
+
+            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    ticket.setId(generatedKeys.getInt(1));
+                }
+            }
+
+            return true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

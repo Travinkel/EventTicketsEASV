@@ -39,7 +39,7 @@ public class Navigation implements INavigation {
         this.registry = Injector.getInstance();
         this.registry.register(INavigation.class, this);
 
-        this.controllerFactory = new ControllerFactory(registry);
+        this.controllerFactory = new ControllerFactory();
 
         setupPrimaryStage();
     }
