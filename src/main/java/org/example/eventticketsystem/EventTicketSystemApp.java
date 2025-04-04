@@ -53,7 +53,7 @@ public class EventTicketSystemApp extends Application {
                 25.0
         );
 
-        String outputPath = PDFGenerator.generateElegantMockTicket(ticket, "tickets");
+        String outputPath = PDFGenerator.generateEASVTicketPDF(ticket, "tickets");
         System.out.println("✅ Ticket generated at: " + outputPath);
 
         primaryStage.setTitle("Event Ticket System");

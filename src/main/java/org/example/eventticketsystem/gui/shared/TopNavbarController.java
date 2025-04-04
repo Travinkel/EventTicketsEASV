@@ -3,6 +3,7 @@ package org.example.eventticketsystem.gui.shared;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
@@ -19,7 +20,7 @@ public class TopNavbarController extends BaseController<User> {
     private static final Logger LOGGER = LoggerFactory.getLogger(TopNavbarController.class);
 
     @FXML private ImageView userAvatar;
-
+    @FXML private Button logoutButton;
     @FXML private Button closeButton;
 
     public TopNavbarController(INavigation navigation, UserService userService) {
@@ -34,9 +35,13 @@ public class TopNavbarController extends BaseController<User> {
         LOGGER.info("✅ TopNavbarController initialized");
 
         Platform.runLater(() -> {
-            Circle clip = new Circle(17.5, 17.5, 17.5);
+            double radius = Math.min(userAvatar.getFitWidth(), userAvatar.getFitHeight()) / 2;
+            Circle clip = new Circle(radius, radius, radius);
             userAvatar.setClip(clip);
         });
+
+        logoutButton.setTooltip(new Tooltip("Log ud"));
+
     }
 
     @FXML

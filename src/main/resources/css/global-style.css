@@ -99,28 +99,46 @@
 /* Top Navbar */
 
 .top-navbar {
-    -fx-background-color: #FAFAFA;
-    -fx-padding: 0 20;
-    -fx-border-color: #DADADA;
-    -fx-border-width: 0 0 1 0;
+    -fx-background-color: #ffffff;
+    -fx-padding: 0 16px;
+    -fx-border-radius: 0 16px 0 0; /* Top-right corner rounded */
+    -fx-background-radius: 0 16px 0 0;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 4, 0, 0, 2);
+}
+
+.page-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-alignment: center-left;
+}
+
+.close-button {
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+    -fx-text-fill: #666;
 }
 
 .logout-btn {
-    -fx-background-color: #F8D7DA;
-    -fx-padding: 6 10;
-    -fx-border-radius: 4;
-    -fx-background-radius: 4;
+    -fx-background-color: #F5C6CB;
+    -fx-background-radius: 6px;
+    -fx-padding: 6px;
+    -fx-min-width: 40px;
+    -fx-min-height: 40px;
     -fx-cursor: hand;
 }
 
 .logout-btn:hover {
-    -fx-background-color: #f44336;
+    -fx-background-color: #DC3545;  /* Saturated red */
+    -fx-text-fill: white;
+}
+
+.close-button:hover {
+    -fx-text-fill: red;
 }
 
 .admin-name {
-    -fx-font-family: "Segoe UI Semibold";
-    -fx-font-size: 16px;
-    -fx-text-fill: #333333;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
 }
 
 .profile-image {
