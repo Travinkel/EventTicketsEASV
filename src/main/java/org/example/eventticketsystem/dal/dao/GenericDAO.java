@@ -1,11 +1,9 @@
-package org.example.eventticketsystem.dal;
-
-import org.example.eventticketsystem.models.User;
+package org.example.eventticketsystem.dal.dao;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface IDAO<T> {
+public interface GenericDAO<T> {
     List<T> findAll();
     Optional<T> findById(int id);
     boolean save(T entity);

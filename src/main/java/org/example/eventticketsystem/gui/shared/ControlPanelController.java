@@ -7,8 +7,8 @@ import javafx.scene.layout.StackPane;
 
 import org.example.eventticketsystem.di.Injectable;
 import org.example.eventticketsystem.gui.BaseController;
-import org.example.eventticketsystem.models.User;
-import org.example.eventticketsystem.bll.UserService;
+import org.example.eventticketsystem.dal.models.User;
+import org.example.eventticketsystem.bll.services.UserService;
 import org.example.eventticketsystem.utils.Config;
 import org.example.eventticketsystem.utils.ContentViewUtils;
 import org.example.eventticketsystem.utils.INavigation;

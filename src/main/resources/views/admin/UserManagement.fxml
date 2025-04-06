@@ -3,8 +3,10 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.control.cell.*?>
 <?import javafx.geometry.Insets?>
-
 <?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
 <VBox xmlns="http://javafx.com/javafx/23.0.1"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="org.example.eventticketsystem.gui.admin.UserManagementController"
@@ -19,33 +21,60 @@
 
     <Label text="Brugere" styleClass="dashboard-subtitle"/>
 
+    <!-- Filters and actions -->
     <HBox spacing="12" alignment="CENTER_LEFT">
+
         <TextField fx:id="searchField" promptText="Søg bruger..." prefWidth="200"/>
+
+        <!-- Filter by Role -->
+        <ComboBox fx:id="roleFilterComboBox" prefWidth="180" promptText="Filter: Rolle">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <String fx:value="Alle"/>
+                    <String fx:value="Admin"/>
+                    <String fx:value="Event Coordinator"/>
+                </FXCollections>
+            </items>
+        </ComboBox>
+
         <Button fx:id="createUserButton" styleClass="crud-btn-create">
             <graphic>
                 <FontIcon iconLiteral="mdi2p-plus" iconSize="18"/>
             </graphic>
+            <tooltip>
+                <Tooltip text="Opret ny bruger"/>
+            </tooltip>
         </Button>
 
         <Button fx:id="editUserButton" styleClass="crud-btn-edit">
             <graphic>
                 <FontIcon iconLiteral="mdi2s-square-edit-outline" iconSize="18"/>
             </graphic>
+            <tooltip>
+                <Tooltip text="Rediger valgt bruger"/>
+            </tooltip>
         </Button>
 
         <Button fx:id="deleteUserButton" styleClass="crud-btn-delete">
             <graphic>
                 <FontIcon iconLiteral="mdi2d-delete" iconSize="18"/>
             </graphic>
+            <tooltip>
+                <Tooltip text="Slet valgt bruger"/>
+            </tooltip>
         </Button>
+
     </HBox>
 
+    <!-- User Table -->
     <TableView fx:id="userTable" prefWidth="700" VBox.vgrow="ALWAYS">
         <columns>
             <TableColumn fx:id="colUsername" text="Brugernavn" prefWidth="150"/>
             <TableColumn fx:id="colFullName" text="Navn" prefWidth="200"/>
             <TableColumn fx:id="colEmail" text="Email" prefWidth="250"/>
-            <TableColumn fx:id="colRole" text="Rolle" prefWidth="120"/>
+            <TableColumn fx:id="colAssignedEvents" text="Koordinerede Events" prefWidth="250"/>
+            <TableColumn fx:id="colRole" text="Roller" prefWidth="200.0" />
+
             <TableColumn fx:id="colActions" text="Handlinger" prefWidth="120"/>
         </columns>
     </TableView>

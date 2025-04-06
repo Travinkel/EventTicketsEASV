@@ -4,13 +4,13 @@
     import javafx.fxml.FXML;
     import javafx.fxml.FXMLLoader;
     import javafx.scene.control.*;
-    import javafx.scene.control.cell.PropertyValueFactory;
-    import javafx.scene.control.cell.TextFieldTableCell;
     import javafx.scene.layout.VBox;
+    import org.example.eventticketsystem.bll.repositories.UserRepository;
     import org.example.eventticketsystem.di.Injectable;
     import org.example.eventticketsystem.gui.BaseController;
-    import org.example.eventticketsystem.models.User;
-    import org.example.eventticketsystem.bll.UserService;
+    import org.example.eventticketsystem.dal.models.Event;
+    import org.example.eventticketsystem.dal.models.User;
+    import org.example.eventticketsystem.bll.viewmodels.UserViewModel;
     import org.example.eventticketsystem.utils.Config;
     import org.example.eventticketsystem.utils.INavigation;
     import org.example.eventticketsystem.utils.PasswordUtil;
@@ -20,7 +20,7 @@
     import java.io.IOException;
     import java.time.LocalDateTime;
     import java.util.List;
-    import javafx.scene.Node;
+    import java.util.Map;
 
     @Injectable
     public class UserManagementController extends BaseController<User> {
@@ -36,21 +36,25 @@
         @FXML private Button editUserButton;
         @FXML private Button deleteUserButton;
 
-        @FXML private ListView<User> userListView;
-        @FXML private TableView<User> userTable;
-        @FXML private TableColumn<User, String> colFullName;
-        @FXML private TableColumn<User, String> colUsername;
-        @FXML private TableColumn<User, String> colEmail;
-        @FXML private TableColumn<User, String> colRole;
+        @FXML private TableView<UserViewModel> userTable;
+        @FXML private TableColumn<UserViewModel, String> colFullName;
+        @FXML private TableColumn<UserViewModel, String> colUsername;
+        @FXML private TableColumn<UserViewModel, String> colEmail;
+        @FXML private TableColumn<UserViewModel, String> colRole;
+        @FXML private TableColumn<UserViewModel, String> colAssignedEvents;
+
 
         // cached full list
         private List<User> allUsers;
 
+        private final UserRepository userRepository;
+
         @FXML private VBox mainContent;
 
 
-        public UserManagementController(INavigation navigation, UserService userService) {
-            super(navigation, userService);
+        public UserManagementController(INavigation navigation, UserRepository userRepository) {
+            super(navigation);
+            this.userRepository = userRepository;
         }
 
         @FXML
@@ -60,7 +64,9 @@
             colUsername.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getUsername()));
             colFullName.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getName()));
             colEmail.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getEmail()));
-            colRole.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getRole()));
+            colRole.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getJoinedRoles()));
+            colAssignedEvents.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getJoinedEvents()));
+
 
             createUserButton.setOnAction(e -> {
                 try {
@@ -86,13 +92,7 @@
             loadUsers();
         }
 
-        private void loadUsers() {
-            allUsers = userService.getAllUsers();
-            System.out.println("Loaded users: " + allUsers); // 🔍 Debug
-            LOGGER.info("👤 Total users loaded: {}", allUsers.size()); // 🔍 Log how many were loaded
-            allUsers.forEach(user -> LOGGER.info("👤 {}", user));
-            userTable.getItems().setAll(allUsers);
-        }
+
 
         @FXML
         private void handleDeleteUser() {
@@ -144,16 +144,7 @@
 
 
         private void openCreateUserDialog() throws IOException {
-            User newUser = new User(
-                    0,
-                    "",                    // username
-                    "",                    // hashed password
-                    "",                    // name
-                    "",                    // email
-                    "EVENT_COORDINATOR",   // default role
-                    "00000000",            // default phone
-                    LocalDateTime.now()    // createdAt
-            );
+            User newUser = new User(0, "", "", "", "", "", LocalDateTime.now());
             openUserDialog(newUser, true);
         }
 
@@ -189,21 +180,41 @@
             dialog.showAndWait().ifPresent(u -> {
                 if (controller.isConfirmed()) {
                     if (isNew) {
-                        userService.addUser(
+                        List<String> selectedRoles = controller.getSelectedRoles(); // this comes from the form dialog
+
+                        boolean success = userService.addUserWithRoles(
                                 u.getUsername(),
                                 PasswordUtil.hashPassword("password123"),
                                 u.getName(),
                                 u.getEmail(),
-                                u.getRole(),
+                                selectedRoles,
                                 u.getPhone() != null ? u.getPhone() : "00000000",
                                 LocalDateTime.now()
                         );
+
+                        if (!success) {
+                            showAlert("Kunne ikke oprette brugeren.");
+                        }
                     } else {
                         userService.updateUser(u);
                     }
                     loadUsers();
                 }
             });
+        }
+
+        private void loadUsers() {
+            List<User> users = userService.getAllUsers();
+            Map<Integer, List<String>> userRoles = userService.getAllUserRolesMapped(); // You implement this
+            Map<Integer, List<Event>> userEvents = eventService.getAllEventsMappedByCoordinator(); // You implement this
+
+            List<UserViewModel> viewModels = users.stream().map(user -> {
+                List<String> roles = userRoles.getOrDefault(user.getId(), List.of());
+                List<Event> events = userEvents.getOrDefault(user.getId(), List.of());
+                return new UserViewModel(user, roles, events);
+            }).toList();
+
+            userTable.getItems().setAll(viewModels);
         }
 
 
@@ -219,7 +230,6 @@
                     ", createUserButton=" + createUserButton +
                     ", editUserButton=" + editUserButton +
                     ", deleteUserButton=" + deleteUserButton +
-                    ", userListView=" + userListView +
                     ", userTable=" + userTable +
                     ", colFullName=" + colFullName +
                     ", colUsername=" + colUsername +

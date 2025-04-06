@@ -1,4 +1,4 @@
-package org.example.eventticketsystem.models;
+package org.example.eventticketsystem.dal.models;
 
 
 import java.time.LocalDateTime;

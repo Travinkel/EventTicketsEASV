@@ -2,10 +2,10 @@ package org.example.eventticketsystem.gui.admin;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import org.example.eventticketsystem.bll.UserService;
+import org.example.eventticketsystem.bll.services.UserService;
 import org.example.eventticketsystem.di.Injectable;
 import org.example.eventticketsystem.gui.BaseController;
-import org.example.eventticketsystem.models.User;
+import org.example.eventticketsystem.dal.models.User;
 import org.example.eventticketsystem.utils.INavigation;
 import org.example.eventticketsystem.utils.ContentViewUtils;
 import org.slf4j.Logger;
@@ -39,7 +39,16 @@ public class AdminSettingsController extends BaseController<User> {
         if (current != null) {
             usernameLabel.setText("Brugernavn: " + current.getUsername());
             emailLabel.setText("Email: " + current.getEmail());
-            roleLabel.setText("Rolle: " + current.getRole());
+
+            // Get roles and format them
+            var roles = userService.getRolesForUser(current.getId());
+            String formattedRoles = roles.stream()
+                    .map(r -> r.replace("_", " ").toLowerCase())
+                    .map(r -> Character.toUpperCase(r.charAt(0)) + r.substring(1))
+                    .reduce((a, b) -> a + ", " + b)
+                    .orElse("Ukendt");
+
+            roleLabel.setText("Roller: " + formattedRoles);
         }
 
         // Password change already implemented

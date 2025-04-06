@@ -2,22 +2,11 @@ package org.example.eventticketsystem;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import org.example.eventticketsystem.bll.EmailService;
-import org.example.eventticketsystem.bll.EventService;
-import org.example.eventticketsystem.bll.TicketPurchaseService;
-import org.example.eventticketsystem.bll.UserService;
-import org.example.eventticketsystem.dal.EventDAO;
-import org.example.eventticketsystem.dal.TicketDAO;
-import org.example.eventticketsystem.dal.UserDAO;
 import org.example.eventticketsystem.di.InjectionScanner;
 import org.example.eventticketsystem.di.Injector;
-import org.example.eventticketsystem.models.Ticket;
 import org.example.eventticketsystem.utils.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.kordamp.ikonli.javafx.FontIcon;
-
-import java.time.LocalDateTime;
 
 public class EventTicketSystemApp extends Application {
 
@@ -40,21 +29,6 @@ public class EventTicketSystemApp extends Application {
 
         LOGGER.debug("Loading Login view: {}", Config.loginView());
         navigation.loadScene(Config.loginView());
-
-
-
-        Ticket ticket = new Ticket(
-                1,         // ID
-                42,        // EventID
-                101,       // UserID
-                "wdasdw",
-                LocalDateTime.now(),
-                false,
-                25.0
-        );
-
-        String outputPath = PDFGenerator.generateEASVTicketPDF(ticket, "tickets");
-        System.out.println("✅ Ticket generated at: " + outputPath);
 
         primaryStage.setTitle("Event Ticket System");
         primaryStage.show();

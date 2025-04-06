@@ -6,8 +6,8 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import org.example.eventticketsystem.di.Injectable;
 import org.example.eventticketsystem.gui.BaseController;
-import org.example.eventticketsystem.models.User;
-import org.example.eventticketsystem.bll.UserService;
+import org.example.eventticketsystem.dal.models.User;
+import org.example.eventticketsystem.bll.services.UserService;
 import org.example.eventticketsystem.utils.Config;
 import org.example.eventticketsystem.utils.ContentViewUtils;
 import org.example.eventticketsystem.utils.INavigation;
@@ -16,6 +16,8 @@ import org.kordamp.ikonli.materialdesign2.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.kordamp.ikonli.javafx.FontIcon;
+
+import java.util.List;
 
 
 @Injectable
@@ -39,20 +41,22 @@ public class SidebarController extends BaseController<User> {
 
         nameLabel.setText(user.getName());
 
-        String role = user.getRole().toLowerCase();
+        // ✅ Get all roles from DB
+        var roles = userService.getRolesForUser(user.getId())
+                .stream().map(String::toLowerCase).toList();
 
         createButton(" Dashboard", this::handleDashboard, MaterialDesignH.HOME_ACCOUNT);
 
-        if (role.equals("admin")) {
+        if (roles.contains("admin")) {
             createButton(" Brugere", this::handleUserManagement, MaterialDesignA.ACCOUNT);
         }
 
-        if (role.equals("coordinator")) {
+        if (roles.contains("coordinator")) {
             createButton("Billetter", this::handleTicketManagement, MaterialDesignT.TICKET_ACCOUNT);
             createButton("Arrangementer", this::handleEventManagement, MaterialDesignC.CALENDAR_ACCOUNT);
         }
 
-        if (role.equals("admin")) {
+        if (roles.contains("admin")) {
             createButton("Admin Indstillinger", this::handleAdminSettings, MaterialDesignA.ACCOUNT_COG);
         } else {
             createButton("Mine Indstillinger", this::handleCoordinatorSettings, MaterialDesignA.ACCOUNT_COG);
@@ -75,14 +79,15 @@ public class SidebarController extends BaseController<User> {
         User user = this.navigation.getCurrentUser();
         if (user == null) return;
 
-        String role = user.getRole().toLowerCase();
+        List<String> roles = userService.getRolesForUser(user.getId())
+                .stream().map(String::toLowerCase).toList();
 
-
-        String path = switch (role) {
-            case "admin" -> Config.adminDashboardView();
-            case "event_coordinator" -> Config.coordinatorDashboardView();
-            default -> null;
-        };
+        String path = null;
+        if (roles.contains("admin")) {
+            path = Config.adminDashboardView();
+        } else if (roles.contains("coordinator") || roles.contains("event_coordinator")) {
+            path = Config.coordinatorDashboardView();
+        }
 
         if (path != null) {
             ContentViewUtils.setContent(navigation.loadViewNode(path));

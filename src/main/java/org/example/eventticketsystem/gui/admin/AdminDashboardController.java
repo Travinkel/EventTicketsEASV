@@ -1,14 +1,21 @@
 package org.example.eventticketsystem.gui.admin;
 
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.scene.chart.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.Tooltip;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.util.Duration;
+import org.example.eventticketsystem.dal.connection.DBConnection;
 import org.example.eventticketsystem.di.Injectable;
 import org.example.eventticketsystem.gui.BaseController;
-import org.example.eventticketsystem.models.User;
-import org.example.eventticketsystem.bll.UserService;
+import org.example.eventticketsystem.dal.models.User;
+import org.example.eventticketsystem.bll.services.UserService;
 import org.example.eventticketsystem.utils.INavigation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,6 +41,7 @@ public class AdminDashboardController extends BaseController<User> {
     @FXML private Label pingLabel;
     @FXML private Label connectionLabel;
     @FXML private Label lastUpdatedLabel;
+    @FXML private Circle dbStatusIndicator;
 
 
     @FXML private BarChart<String, Number> roleBarChart;
@@ -48,9 +56,15 @@ public class AdminDashboardController extends BaseController<User> {
     public void initialize() {
         LOGGER.info("✅ AdminDashboardController initialized");
 
-        if (!"ADMIN".equalsIgnoreCase(navigation.getCurrentUser().getRole())) return;
+        Timeline refreshTimeline = new Timeline(
+                new KeyFrame(Duration.seconds(15), e -> handleRefreshDashboard())
+        );
+        refreshTimeline.setCycleCount(Animation.INDEFINITE);
+        refreshTimeline.play();
 
         refreshDashboardButton.setOnAction(e -> handleRefreshDashboard());
+        refreshDashboardButton.setTooltip(new Tooltip("Opdater systemstatus og statistik"));
+
         handleRefreshDashboard();
     }
 
@@ -96,13 +110,19 @@ public class AdminDashboardController extends BaseController<User> {
             userService.getAllUsers(); // ping DB
             long duration = System.currentTimeMillis() - start;
 
-            dbStatusLabel.setText("🟢 Database Online");
+            dbStatusIndicator.setFill(Color.GREEN);
+            dbStatusLabel.setText("Database Online");
+            dbStatusLabel.setStyle("-fx-text-fill: green;");
             pingLabel.setText("Ping: " + duration + " ms");
-            connectionLabel.setText("Forbindelser: N/A");
+            int connections = DBConnection.getActiveConnections();
+            connectionLabel.setText("Forbindelser: " + (connections >= 0 ? connections : "❌"));
         } catch (Exception e) {
-            dbStatusLabel.setText("🔴 Database Offline");
+            dbStatusIndicator.setFill(Color.RED);
+            dbStatusLabel.setText("Database Offline");
+            dbStatusLabel.setStyle("-fx-text-fill: red;");
             pingLabel.setText("Ping: ❌");
-            connectionLabel.setText("Forbindelser: ❌");
+            int connections = DBConnection.getActiveConnections();
+            connectionLabel.setText("Forbindelser: " + (connections >= 0 ? connections : "❌"));
         }
         lastUpdatedLabel.setText("Opdateret: " +
                 LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")));

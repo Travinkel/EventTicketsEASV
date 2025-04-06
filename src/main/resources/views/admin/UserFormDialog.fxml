@@ -2,15 +2,25 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.HBox?>
-<VBox spacing="12" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="org.example.eventticketsystem.gui.admin.UserFormDialogController">
-    <TextField fx:id="usernameField" promptText="Brugernavn"/>
-    <PasswordField fx:id="passwordField" promptText="Adgangskode (valgfri ved redigering)"/>
-    <TextField fx:id="nameField" promptText="Fulde Navn"/>
-    <TextField fx:id="emailField" promptText="Email"/>
-    <ComboBox fx:id="roleComboBox" promptText="Vælg Rolle"/>
-    <HBox spacing="10">
-        <Button fx:id="confirmButton" text="Bekræft"/>
-        <Button fx:id="cancelButton" text="Annuller"/>
-    </HBox>
-</VBox>
+<?import javafx.scene.layout.GridPane?>
+<GridPane xmlns="http://javafx.com/javafx/17"
+          xmlns:fx="http://javafx.com/fxml"
+          fx:controller="org.example.eventticketsystem.gui.admin.UserFormDialogController">
+
+    <Label text="Brugernavn:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+    <TextField fx:id="usernameField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+    <Label text="Navn:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+    <TextField fx:id="nameField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+    <Label text="Email:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+    <TextField fx:id="emailField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+    <Label text="Roller:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+    <ListView fx:id="roleListView" GridPane.rowIndex="3" GridPane.columnIndex="1"
+              selectionModel="$multiSelectionModel" prefHeight="60"/>
+
+    <Label text="Events (kun for koordinatorer):" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+    <ListView fx:id="eventListView" GridPane.rowIndex="4" GridPane.columnIndex="1"
+              selectionModel="$multiSelectionModel" prefHeight="100"/>
+</GridPane>

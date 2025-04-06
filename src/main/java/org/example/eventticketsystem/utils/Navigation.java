@@ -12,7 +12,7 @@ import javafx.stage.StageStyle;
 import javafx.util.Callback;
 import org.example.eventticketsystem.di.ControllerFactory;
 import org.example.eventticketsystem.di.Injector;
-import org.example.eventticketsystem.models.User;
+import org.example.eventticketsystem.dal.models.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -3,7 +3,7 @@ package org.example.eventticketsystem.utils;
 import javafx.scene.Node;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import org.example.eventticketsystem.models.User;
+import org.example.eventticketsystem.dal.models.User;
 
 public interface INavigation {
     void loadScene(String fxmlPath); // still useful

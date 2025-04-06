@@ -1,4 +1,4 @@
-package org.example.eventticketsystem.bll;
+package org.example.eventticketsystem.bll.services;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

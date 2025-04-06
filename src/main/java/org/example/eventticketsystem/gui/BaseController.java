@@ -1,6 +1,6 @@
 package org.example.eventticketsystem.gui;
 
-import org.example.eventticketsystem.bll.UserService;
+import org.example.eventticketsystem.bll.services.UserService;
 import org.example.eventticketsystem.utils.INavigation;
 
 public abstract class BaseController<T> {

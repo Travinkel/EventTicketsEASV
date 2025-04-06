@@ -1,11 +1,9 @@
-package org.example.eventticketsystem.bll;
+package org.example.eventticketsystem.bll.services;
 
 import jakarta.mail.*;
 import jakarta.mail.internet.*;
-import jakarta.activation.DataHandler;
-import jakarta.activation.FileDataSource;
-import org.example.eventticketsystem.EventTicketSystemApp;
-import org.example.eventticketsystem.models.Ticket;
+import org.example.eventticketsystem.di.Injectable;
+import org.example.eventticketsystem.dal.models.Ticket;
 import org.example.eventticketsystem.utils.Config;
 
 import java.io.File;
@@ -13,8 +11,9 @@ import java.util.Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@Injectable
 public class EmailService {
-    private static final Logger LOGGER = LoggerFactory.getLogger(EventTicketSystemApp.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(EmailService.class);
 
     private final Session session;
     private final String from;
