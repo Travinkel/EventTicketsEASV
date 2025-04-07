@@ -2,7 +2,7 @@ package org.example.eventticketsystem.bll.services;
 
 import jakarta.mail.*;
 import jakarta.mail.internet.*;
-import org.example.eventticketsystem.di.Injectable;
+import org.example.eventticketsystem.utils.di.Injectable;
 import org.example.eventticketsystem.dal.models.Ticket;
 import org.example.eventticketsystem.utils.Config;
 
@@ -64,10 +64,5 @@ public class EmailService {
             e.printStackTrace();
             return false;
         }
-    }
-
-    public void sendTicketToUser(int userId, Ticket ticket) {
-        // Simulate sending
-        LOGGER.info("📧 Sending ticket to user ID {} with QR: {}", userId, ticket.getQrCode());
     }
 }

@@ -74,7 +74,7 @@ public class PDFGenerator {
 
             // Barcode (Code128)
             Barcode128 barcode = new Barcode128();
-            barcode.setCode(ticket.getBarCode());
+            barcode.setCode(ticket.getBarcode());
             barcode.setCodeType(Barcode.CODE128);
             Image barcodeImg = barcode.createImageWithBarcode(canvas, null, null);
             barcodeImg.setAlignment(Image.ALIGN_CENTER);

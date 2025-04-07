@@ -6,8 +6,8 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(of = {"userId", "roleId"})
-public class UserRole {
-    private int userId;
-    private int roleId;
+@ToString(of = {"id", "name"})
+public class Role {
+    private int id;
+    private String name;
 }

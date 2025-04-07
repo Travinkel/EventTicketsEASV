@@ -1,22 +1,17 @@
 package org.example.eventticketsystem.dal.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
+import lombok.*;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Event  {
-    protected int id;
+public class Event implements Identifiable {
+    private int id;
     private String title;
     private String description;
-    private String location;
+    private String locationGuidance;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private double price;

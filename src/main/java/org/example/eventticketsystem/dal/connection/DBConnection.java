@@ -23,31 +23,25 @@ public class DBConnection {
             logger.info("✅ Connected to the database successfully!");
         } catch (SQLException ex) {
             logger.error("❌ Failed to connect to database", ex);
+            throw ex;
         }
     }
+
 
     public static synchronized DBConnection getInstance() throws SQLException {
         if (instance == null) {
             instance = new DBConnection();
         } else if (instance.getConnection().isClosed()) {
-            instance = new DBConnection();
+            instance = new DBConnection();  // Recreate instance if connection is closed
         }
         return instance;
     }
 
-    public static int getActiveConnections() {
-        try (Connection conn = getInstance().getConnection();
-             PreparedStatement stmt = conn.prepareStatement(
-                     "SELECT COUNT(*) FROM sys.dm_exec_sessions WHERE status = 'running' AND is_user_process = 1");
-             ResultSet rs = stmt.executeQuery()) {
-            if (rs.next()) return rs.getInt(1);
-        } catch (SQLException e) {
-            logger.error("❌ Could not get active connections", e);
-        }
-        return -1;
-    }
 
-    public Connection getConnection() {
+    public Connection getConnection() throws SQLException {
+        if (connection == null || connection.isClosed()) {
+            connection = DriverManager.getConnection(Config.get("db.url"), Config.get("db.username"), Config.get("db.password"));
+        }
         return connection;
     }
 }

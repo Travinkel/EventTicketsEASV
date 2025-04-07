@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="org.example.eventticketsystem.gui.coordinator.EventCoordinatorController">
+
+    <top>
+        <Label text="Event Coordinator Panel" style="-fx-font-size: 20px; -fx-padding: 10px;" BorderPane.alignment="CENTER"/>
+    </top>
+
+    <center>
+        <VBox spacing="15" padding="15">
+
+            <Label text="Mine Events" style="-fx-font-size: 16px;"/>
+            <TableView fx:id="eventTable" prefHeight="200">
+                <columns>
+                    <TableColumn fx:id="colTitle" text="Titel"/>
+                    <TableColumn fx:id="colStartTime" text="Start"/>
+                    <TableColumn fx:id="colEndTime" text="Slut"/>
+                    <TableColumn fx:id="colLocation" text="Sted"/>
+                </columns>
+            </TableView>
+
+            <Label text="Billetter til valgt event" style="-fx-font-size: 16px;"/>
+            <TableView fx:id="ticketTable" prefHeight="220">
+                <columns>
+                    <TableColumn fx:id="colTicketId" text="Billet ID"/>
+                    <TableColumn fx:id="colUserId" text="Bruger ID"/>
+                    <TableColumn fx:id="colEmail" text="Email"/>
+                    <TableColumn fx:id="colPrice" text="Pris"/>
+                    <TableColumn fx:id="colCheckedIn" text="Indtjekket"/>
+                </columns>
+            </TableView>
+
+            <HBox spacing="10" alignment="CENTER_RIGHT">
+                <Button fx:id="btnSendTicket" text="Send billet som PDF" />
+            </HBox>
+
+        </VBox>
+    </center>
+
+</BorderPane>

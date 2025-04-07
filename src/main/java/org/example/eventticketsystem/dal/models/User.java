@@ -3,13 +3,12 @@ package org.example.eventticketsystem.dal.models;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(of = {"username", "identityRole"})
+@ToString(of = {"username", "name", "email", "phone"})
 public class User {
     private int id;
     private String username;

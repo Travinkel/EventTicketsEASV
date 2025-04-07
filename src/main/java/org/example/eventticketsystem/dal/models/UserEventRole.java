@@ -2,8 +2,6 @@ package org.example.eventticketsystem.dal.models;
 
 import lombok.*;
 
-import java.time.LocalDateTime;
-
 @Getter
 @Setter
 @NoArgsConstructor
