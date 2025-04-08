@@ -1,15 +1,15 @@
 package org.example.eventticketsystem.dal.dao.decorator;
 
 import lombok.RequiredArgsConstructor;
-import org.example.eventticketsystem.dal.dao.GenericRepository;
+import org.example.eventticketsystem.dal.dao.IRepository;
 
 import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
-public class GenericRepositoryDecorator<T> implements GenericRepository<T> {
+public class IRepositoryDecorator<T> implements IRepository<T> {
 
-    private final GenericRepository<T> decoratedDAO;
+    private final IRepository<T> decoratedDAO;
 
     @Override
     public List<T> findAll() {

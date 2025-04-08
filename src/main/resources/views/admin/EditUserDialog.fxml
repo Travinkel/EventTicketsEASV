@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<VBox xmlns="http://javafx.com/javafx/23.0.1"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.example.eventticketsystem.gui.admin.EditUserDialogController"
+      spacing="15" alignment="CENTER" styleClass="dialog-root">
+
+    <Label text="Rediger Bruger" styleClass="heading2"/>
+    <TextField fx:id="usernameField" promptText="Brugernavn" styleClass="input-field"/>
+    <TextField fx:id="fullNameField" promptText="Fuldt Navn" styleClass="input-field"/>
+    <TextField fx:id="phoneField" promptText="Telefonnummer" styleClass="input-field"/>
+    <TextField fx:id="emailField" promptText="Email" styleClass="input-field"/>
+    <ComboBox fx:id="roleComboBox" promptText="Vælg Rolle" styleClass="input-field"/>
+    <HBox spacing="10" alignment="CENTER">
+        <Button fx:id="saveButton" text="Gem" styleClass="btn-primary"/>
+        <Button fx:id="cancelButton" text="Annuller" styleClass="btn-secondary"/>
+    </HBox>
+</VBox>

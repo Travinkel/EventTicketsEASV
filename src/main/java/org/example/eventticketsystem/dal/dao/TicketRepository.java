@@ -1,9 +1,12 @@
 package org.example.eventticketsystem.dal.dao;
 
 import org.example.eventticketsystem.dal.connection.DBConnection;
-import org.example.eventticketsystem.utils.di.Injectable;
-import org.example.eventticketsystem.dal.models.Ticket;
 import org.example.eventticketsystem.dal.helpers.ResultSetExtractor;
+import org.example.eventticketsystem.dal.models.Ticket;
+import org.example.eventticketsystem.utils.di.Inject;
+import org.example.eventticketsystem.utils.di.Repository;
+import org.example.eventticketsystem.utils.di.Scope;
+import org.example.eventticketsystem.utils.di.Singleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,23 +15,34 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@Injectable
-public class TicketRepository implements GenericRepository<Ticket> {
+/**
+ * Repository for managing CRUD operations on Ticket entities.
+ * This class is managed by the DI framework.
+ */
+@Repository
+@Singleton
+@Scope("singleton")
+public class TicketRepository implements IRepository<Ticket> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TicketRepository.class);
     private final DBConnection dbConnection;
 
-    public TicketRepository(DBConnection dbConnection) throws SQLException {
+    /**
+     * Constructor for TicketRepository.
+     * The DI framework injects the DBConnection dependency.
+     *
+     * @param dbConnection The database connection instance.
+     */
+    @Inject
+    public TicketRepository(DBConnection dbConnection) {
         this.dbConnection = dbConnection;
-        if (this.dbConnection == null || this.dbConnection.getConnection().isClosed()) {
-            throw new IllegalStateException("❌ Cannot initialize TicketRepository: no DB connection");
-        }
     }
 
     // ==== CRUD ====
 
     @Override
     public List<Ticket> findAll() {
+        LOGGER.debug("🔍 Executing findAll() to fetch all tickets");
         List<Ticket> tickets = new ArrayList<>();
         String sql = "SELECT * FROM Tickets";
         try (Connection connection = dbConnection.getConnection();
@@ -37,30 +51,38 @@ public class TicketRepository implements GenericRepository<Ticket> {
             while (rs.next()) {
                 tickets.add(ResultSetExtractor.extractTicket(rs));
             }
+            LOGGER.info("✅ Retrieved {} tickets from the database", tickets.size());
         } catch (SQLException e) {
-            LOGGER.error("Error finding all tickets", e);
+            LOGGER.error("❌ Error finding all tickets", e);
         }
         return tickets;
     }
 
     @Override
     public Optional<Ticket> findById(int id) {
+        LOGGER.debug("🔍 Executing findById() for ticket ID: {}", id);
         String sql = "SELECT * FROM Tickets WHERE id = ?";
         try (Connection connection = dbConnection.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, id);
             try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) return Optional.of(ResultSetExtractor.extractTicket(rs));
+                if (rs.next()) {
+                    LOGGER.info("✅ Ticket with ID {} found", id);
+                    return Optional.of(ResultSetExtractor.extractTicket(rs));
+                }
             }
         } catch (SQLException e) {
-            LOGGER.error("Error finding ticket by id", e);
+            LOGGER.error("❌ Error finding ticket by ID: {}", id, e);
         }
+        LOGGER.warn("⚠️ No ticket found with ID: {}", id);
         return Optional.empty();
     }
 
     @Override
     public boolean save(Ticket ticket) {
-        String sql = "INSERT INTO Tickets (eventId, userId, qrCode, barcode, issuedAt, checkedIn, priceAtPurchase) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        LOGGER.debug("🔍 Executing save() for ticket: {}", ticket);
+        String sql =
+                "INSERT INTO Tickets (eventId, userId, qrCode, barcode, issuedAt, checkedIn, priceAtPurchase) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (Connection connection = dbConnection.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setInt(1, ticket.getEventId());
@@ -71,20 +93,28 @@ public class TicketRepository implements GenericRepository<Ticket> {
             ps.setBoolean(6, ticket.isCheckedIn());
             ps.setDouble(7, ticket.getPriceAtPurchase());
             int rows = ps.executeUpdate();
-            if (rows == 0) return false;
+            if (rows == 0) {
+                LOGGER.warn("⚠️ No rows affected while saving ticket: {}", ticket);
+                return false;
+            }
             try (ResultSet keys = ps.getGeneratedKeys()) {
-                if (keys.next()) ticket.setId(keys.getInt(1));
+                if (keys.next()) {
+                    ticket.setId(keys.getInt(1));
+                    LOGGER.info("➕ Ticket saved with ID: {}", ticket.getId());
+                }
             }
             return true;
         } catch (SQLException e) {
-            LOGGER.error("Error saving ticket", e);
+            LOGGER.error("❌ Error saving ticket: {}", ticket, e);
         }
         return false;
     }
 
     @Override
     public boolean update(Ticket ticket) {
-        String sql = "UPDATE Tickets SET eventId = ?, userId = ?, qrCode = ?, barcode = ?, issuedAt = ?, checkedIn = ?, priceAtPurchase = ? WHERE id = ?";
+        LOGGER.debug("🔍 Executing update() for ticket ID: {}", ticket.getId());
+        String sql =
+                "UPDATE Tickets SET eventId = ?, userId = ?, qrCode = ?, barcode = ?, issuedAt = ?, checkedIn = ?, priceAtPurchase = ? WHERE id = ?";
         try (Connection connection = dbConnection.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, ticket.getEventId());
@@ -95,23 +125,31 @@ public class TicketRepository implements GenericRepository<Ticket> {
             ps.setBoolean(6, ticket.isCheckedIn());
             ps.setDouble(7, ticket.getPriceAtPurchase());
             ps.setInt(8, ticket.getId());
-            return ps.executeUpdate() == 1;
+            if (ps.executeUpdate() == 1) {
+                LOGGER.info("♻️ Ticket with ID {} updated successfully", ticket.getId());
+                return true;
+            }
         } catch (SQLException e) {
-            LOGGER.error("Error updating ticket", e);
+            LOGGER.error("❌ Error updating ticket ID: {}", ticket.getId(), e);
         }
+        LOGGER.warn("⚠️ No rows affected while updating ticket ID: {}", ticket.getId());
         return false;
     }
 
     @Override
     public boolean delete(int id) {
+        LOGGER.debug("🔍 Executing delete() for ticket ID: {}", id);
         String sql = "DELETE FROM Tickets WHERE id = ?";
         try (Connection connection = dbConnection.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setInt(1, id);
-            return ps.executeUpdate() == 1;
+            if (ps.executeUpdate() == 1) {
+                LOGGER.info("🗑 Ticket with ID {} deleted successfully", id);
+                return true;
+            }
         } catch (SQLException e) {
-            LOGGER.error("Error deleting ticket", e);
+            LOGGER.error("❌ Error deleting ticket ID: {}", id, e);
         }
+        LOGGER.warn("⚠️ No rows affected while deleting ticket ID: {}", id);
         return false;
     }
 
@@ -185,11 +223,9 @@ public class TicketRepository implements GenericRepository<Ticket> {
         return false;
     }
 
-
     // ==== Utility Methods ====
 
     private Ticket extractTicket(ResultSet rs) throws SQLException {
         return ResultSetExtractor.extractTicket(rs);
     }
 }
-

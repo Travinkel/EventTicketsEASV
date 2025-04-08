@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<VBox xmlns:fx="http://javafx.com/fxml/1"
+      xmlns="http://javafx.com/javafx/23.0.1"
+      fx:controller="org.example.eventticketsystem.gui.admin.AssignCoordinatorDialogController"
+      spacing="15" alignment="CENTER" styleClass="dialog-root">
+
+    <Label text="Tildel Koordinator" styleClass="heading2"/>
+    <Label fx:id="eventLabel" text="Event: [Event Name]" styleClass="body-text"/>
+    <ComboBox fx:id="eventComboBox" promptText="Vælg Event" styleClass="input-field"/>
+    <ComboBox fx:id="coordinatorComboBox" promptText="Vælg Koordinator" styleClass="input-field"/>
+
+    <HBox spacing="10" alignment="CENTER">
+        <Button fx:id="assignButton" text="Tildel" styleClass="btn-primary"/>
+        <Button fx:id="cancelButton" text="Annuller" styleClass="btn-secondary"/>
+    </HBox>
+</VBox>

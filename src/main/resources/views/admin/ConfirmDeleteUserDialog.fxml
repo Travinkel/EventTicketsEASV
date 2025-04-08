@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<?import javafx.scene.layout.HBox?>
+<VBox xmlns="http://javafx.com/javafx/23.0.1"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.example.eventticketsystem.gui.admin.ConfirmDeleteUserController"
+      spacing="16"
+      alignment="CENTER"
+      style="-fx-background-color: #FFFFFF; -fx-padding: 30; -fx-border-color: #DADADA; -fx-border-radius: 12; -fx-background-radius: 12;">
+
+    <Label text="Er du sikker på, at du vil slette brugeren?" style="-fx-font-size: 16px; -fx-font-family: 'Segoe UI Semibold'; -fx-text-fill: #333333;"/>
+    <Label fx:id="userNameLabel" style="-fx-font-size: 14px; -fx-text-fill: #009FE3;"/>
+
+    <HBox spacing="12" alignment="CENTER">
+        <Button fx:id="confirmButton" text="Slet" style="-fx-background-color: #009FE3; -fx-text-fill: white; -fx-padding: 10 20; -fx-background-radius: 4;"/>
+        <Button fx:id="cancelButton" text="Annuller" style="-fx-background-color: transparent; -fx-text-fill: #009FE3; -fx-padding: 10 20;"/>
+    </HBox>
+</VBox>

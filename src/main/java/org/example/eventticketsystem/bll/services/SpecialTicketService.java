@@ -3,10 +3,12 @@ package org.example.eventticketsystem.bll.services;
 import org.example.eventticketsystem.bll.services.interfaces.ISpecialTicketService;
 import org.example.eventticketsystem.dal.dao.SpecialTicketRepository;
 import org.example.eventticketsystem.dal.models.SpecialTicket;
+import org.example.eventticketsystem.utils.di.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class SpecialTicketService implements ISpecialTicketService {
     private final SpecialTicketRepository repository;
 

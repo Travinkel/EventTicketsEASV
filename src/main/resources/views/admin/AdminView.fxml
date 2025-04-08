@@ -3,31 +3,32 @@
 <?import javafx.scene.control.*?>
 <?import javafx.geometry.Insets?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
-
 <?import javafx.collections.FXCollections?>
 <?import java.lang.String?>
+
 <VBox xmlns="http://javafx.com/javafx/23.0.1"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="org.example.eventticketsystem.gui.admin.AdminController"
       fx:id="adminRoot"
-      styleClass="main-content"
-      alignment="TOP_CENTER"
-      spacing="20.0">
+      styleClass="admin-root"
+      spacing="24"
+      alignment="TOP_CENTER">
 
     <padding>
-        <Insets top="20" left="20" right="20" bottom="20"/>
+        <Insets top="30" left="30" right="30" bottom="30"/>
     </padding>
 
-    <Label text="Bruger- og Eventstyring" styleClass="dashboard-subtitle"/>
+    <Label text="Bruger- og Eventstyring" styleClass="heading2"/>
 
-    <HBox spacing="20" alignment="TOP_CENTER">
+    <HBox spacing="24" alignment="TOP_CENTER">
 
         <!-- USER MANAGEMENT -->
-        <VBox spacing="12">
-            <Label text="Brugere" styleClass="dashboard-section-title"/>
-            <HBox spacing="8" alignment="CENTER_LEFT">
-                <TextField fx:id="searchUserField" promptText="Søg bruger..." prefWidth="180"/>
-                <ComboBox fx:id="roleFilterComboBox" promptText="Filter: Rolle" prefWidth="150">
+        <VBox spacing="15" styleClass="card" HBox.hgrow="ALWAYS" maxWidth="Infinity">
+            <Label text="Brugere" styleClass="section-title"/>
+
+            <HBox spacing="12" alignment="CENTER_LEFT">
+                <TextField fx:id="searchUserField" promptText="Søg bruger..." prefWidth="180" styleClass="input-field"/>
+                <ComboBox fx:id="roleFilterComboBox" promptText="Filter: Rolle" prefWidth="150" styleClass="input-field">
                     <items>
                         <FXCollections fx:factory="observableArrayList">
                             <String fx:value="Alle"/>
@@ -36,21 +37,21 @@
                         </FXCollections>
                     </items>
                 </ComboBox>
-                <Button fx:id="createUserButton" styleClass="crud-btn-create">
+                <Button fx:id="createUserButton" styleClass="btn-primary">
                     <graphic><FontIcon iconLiteral="mdi2p-plus" iconSize="18"/></graphic>
                     <tooltip><Tooltip text="Opret bruger"/></tooltip>
                 </Button>
-                <Button fx:id="editUserButton" styleClass="crud-btn-edit">
+                <Button fx:id="editUserButton" styleClass="btn-edit">
                     <graphic><FontIcon iconLiteral="mdi2s-square-edit-outline" iconSize="18"/></graphic>
                     <tooltip><Tooltip text="Rediger bruger"/></tooltip>
                 </Button>
-                <Button fx:id="deleteUserButton" styleClass="crud-btn-delete">
+                <Button fx:id="deleteUserButton" styleClass="btn-delete">
                     <graphic><FontIcon iconLiteral="mdi2d-delete" iconSize="18"/></graphic>
                     <tooltip><Tooltip text="Slet bruger"/></tooltip>
                 </Button>
             </HBox>
 
-            <TableView fx:id="userTable" prefWidth="600">
+            <TableView fx:id="userTable" VBox.vgrow="ALWAYS" prefWidth="600" maxWidth="Infinity" styleClass="fluent-table">
                 <columns>
                     <TableColumn fx:id="colUsername" text="Brugernavn" prefWidth="120"/>
                     <TableColumn fx:id="colFullName" text="Navn" prefWidth="150"/>
@@ -62,20 +63,21 @@
         </VBox>
 
         <!-- EVENT MANAGEMENT -->
-        <VBox spacing="12">
-            <Label text="Events" styleClass="dashboard-section-title"/>
-            <HBox spacing="8" alignment="CENTER_LEFT">
-                <Button fx:id="assignCoordinatorButton" styleClass="crud-btn-edit">
+        <VBox spacing="15" styleClass="card" HBox.hgrow="ALWAYS" maxWidth="Infinity">
+            <Label text="Events" styleClass="section-title"/>
+
+            <HBox spacing="12" alignment="CENTER_LEFT">
+                <Button fx:id="assignCoordinatorButton" styleClass="btn-edit">
                     <graphic><FontIcon iconLiteral="mdi2a-account-plus" iconSize="18"/></graphic>
                     <tooltip><Tooltip text="Tildel koordinator"/></tooltip>
                 </Button>
-                <Button fx:id="deleteEventButton" styleClass="crud-btn-delete">
+                <Button fx:id="deleteEventButton" styleClass="btn-delete">
                     <graphic><FontIcon iconLiteral="mdi2d-delete" iconSize="18"/></graphic>
                     <tooltip><Tooltip text="Slet event"/></tooltip>
                 </Button>
             </HBox>
 
-            <TableView fx:id="eventTable" prefWidth="600">
+            <TableView fx:id="eventTable" VBox.vgrow="ALWAYS" prefWidth="-1" maxWidth="Infinity" styleClass="fluent-table">
                 <columns>
                     <TableColumn fx:id="colEventTitle" text="Titel" prefWidth="200"/>
                     <TableColumn fx:id="colEventStart" text="Start" prefWidth="140"/>

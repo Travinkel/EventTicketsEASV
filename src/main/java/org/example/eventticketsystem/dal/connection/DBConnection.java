@@ -4,44 +4,44 @@ import org.example.eventticketsystem.utils.Config;
 
 import java.sql.*;
 
+import org.example.eventticketsystem.utils.di.Injectable;
+import org.example.eventticketsystem.utils.di.Scope;
+import org.example.eventticketsystem.utils.di.Singleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * The DBConnection class is responsible for managing the database connection.
+ * It has been refactored to align with the principles of dependency injection (DI)
+ * and to allow the DI framework to manage its lifecycle.
+ */
+
+// Indicates that this class should be treated as a singleton
+@Singleton
+// Explicitly defines the scope as "singleton" for clarity and extensibility.
+@Scope("singleton")
+@Injectable
 public class DBConnection {
-    private static final Logger logger = LoggerFactory.getLogger(DBConnection.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(DBConnection.class.getName());
+    private final Config config;
 
-    private static DBConnection instance;
-    private Connection connection;
-
-    private DBConnection() throws SQLException {
-        String url = Config.get("db.url");
-        String user = Config.get("db.username");
-        String pass = Config.get("db.password");
-
-        try {
-            connection = DriverManager.getConnection(url, user, pass);
-            logger.info("✅ Connected to the database successfully!");
-        } catch (SQLException ex) {
-            logger.error("❌ Failed to connect to database", ex);
-            throw ex;
-        }
+    /**
+     * Constructor is public to allow the DI framework to instantiate this class.
+     * The DI framework will ensure that only one instance is created due to the @Singleton annotation.
+     */
+    public DBConnection(Config config) throws SQLException {
+        this.config = config;
     }
 
-
-    public static synchronized DBConnection getInstance() throws SQLException {
-        if (instance == null) {
-            instance = new DBConnection();
-        } else if (instance.getConnection().isClosed()) {
-            instance = new DBConnection();  // Recreate instance if connection is closed
-        }
-        return instance;
-    }
-
-
+    /**
+     * Provides access to the database connection.
+     * The DI framework ensures that the same instance of DBConnection is used wherever injected.
+     */
     public Connection getConnection() throws SQLException {
-        if (connection == null || connection.isClosed()) {
-            connection = DriverManager.getConnection(Config.get("db.url"), Config.get("db.username"), Config.get("db.password"));
-        }
-        return connection;
+        String url = config.get(Config.Key.DB_URL);
+        String user = config.get(Config.Key.DB_USERNAME);
+        String password = config.get(Config.Key.DB_PASSWORD);
+
+        return DriverManager.getConnection(url, user, password);
     }
 }

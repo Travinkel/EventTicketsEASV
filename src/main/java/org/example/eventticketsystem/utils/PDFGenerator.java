@@ -7,6 +7,8 @@ import com.lowagie.text.Rectangle;
 import com.lowagie.text.pdf.*;
 import org.example.eventticketsystem.dal.models.Event;
 import org.example.eventticketsystem.dal.models.Ticket;
+import org.example.eventticketsystem.utils.di.Injectable;
+import org.example.eventticketsystem.utils.di.Scope;
 
 import java.awt.*;
 import java.io.File;
@@ -14,6 +16,8 @@ import java.io.FileOutputStream;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
+@Injectable
+@Scope("singleton")
 public class PDFGenerator {
 
     public static String generate(Ticket ticket, Event event) {

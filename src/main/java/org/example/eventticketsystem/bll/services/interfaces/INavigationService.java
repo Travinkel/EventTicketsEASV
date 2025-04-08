@@ -4,12 +4,14 @@ import javafx.scene.Node;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import org.example.eventticketsystem.bll.session.SessionContext;
-import org.example.eventticketsystem.dal.models.User;
+import org.example.eventticketsystem.utils.Config;
 
-public interface INavigation {
+import java.util.function.Consumer;
+
+public interface INavigationService {
     void loadScene(String fxmlPath); // still useful
 
-    void loadSceneFromConfig(String configKey); // NEW
+    void loadSceneFromConfig(Config.Key configKey); // NEW
 
     Node loadViewNode(String fxmlPath);
 
@@ -20,6 +22,8 @@ public interface INavigation {
     Stage getPrimaryStage();
 
     SessionContext getSession();
+
+    <T> T showDialog(String fxmlPath, Class<T> controllerClass, Consumer<T> initializer);
 
     Callback<Class<?>, Object> getControllerFactory();
 }

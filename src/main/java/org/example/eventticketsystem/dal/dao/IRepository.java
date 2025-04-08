@@ -3,7 +3,7 @@ package org.example.eventticketsystem.dal.dao;
 import java.util.List;
 import java.util.Optional;
 
-public interface GenericRepository<T> {
+public interface IRepository<T> {
     List<T> findAll();
     Optional<T> findById(int id);
     boolean save(T entity);

@@ -1,7 +1,7 @@
 package org.example.eventticketsystem.dal.dao.decorator;
 
 import lombok.extern.slf4j.Slf4j;
-import org.example.eventticketsystem.dal.dao.GenericRepository;
+import org.example.eventticketsystem.dal.dao.IRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -9,10 +9,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Slf4j
-public class LoggingRepositoryDecorator<T> extends GenericRepositoryDecorator<T> {
+public class LoggingRepositoryDecorator<T> extends IRepositoryDecorator<T> {
     private static final Logger LOGGER = LoggerFactory.getLogger(LoggingRepositoryDecorator.class);
 
-    public LoggingRepositoryDecorator(GenericRepository<T> decoratedDAO) {
+    public LoggingRepositoryDecorator(IRepository<T> decoratedDAO) {
         super(decoratedDAO);
     }
 

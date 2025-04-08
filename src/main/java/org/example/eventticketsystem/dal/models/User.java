@@ -4,8 +4,8 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
+@Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString(of = {"username", "name", "email", "phone"})

@@ -1,10 +1,8 @@
 package org.example.eventticketsystem.gui.shared;
 
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -15,11 +13,10 @@ import org.example.eventticketsystem.utils.di.Injectable;
 import org.example.eventticketsystem.utils.di.Injector;
 
 import javafx.event.ActionEvent;
-import java.net.URL;
+
 import java.util.Optional;
-import java.util.ResourceBundle;
 
-
+@Injectable
 public class LoginController {
 
     @FXML
@@ -55,7 +52,7 @@ public class LoginController {
 
         if (sessionOpt.isPresent()) {
             SessionContext session = sessionOpt.get();
-            Injector.getInstance().register(SessionContext.class, session);
+            Injector.getInstance().register(SessionContext.class, session, "session");
             System.out.println("✅ User logged in successfully");
 
             if (session.isAdmin()) {

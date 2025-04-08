@@ -28,7 +28,7 @@ public class ResultSetExtractor {
         event.setDescription(rs.getString("description"));
         event.setStartTime(rs.getTimestamp("startTime").toLocalDateTime());
         event.setEndTime(rs.getTimestamp("endTime") != null ? rs.getTimestamp("endTime").toLocalDateTime() : null);
-        event.setLocationGuidance(rs.getString("location"));
+        event.setLocationGuidance(rs.getString("locationGuidance"));
         event.setPrice(rs.getDouble("price"));
         event.setCapacity(rs.getInt("capacity"));
         event.setPublic(rs.getBoolean("isPublic"));

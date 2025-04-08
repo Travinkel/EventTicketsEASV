@@ -1,10 +1,37 @@
 <configuration>
+
+    <!-- ==== Console Appender with emoji/log level formatting ==== -->
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%d{HH:mm:ss} [%thread] %-5level %logger - %msg%n</pattern>
+            <!--
+                Log pattern includes:
+                - Timestamp: HH:mm:ss
+                - Thread name
+                - Log level
+                - Logger (shortened to 36 chars)
+                - Message
+            -->
+            <pattern>
+                %d{HH:mm:ss} [%thread] %-5level %highlight(%logger{36}) - %msg%n
+            </pattern>
         </encoder>
     </appender>
-    <root level="info">
+
+    <!-- ==== Log levels for your app ==== -->
+
+    <!-- ROOT logger: DEBUG and up (so you see everything unless filtered) -->
+    <root level="DEBUG">
         <appender-ref ref="STDOUT"/>
     </root>
+
+    <!-- Show full dependency injection log info, with emojis -->
+    <logger name="org.example.eventticketsystem.utils.di" level="DEBUG"/>
+
+    <!-- Reduce noise from ClassGraph -->
+    <logger name="io.github.classgraph" level="WARN"/>
+
+    <!-- Optional: reduce spam from SQL driver if too noisy -->
+    <logger name="com.microsoft.sqlserver" level="WARN"/>
+    <logger name="org.reflections" level="WARN"/>
+
 </configuration>

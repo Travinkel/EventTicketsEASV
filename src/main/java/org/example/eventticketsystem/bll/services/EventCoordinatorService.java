@@ -3,10 +3,12 @@ package org.example.eventticketsystem.bll.services;
 import org.example.eventticketsystem.bll.services.interfaces.IEventCoordinatorService;
 import org.example.eventticketsystem.dal.dao.*;
 import org.example.eventticketsystem.dal.models.*;
+import org.example.eventticketsystem.utils.di.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class EventCoordinatorService implements IEventCoordinatorService {
 
     private final EventRepository eventRepository;

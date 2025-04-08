@@ -1,15 +1,21 @@
 package org.example.eventticketsystem.utils;
 
-import java.io.FileInputStream;
+import org.example.eventticketsystem.utils.di.Injectable;
+import org.example.eventticketsystem.utils.di.Scope;
+import org.example.eventticketsystem.utils.di.Singleton;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+@Singleton
+@Scope("singleton")
+@Injectable
 public class Config {
-    private static final Properties props = new Properties();
+    private final Properties props = new Properties();
 
-    static {
-        try (InputStream input = Config.class.getClassLoader().getResourceAsStream("config.properties")) {
+    public Config() {
+        try (InputStream input = getClass().getClassLoader().getResourceAsStream("config.properties")) {
             if (input == null) {
                 throw new RuntimeException("Could not load config.properties from classpath");
             }
@@ -19,67 +25,44 @@ public class Config {
         }
     }
 
-    public static String get(String key) {
-        return props.getProperty(key);
+    public String get(Key key) {
+        return props.getProperty(key.getKey());
     }
 
-    public static String loginView() {
-        return get("views.login");
-    }
+    public enum Key {
+        LOGIN_VIEW("views.login"),
+        CONTROL_PANEL_VIEW("views.controlPanel"),
+        ADMIN_DASHBOARD_VIEW("views.admin.dashboard"),
+        USER_MANAGEMENT_VIEW("views.admin.userManagement"),
+        USER_FORM_VIEW("views.admin.userForm"),
+        ADMIN_SETTINGS_VIEW("views.admin.settings"),
+        COORDINATOR_SETTINGS_VIEW("views.coordinator.settings"),
+        COORDINATOR_DASHBOARD_VIEW("views.coordinator.dashboard"),
+        TICKET_MANAGEMENT_VIEW("views.coordinator.ticketManagement"),
+        TICKET_DETAILS_VIEW("views.coordinator.ticketDetails"),
+        EVENT_MANAGEMENT_VIEW("views.coordinator.eventManagement"),
+        EVENT_FORM_VIEW("views.coordinator.eventForm"),
+        CONFIRM_DIALOG_VIEW("views.shared.confirmDialog"),
+        SIDEBAR_VIEW("views.shared.sidebar"),
+        TOP_NAVBAR_VIEW("views.shared.topNavbar"),
+        DB_URL("db.url"),
+        DB_USERNAME("db.username"),
+        DB_PASSWORD("db.password"),
+        EMAIL_HOST("email.host"),
+        EMAIL_PORT("email.port"),
+        EMAIL_USERNAME("email.username"),
+        EMAIL_PASSWORD("email.password"),
+        EMAIL_FROM("email.from"),
+        GLOBAL_CSS("global.css");
 
-    public static String controlPanelView() {
-        return get("views.controlPanel");
-    }
+        private final String key;
 
-    public static String adminDashboardView() {
-        return get("views.admin.dashboard");
-    }
+        Key(String key) {
+            this.key = key;
+        }
 
-    public static String userManagementView() {
-        return get("views.admin.userManagement");
-    }
-
-    public static String userFormView() {
-        return get("views.admin.userForm");
-    }
-
-    public static String adminSettingsView() {
-        return get("views.admin.settings");
-    }
-
-    public static String coordinatorSettingsView() {
-        return get("views.coordinator.settings");
-    }
-
-    public static String coordinatorDashboardView() {
-        return get("views.coordinator.dashboard");
-    }
-
-    public static String ticketManagementView() {
-        return get("views.coordinator.ticketManagement");
-    }
-
-    public static String ticketDetailsView() {
-        return get("views.coordinator.ticketDetails");
-    }
-
-    public static String eventManagementView() {
-        return get("views.coordinator.eventManagement");
-    }
-
-    public static String eventFormView() {
-        return get("views.coordinator.eventForm");
-    }
-
-    public static String confirmDialogView() {
-        return get("views.shared.confirmDialog");
-    }
-
-    public static String sidebarView() {
-        return get("views.shared.sidebar");
-    }
-
-    public static String topNavbarView() {
-        return get("views.shared.topNavbar");
+        public String getKey() {
+            return key;
+        }
     }
 }
