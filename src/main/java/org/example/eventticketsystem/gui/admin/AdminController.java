@@ -1,3 +1,12 @@
+/**
+ * 📚 Controller for managing the Admin GUI. This class handles user and event management operations,
+ * including CRUD operations and coordinator assignments.
+ * <p>
+ * 🧱 Design Pattern: Model-View-Controller (MVC)
+ * <p>
+ * 🔗 Dependencies: {@link org.example.eventticketsystem.bll.services.AdminService} for business logic, {@link org.example.eventticketsystem.bll.services.interfaces.INavigationService} for navigation,
+ * {@link org.example.eventticketsystem.bll.session.SessionContext} for session management, {@link UserComposite}, {@link Event}, {@link User} for domain models.
+ */
 package org.example.eventticketsystem.gui.admin;
 
 import javafx.beans.property.ReadOnlyStringWrapper;
@@ -10,6 +19,7 @@ import org.example.eventticketsystem.bll.session.SessionContext;
 import org.example.eventticketsystem.bll.viewmodels.UserComposite;
 import org.example.eventticketsystem.dal.models.Event;
 import org.example.eventticketsystem.dal.models.User;
+import org.example.eventticketsystem.gui.coordinator.AssignCoordinatorDialogController;
 import org.example.eventticketsystem.utils.di.Injectable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -78,11 +88,7 @@ public class AdminController {
 
     @FXML
     private void initialize() {
-        LOGGER.info("""
-                ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-                🚀 Initializing AdminController
-                ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-                """);
+        LOGGER.info("📋 Initializing AdminController");
         setupUserTable();
         setupEventTable();
         setupActions();
@@ -301,5 +307,8 @@ public class AdminController {
                 .setAll(allEvents);
         LOGGER.info("✅ Events loaded: {}", allEvents.size());
     }
-}
 
+    public TableView<UserComposite> getUserTable() {
+        return userTable;
+    }
+}

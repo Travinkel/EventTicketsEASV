@@ -1,3 +1,11 @@
+/**
+ * 📚 Dialog Controller for confirming the deletion of an event. This class handles the user confirmation
+ * and performs the deletion operation.
+ * <p>
+ * 🧱 Design Pattern: Model-View-Controller (MVC)
+ * <p>
+ * 🔗 Dependencies: {@link org.example.eventticketsystem.bll.services.AdminService} for business logic, {@link Event} for domain models.
+ */
 package org.example.eventticketsystem.gui.admin;
 
 import javafx.fxml.FXML;

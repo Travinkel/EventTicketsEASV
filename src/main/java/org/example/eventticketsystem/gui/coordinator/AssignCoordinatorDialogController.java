@@ -1,4 +1,4 @@
-package org.example.eventticketsystem.gui.admin;
+package org.example.eventticketsystem.gui.coordinator;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -29,6 +29,7 @@ public class AssignCoordinatorDialogController {
     @FXML
     private Button cancelButton;
     private boolean coordinatorAssigned = false;
+    private Event event;
 
     public AssignCoordinatorDialogController(AdminService adminService) {
         this.adminService = adminService;
@@ -110,5 +111,9 @@ public class AssignCoordinatorDialogController {
         alert.setTitle(title);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    public void setEvent(Event event) {
+        this.event = event;
     }
 }

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.example.eventticketsystem.gui.coordinator.CreateTicketDialogController"
+      spacing="10" alignment="CENTER">
+    <padding>
+        <Insets top="15" right="15" bottom="15" left="15"/>
+    </padding>
+
+    <Label text="Opret Ny Billet" style="-fx-font-size: 18px;"/>
+
+    <GridPane hgap="10" vgap="10">
+        <Label text="Bruger ID:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+        <TextField fx:id="txtUserId" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+        <Label text="Pris:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+        <TextField fx:id="txtPrice" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+    </GridPane>
+
+    <HBox spacing="10" alignment="CENTER_RIGHT">
+        <Button text="Annuller" onAction="#handleCancel"/>
+        <Button text="Opret" onAction="#handleCreate"/>
+    </HBox>
+</VBox>

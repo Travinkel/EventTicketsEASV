@@ -223,6 +223,7 @@ public class TicketRepository implements IRepository<Ticket> {
         return false;
     }
 
+
     // ==== Utility Methods ====
 
     private Ticket extractTicket(ResultSet rs) throws SQLException {

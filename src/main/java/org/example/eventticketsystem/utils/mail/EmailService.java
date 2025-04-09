@@ -1,17 +1,16 @@
-package org.example.eventticketsystem.bll.services;
+package org.example.eventticketsystem.utils.mail;
 
 import jakarta.mail.*;
-import jakarta.mail.internet.*;
-import org.example.eventticketsystem.utils.di.Injectable;
-import org.example.eventticketsystem.dal.models.Ticket;
+import jakarta.mail.internet.InternetAddress;
+import jakarta.mail.internet.MimeBodyPart;
+import jakarta.mail.internet.MimeMessage;
+import jakarta.mail.internet.MimeMultipart;
 import org.example.eventticketsystem.utils.Config;
-
-import java.io.File;
-import java.util.Properties;
-
 import org.example.eventticketsystem.utils.di.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Properties;
 
 @Service
 public class EmailService {
@@ -41,7 +40,8 @@ public class EmailService {
     }
 
 
-    public boolean sendEmailWithAttachment(String to, String subject, String body, String filePath) {
+    public boolean sendEmailWithAttachment(String to, String subject, String body, byte[] fileContent,
+                                           String filename) {
         try {
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(from));
@@ -52,7 +52,8 @@ public class EmailService {
             textPart.setText(body);
 
             MimeBodyPart attachmentPart = new MimeBodyPart();
-            attachmentPart.attachFile(new File(filePath));
+            attachmentPart.setFileName(filename);
+            attachmentPart.setContent(fileContent, "application/pdf");
 
             Multipart multipart = new MimeMultipart();
             multipart.addBodyPart(textPart);
@@ -63,8 +64,9 @@ public class EmailService {
             return true;
 
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error("❌ Failed to send email with attachment", e);
             return false;
         }
     }
+
 }

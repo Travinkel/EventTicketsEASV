@@ -1,3 +1,15 @@
+/**
+ * 📚 Repository for managing User-Event-Role relationships.
+ * This class handles CRUD operations and additional queries for the UserEventRoles table.
+ * <p>
+ * 🧱 Design Pattern: Data Access Object (DAO)
+ * <p>
+ * 🔗 Dependencies:
+ * {@link org.example.eventticketsystem.dal.connection.DBConnection} for database connectivity
+ * {@link ResultSetExtractor} for mapping result sets to models
+ * {@link org.example.eventticketsystem.dal.models.UserEventRole}, {@link Event}, {@link org.example.eventticketsystem.dal.models.User} for domain models
+ */
+
 package org.example.eventticketsystem.dal.dao;
 
 import org.example.eventticketsystem.dal.connection.DBConnection;

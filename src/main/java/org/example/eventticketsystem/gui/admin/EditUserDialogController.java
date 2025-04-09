@@ -73,7 +73,7 @@ public class EditUserDialogController {
             DialogUtils.showAlert("Fejl", "Alle felter skal udfyldes.");
             return;
         }
-        
+
 
         userToEdit.setUsername(username);
         userToEdit.setName(fullName);
@@ -126,3 +126,4 @@ public class EditUserDialogController {
         }
     }
 }
+

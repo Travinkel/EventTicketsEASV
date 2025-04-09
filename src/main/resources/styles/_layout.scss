@@ -1,0 +1,19 @@
+@import 'variables';
+
+.root {
+  background-color: #F4F5F7;
+}
+
+.card, .settings-card {
+  background-color: white;
+  border-radius: $radius-default;
+  box-shadow: $shadow-soft;
+  padding: 30px;
+}
+
+.sidebar {
+  background-color: $easv-gray;
+  border-radius: 20px 0 0 20px;
+  padding: 20px;
+  color: white;
+}

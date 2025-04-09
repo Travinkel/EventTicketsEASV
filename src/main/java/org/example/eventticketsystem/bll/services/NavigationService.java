@@ -252,7 +252,7 @@ public class NavigationService implements INavigationService {
         switch (fxmlPath) {
             case "/views/shared/LoginView.fxml" -> setWindowSize(420, 450);
             case "/views/admin/AdminView.fxml" -> setWindowSize(1280, 800);
-            case "/views/archive/EventCoordinatorView.fxml" -> setWindowSize(1280, 800);
+            case "/views/coordinator/EventCoordinatorView.fxml" -> setWindowSize(1280, 800);
             default -> setWindowSize(420, 450);
         }
         logger.info("✅ Window size adjusted for scene: {}", fxmlPath);

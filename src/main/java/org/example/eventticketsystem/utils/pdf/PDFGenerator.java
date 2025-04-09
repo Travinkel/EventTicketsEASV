@@ -1,4 +1,4 @@
-package org.example.eventticketsystem.utils;
+package org.example.eventticketsystem.utils.pdf;
 
 import com.lowagie.text.*;
 import com.lowagie.text.Font;
@@ -7,6 +7,7 @@ import com.lowagie.text.Rectangle;
 import com.lowagie.text.pdf.*;
 import org.example.eventticketsystem.dal.models.Event;
 import org.example.eventticketsystem.dal.models.Ticket;
+import org.example.eventticketsystem.utils.QRGenerator;
 import org.example.eventticketsystem.utils.di.Injectable;
 import org.example.eventticketsystem.utils.di.Scope;
 
@@ -59,7 +60,8 @@ public class PDFGenerator {
             table.addCell(createCell(event.getTitle(), valueFont));
 
             table.addCell(createCell("Dato:", labelFont));
-            table.addCell(createCell(event.getStartTime().format(DateTimeFormatter.ofPattern("dd MMM yyyy")), valueFont));
+            table.addCell(createCell(event.getStartTime()
+                    .format(DateTimeFormatter.ofPattern("dd MMM yyyy")), valueFont));
 
             table.addCell(createCell("Bruger ID:", labelFont));
             table.addCell(createCell(String.valueOf(ticket.getUserId()), valueFont));

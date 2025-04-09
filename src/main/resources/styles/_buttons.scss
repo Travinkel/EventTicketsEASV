@@ -1,0 +1,31 @@
+@import 'variables';
+
+.button-primary, .btn-primary {
+  background-color: $easv-blue;
+  color: white;
+  font-family: $font-title;
+  border-radius: $radius-default;
+  padding: 10px 20px;
+
+  &:hover {
+    background-color: darken($easv-blue, 10%);
+  }
+}
+
+.button-secondary, .btn-secondary {
+  background-color: $easv-red;
+  color: white;
+  font-family: $font-title;
+  border-radius: $radius-default;
+  padding: 10px 20px;
+
+  &:hover {
+    background-color: darken($easv-red, 10%);
+  }
+}
+
+.crud-btn-create, .btn-edit, .btn-delete {
+  border-radius: 6px;
+  font-size: 14px;
+  padding: 6px 12px;
+}

@@ -146,6 +146,22 @@ public class UserRoleRepository implements IRepository<UserRole> {
         return roles;
     }
 
+    public boolean userHasRole(int userId, int roleId) {
+        String sql = "SELECT COUNT(*) FROM UserRoles WHERE userId = ? AND roleId = ?";
+        try (Connection conn = dbConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, userId);
+            stmt.setInt(2, roleId);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public List<Integer> findUserIdsByRole(int roleId) {
         List<Integer> userIds = new ArrayList<>();
         String sql = "SELECT userId FROM UserRoles WHERE roleId = ?";

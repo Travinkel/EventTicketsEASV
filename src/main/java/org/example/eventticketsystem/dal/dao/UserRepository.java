@@ -40,11 +40,19 @@ public class UserRepository implements IRepository<User> {
 
     // ==== CRUD ====
 
+    /**
+     * 🔍 Fetches all users from the database.
+     * <p>
+     * 📌 This method retrieves all rows from the `Users` table and maps them to {@link User} objects.
+     *
+     * @return A list of {@link User} objects.
+     */
     @Override
     public List<User> findAll() {
         List<User> users = new ArrayList<>();
         String sql = "SELECT * FROM Users";
 
+        // 📌 Log the SQL query for debugging purposes
         LOGGER.debug("📦 Executing SQL query to fetch all users: {}", sql);
 
         try (Connection connection = dbConnection.getConnection();
@@ -89,11 +97,20 @@ public class UserRepository implements IRepository<User> {
         return Optional.empty();
     }
 
+    /**
+     * ➕ Saves a new user to the database.
+     * <p>
+     * 📌 Inserts a new record into the `Users` table and sets the generated ID on the {@link User} object.
+     *
+     * @param user The {@link User} object to save.
+     * @return True if the operation was successful, false otherwise.
+     */
     @Override
     public boolean save(User user) {
         String sql =
                 "INSERT INTO Users (username, hashedPassword, name, email, phone, createdAt) VALUES (?, ?, ?, ?, ?, ?)";
 
+        // 📌 Use a prepared statement to prevent SQL injection
         LOGGER.debug("📦 Preparing to save user: {}", user);
 
         try (Connection connection = dbConnection.getConnection();
@@ -128,6 +145,14 @@ public class UserRepository implements IRepository<User> {
         return false;
     }
 
+    /**
+     * ♻️ Updates an existing user in the database.
+     * <p>
+     * 📌 Updates the fields of a user in the `Users` table based on the user's ID.
+     *
+     * @param user The {@link User} object to update.
+     * @return True if the update was successful, false otherwise.
+     */
     @Override
     public boolean update(User user) {
         String sql =
@@ -162,28 +187,36 @@ public class UserRepository implements IRepository<User> {
         return false;
     }
 
+    /**
+     * 🗑 Deletes a user from the database.
+     * <p>
+     * 📌 Deletes the user from the `Users` table and cascades the deletion to related tables (e.g., `UserRoles`).
+     *
+     * @param userId The ID of the user to delete.
+     * @return True if the deletion was successful, false otherwise.
+     */
     @Override
     public boolean delete(int userId) {
-        String sql = "DELETE FROM Users WHERE id = ?";
+        // 📌 Use a transaction to ensure atomicity of the delete operation
+        try (Connection conn = dbConnection.getConnection()) {
+            conn.setAutoCommit(false);
+            try (PreparedStatement deleteRoles = conn.prepareStatement("DELETE FROM UserRoles WHERE userId = ?");
+                 PreparedStatement deleteUser = conn.prepareStatement("DELETE FROM Users WHERE id = ?")) {
 
-        LOGGER.debug("🗑 Preparing to delete user with ID: {}", userId);
+                deleteRoles.setInt(1, userId);
+                deleteRoles.executeUpdate();
 
-        try (Connection connection = dbConnection.getConnection();
-             PreparedStatement stmt = connection.prepareStatement(sql)) {
+                deleteUser.setInt(1, userId);
+                int rows = deleteUser.executeUpdate();
 
-            stmt.setInt(1, userId);
-            boolean success = stmt.executeUpdate() > 0;
-
-            if (success) {
-                LOGGER.info("🗑 User with ID {} successfully deleted.", userId);
-            } else {
-                LOGGER.warn("⚠️ No user found to delete with ID: {}", userId);
+                conn.commit();
+                return rows > 0;
+            } catch (SQLException e) {
+                conn.rollback();
+                throw e;
             }
-
-            return success;
-
-        } catch (SQLException e) {
-            LOGGER.error("❌ Failed to delete user with ID: {}", userId, e);
+        } catch (SQLException ex) {
+            LOGGER.error("❌ Failed to delete user with ID: " + userId, ex);
             return false;
         }
     }
@@ -229,6 +262,14 @@ public class UserRepository implements IRepository<User> {
 
     // ==== User Retrieval ====
 
+    /**
+     * 🔍 Finds a user by their username.
+     * <p>
+     * 📌 This method retrieves a user from the `Users` table based on their username.
+     *
+     * @param username The username of the user.
+     * @return An {@link Optional} containing the user if found, or empty if not found.
+     */
     public Optional<User> findByUsername(String username) {
         String sql = "SELECT * FROM Users WHERE username = ?";
 

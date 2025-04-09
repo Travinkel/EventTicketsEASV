@@ -1,24 +1,27 @@
 package org.example.eventticketsystem.gui.shared;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import lombok.Getter;
 import org.example.eventticketsystem.bll.services.AuthService;
 import org.example.eventticketsystem.bll.services.NavigationService;
 import org.example.eventticketsystem.bll.session.SessionContext;
 import org.example.eventticketsystem.utils.di.Injectable;
 import org.example.eventticketsystem.utils.di.Injector;
 
-import javafx.event.ActionEvent;
-
 import java.util.Optional;
 
 @Injectable
+@Getter
 public class LoginController {
 
+    private final AuthService authService;
+    private final NavigationService navigationService;
     @FXML
     private TextField usernameField;
     @FXML
@@ -28,9 +31,6 @@ public class LoginController {
     @FXML
     private Button closeButton;
 
-    private final AuthService authService;
-    private final NavigationService navigationService;
-
     public LoginController(AuthService authService, NavigationService navigationService) {
         this.authService = authService;
         this.navigationService = navigationService;
@@ -39,8 +39,10 @@ public class LoginController {
 
     @FXML
     private void handleLogin(ActionEvent event) {
-        String username = usernameField.getText().trim();
-        String password = passwordField.getText().trim();
+        String username = usernameField.getText()
+                .trim();
+        String password = passwordField.getText()
+                .trim();
 
         if (username.isEmpty() || password.isEmpty()) {
             // Optional: Add UI feedback (e.g., shake input fields or display label)
@@ -52,7 +54,8 @@ public class LoginController {
 
         if (sessionOpt.isPresent()) {
             SessionContext session = sessionOpt.get();
-            Injector.getInstance().register(SessionContext.class, session, "session");
+            Injector.getInstance()
+                    .register(SessionContext.class, session, "session");
             System.out.println("✅ User logged in successfully");
 
             if (session.isAdmin()) {
@@ -71,8 +74,11 @@ public class LoginController {
 
     @FXML
     private void closeApp(ActionEvent event) {
+        SessionContext.getInstance()
+                .reset(); // Reset session on app close
         Node source = (Node) event.getSource();
-        Stage stage = (Stage) source.getScene().getWindow();
+        Stage stage = (Stage) source.getScene()
+                .getWindow();
         stage.close();
     }
 }
