@@ -1,19 +1,136 @@
-@import 'variables';
+@import "variables";
 
-.root {
-  background-color: #F4F5F7;
+/* === Base Containers === */
+.content-root {
+  -fx-background-color: $background-light;
+  -fx-background-radius: $radius-default;
+  -fx-border-radius: $radius-default;
+  -fx-border-color: $border-light;
+  -fx-border-width: 1px;
+  -fx-effect: $shadow-default;
+  -fx-padding: $space-4;
 }
 
-.card, .settings-card {
-  background-color: white;
-  border-radius: $radius-default;
-  box-shadow: $shadow-soft;
-  padding: 30px;
+
+/* === Content Areas === */
+/* REPLACED: .rounded-container, .dashboard-root, .main-content, .admin-root, .grid-container */
+.content-root {
+  @extend .base-container;
+  // TODO: RENAME these in FXML:
+  // rounded-container → content-root
+  // dashboard-root → content-root
+  // main-content → content-root
+  // admin-root → content-root
+  // grid-container → content-root
 }
 
+/* === Inner Content Wrapper === */
+.content-area {
+  -fx-background-color: $background-light;
+  -fx-background-radius: $radius-default;
+  -fx-border-radius: $radius-default;
+  -fx-border-color: $border-light;
+  -fx-border-width: 1px;
+  -fx-effect: $shadow-default;
+}
+
+/* === Section / Card Containers === */
+.section-container {
+  -fx-background-color: $background-white;
+  -fx-background-radius: $radius-small;
+  -fx-border-radius: $radius-small;
+  -fx-border-color: $border-light;
+  -fx-border-width: 1px;
+  -fx-padding: $space-6;
+  -fx-effect: $shadow-soft;
+}
+
+/* REPLACED: .settings-card */
+.card {
+  @extend .section-container;
+  // TODO: RENAME settings-card → card in FXML
+}
+
+.card > .title {
+  -fx-background-color: transparent;
+  -fx-font-family: $font-heading;
+  -fx-font-size: 18px;
+  -fx-text-fill: $text-primary;
+  -fx-padding: 8 16;
+  -fx-font-weight: bold;
+  -fx-border-color: transparent;
+}
+
+.login-card {
+  -fx-background-color: transparent;
+  -fx-background-radius: $radius-default;
+  -fx-border-radius: $radius-default;
+  -fx-padding: $space-6;
+}
+
+/* === Sidebar Layout === */
 .sidebar {
-  background-color: $easv-gray;
-  border-radius: 20px 0 0 20px;
-  padding: 20px;
-  color: white;
+  -fx-background-color: #2A3D66;
+  -fx-padding: $space-5;
+  -fx-spacing: $space-2;
+  -fx-border-radius: $radius-large 0 0 $radius-large;
+  -fx-background-radius: $radius-large 0 0 $radius-large;
+  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0.1, 0, 2);
+}
+
+/* === Settings Root */
+.settings-root {
+  -fx-background-color: $background-light;
+}
+
+/* === Tableview Root */
+.fluent-table {
+  -fx-background-color: $background-white;
+  -fx-border-color: #DADADA;
+  -fx-border-width: 1;
+  -fx-table-cell-border-color: #EAEAEA;
+  -fx-font-family: $font-body;
+  -fx-font-size: 14px;
+}
+
+/* Header background */
+.fluent-table .column-header-background {
+  -fx-background-color: $easv-blue;
+  -fx-border-color: transparent;
+}
+
+/* Header text */
+.fluent-table .column-header,
+.fluent-table .label {
+  -fx-text-fill: white;
+  -fx-font-weight: bold;
+}
+
+/* Column alignment */
+.fluent-table .table-column {
+  -fx-alignment: CENTER_LEFT;
+  -fx-font-weight: bold;
+}
+
+/* Row styling */
+.fluent-table .table-row-cell {
+  -fx-border-color: $border-light;
+  -fx-background-color: $background-white;
+}
+
+.fluent-table .table-row-cell:hover {
+  -fx-background-color: #eef6fc;
+}
+
+.fluent-table .table-row-cell:selected {
+  -fx-background-color: #cceeff;
+}
+
+.form-input {
+  -fx-font-size: 14px;
+  -fx-padding: 8;
+  -fx-background-color: $background-white;
+  -fx-border-color: $border-light;
+  -fx-border-radius: 4;
+  -fx-font-family: $font-body;
 }

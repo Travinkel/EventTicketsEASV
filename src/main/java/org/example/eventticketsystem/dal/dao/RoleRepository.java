@@ -1,15 +1,30 @@
 /**
- * 📚 Repository for managing User-Event-Role relationships.
- * This class handles CRUD operations and additional queries for the UserEventRoles table.
+ * 📚 Repository for managing Role entities and their relationships with users and events.
+ * This class provides CRUD operations and additional queries for the `Roles` table.
+ * It also supports operations related to the `UserEventRoles` table, enabling role-based
+ * access control and user-event-role associations.
  * <p>
  * 🧱 Design Pattern: Data Access Object (DAO)
+ * - Encapsulates database access logic for the `Roles` table.
+ * - Promotes separation of concerns by isolating persistence logic from business logic.
  * <p>
  * 🔗 Dependencies:
- * {@link org.example.eventticketsystem.dal.connection.DBConnection} for database connectivity
- * {@link ResultSetExtractor} for mapping result sets to models
- * {@link org.example.eventticketsystem.dal.models.UserEventRole}, {@link Event}, {@link org.example.eventticketsystem.dal.models.User} for domain models
+ * - {@link org.example.eventticketsystem.dal.connection.DBConnection} for establishing database connections.
+ * - {@link org.example.eventticketsystem.dal.helpers.ResultSetExtractor} for mapping SQL result sets to domain models.
+ * - {@link org.example.eventticketsystem.dal.models.Role} for representing role entities.
+ * - {@link org.example.eventticketsystem.dal.models.UserEventRole} for managing user-event-role relationships.
+ * - {@link org.example.eventticketsystem.dal.models.User} and {@link Event} for domain models related to roles.
+ * <p>
+ * 🧩 Responsibilities:
+ * - Perform CRUD operations on the `Roles` table.
+ * - Support role-based queries, such as finding roles by name or ID.
+ * - Facilitate role assignments and associations with users and events.
+ * - Ensure transactional integrity and handle SQL exceptions gracefully.
+ * <p>
+ * 🛠️ Usage:
+ * - This repository is managed as a singleton by the DI framework.
+ * - Use this class in service layers to interact with role-related data.
  */
-
 package org.example.eventticketsystem.dal.dao;
 
 import org.example.eventticketsystem.dal.connection.DBConnection;
@@ -39,8 +54,11 @@ import java.util.Optional;
 @Scope("singleton")
 public class RoleRepository implements IRepository<Role> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(RoleRepository.class);
-    private final DBConnection dbConnection;
+    private static final Logger
+            LOGGER =
+            LoggerFactory.getLogger(RoleRepository.class);
+    private final DBConnection
+            dbConnection;
 
     /**
      * Constructor for RoleRepository.
@@ -50,7 +68,8 @@ public class RoleRepository implements IRepository<Role> {
      */
     @Inject
     public RoleRepository(DBConnection dbConnection) {
-        this.dbConnection = dbConnection;
+        this.dbConnection =
+                dbConnection;
     }
 
     // ==== CRUD ====
@@ -63,17 +82,23 @@ public class RoleRepository implements IRepository<Role> {
     @Override
     public List<Role> findAll() {
         LOGGER.info("📦 Retrieving all roles from the database...");
-        List<Role> roles = new ArrayList<>();
-        String sql = "SELECT * FROM Roles";
+        List<Role>
+                roles =
+                new ArrayList<>();
+        String
+                sql =
+                "SELECT * FROM Roles";
         try (PreparedStatement ps = dbConnection.getConnection()
                 .prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 roles.add(ResultSetExtractor.extractRole(rs));
             }
-            LOGGER.info("✅ Successfully retrieved {} roles.", roles.size());
+            LOGGER.info("✅ Successfully retrieved {} roles.",
+                    roles.size());
         } catch (SQLException e) {
-            LOGGER.error("❌ Error retrieving all roles from the database.", e);
+            LOGGER.error("❌ Error retrieving all roles from the database.",
+                    e);
         }
         return roles;
     }
@@ -86,20 +111,28 @@ public class RoleRepository implements IRepository<Role> {
      */
     @Override
     public Optional<Role> findById(int id) {
-        LOGGER.debug("🔍 Finding role by ID: {}", id);
-        String sql = "SELECT * FROM Roles WHERE id = ?";
+        LOGGER.debug("🔍 Finding role by ID: {}",
+                id);
+        String
+                sql =
+                "SELECT * FROM Roles WHERE id = ?";
         try (PreparedStatement ps = dbConnection.getConnection()
                 .prepareStatement(sql)) {
-            ps.setInt(1, id);
+            ps.setInt(1,
+                    id);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    LOGGER.info("✅ Role with ID {} found.", id);
+                    LOGGER.info("✅ Role with ID {} found.",
+                            id);
                     return Optional.of(ResultSetExtractor.extractRole(rs));
                 }
             }
-            LOGGER.warn("⚠️ No role found with ID: {}", id);
+            LOGGER.warn("⚠️ No role found with ID: {}",
+                    id);
         } catch (SQLException e) {
-            LOGGER.error("❌ Error finding role by ID: {}", id, e);
+            LOGGER.error("❌ Error finding role by ID: {}",
+                    id,
+                    e);
         }
         return Optional.empty();
     }
@@ -112,25 +145,38 @@ public class RoleRepository implements IRepository<Role> {
      */
     @Override
     public boolean save(Role role) {
-        LOGGER.info("➕ Saving new role: {}", role.getName());
-        String sql = "INSERT INTO Roles (name) VALUES (?)";
+        LOGGER.info("➕ Saving new role: {}",
+                role.getName());
+        String
+                sql =
+                "INSERT INTO Roles (name) VALUES (?)";
         try (PreparedStatement ps = dbConnection.getConnection()
-                .prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            ps.setString(1, role.getName());
-            int rows = ps.executeUpdate();
-            if (rows == 0) {
-                LOGGER.warn("⚠️ No rows affected while saving role: {}", role.getName());
+                .prepareStatement(sql,
+                        Statement.RETURN_GENERATED_KEYS)) {
+            ps.setString(1,
+                    role.getName());
+            int
+                    rows =
+                    ps.executeUpdate();
+            if (rows ==
+                0) {
+                LOGGER.warn("⚠️ No rows affected while saving role: {}",
+                        role.getName());
                 return false;
             }
             try (ResultSet keys = ps.getGeneratedKeys()) {
                 if (keys.next()) {
                     role.setId(keys.getInt(1));
-                    LOGGER.info("✅ Role '{}' saved with ID: {}", role.getName(), role.getId());
+                    LOGGER.info("✅ Role '{}' saved with ID: {}",
+                            role.getName(),
+                            role.getId());
                 }
             }
             return true;
         } catch (SQLException e) {
-            LOGGER.error("❌ Error saving role: {}", role.getName(), e);
+            LOGGER.error("❌ Error saving role: {}",
+                    role.getName(),
+                    e);
         }
         return false;
     }
@@ -143,19 +189,30 @@ public class RoleRepository implements IRepository<Role> {
      */
     @Override
     public boolean update(Role role) {
-        LOGGER.info("♻️ Updating role with ID {}: {}", role.getId(), role.getName());
-        String sql = "UPDATE Roles SET name = ? WHERE id = ?";
+        LOGGER.info("♻️ Updating role with ID {}: {}",
+                role.getId(),
+                role.getName());
+        String
+                sql =
+                "UPDATE Roles SET name = ? WHERE id = ?";
         try (PreparedStatement ps = dbConnection.getConnection()
                 .prepareStatement(sql)) {
-            ps.setString(1, role.getName());
-            ps.setInt(2, role.getId());
-            if (ps.executeUpdate() == 1) {
-                LOGGER.info("✅ Role with ID {} successfully updated.", role.getId());
+            ps.setString(1,
+                    role.getName());
+            ps.setInt(2,
+                    role.getId());
+            if (ps.executeUpdate() ==
+                1) {
+                LOGGER.info("✅ Role with ID {} successfully updated.",
+                        role.getId());
                 return true;
             }
-            LOGGER.warn("⚠️ No rows affected while updating role with ID: {}", role.getId());
+            LOGGER.warn("⚠️ No rows affected while updating role with ID: {}",
+                    role.getId());
         } catch (SQLException e) {
-            LOGGER.error("❌ Error updating role with ID {}: {}", role.getId(), e);
+            LOGGER.error("❌ Error updating role with ID {}: {}",
+                    role.getId(),
+                    e);
         }
         return false;
     }
@@ -168,18 +225,27 @@ public class RoleRepository implements IRepository<Role> {
      */
     @Override
     public boolean delete(int id) {
-        LOGGER.info("🗑 Deleting role with ID: {}", id);
-        String sql = "DELETE FROM Roles WHERE id = ?";
+        LOGGER.info("🗑 Deleting role with ID: {}",
+                id);
+        String
+                sql =
+                "DELETE FROM Roles WHERE id = ?";
         try (PreparedStatement ps = dbConnection.getConnection()
                 .prepareStatement(sql)) {
-            ps.setInt(1, id);
-            if (ps.executeUpdate() == 1) {
-                LOGGER.info("✅ Role with ID {} successfully deleted.", id);
+            ps.setInt(1,
+                    id);
+            if (ps.executeUpdate() ==
+                1) {
+                LOGGER.info("✅ Role with ID {} successfully deleted.",
+                        id);
                 return true;
             }
-            LOGGER.warn("⚠️ No rows affected while deleting role with ID: {}", id);
+            LOGGER.warn("⚠️ No rows affected while deleting role with ID: {}",
+                    id);
         } catch (SQLException e) {
-            LOGGER.error("❌ Error deleting role with ID: {}", id, e);
+            LOGGER.error("❌ Error deleting role with ID: {}",
+                    id,
+                    e);
         }
         return false;
     }
@@ -191,20 +257,28 @@ public class RoleRepository implements IRepository<Role> {
      * @return An Optional containing the role if found, or empty if not.
      */
     public Optional<Role> findByName(String name) {
-        LOGGER.debug("🔍 Finding role by name: {}", name);
-        String sql = "SELECT * FROM Roles WHERE name = ?";
+        LOGGER.debug("🔍 Finding role by name: {}",
+                name);
+        String
+                sql =
+                "SELECT * FROM Roles WHERE name = ?";
         try (PreparedStatement ps = dbConnection.getConnection()
                 .prepareStatement(sql)) {
-            ps.setString(1, name);
+            ps.setString(1,
+                    name);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    LOGGER.info("✅ Role with name '{}' found.", name);
+                    LOGGER.info("✅ Role with name '{}' found.",
+                            name);
                     return Optional.of(ResultSetExtractor.extractRole(rs));
                 }
             }
-            LOGGER.warn("⚠️ No role found with name: {}", name);
+            LOGGER.warn("⚠️ No role found with name: {}",
+                    name);
         } catch (SQLException e) {
-            LOGGER.error("❌ Error finding role by name: {}", name, e);
+            LOGGER.error("❌ Error finding role by name: {}",
+                    name,
+                    e);
         }
         return Optional.empty();
     }

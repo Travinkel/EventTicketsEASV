@@ -4,24 +4,25 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <BorderPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="org.example.eventticketsystem.gui.coordinator.EventCoordinatorController">
+            fx:controller="org.example.eventticketsystem.gui.coordinator.EventCoordinatorController"
+            styleClass="rounded-container">
 
     <top>
         <Label text="Event Koordinator Oversigt"
-               styleClass="heading"
+               styleClass="heading-1"
                BorderPane.alignment="CENTER"/>
     </top>
 
     <center>
-        <VBox spacing="15">
+        <VBox spacing="20" styleClass="section-container">
             <padding>
-                <Insets top="15" right="15" bottom="15" left="15"/>
+                <Insets top="20" right="20" bottom="20" left="20"/>
             </padding>
 
-            <!-- Events -->
-            <TitledPane text="Mine Events" expanded="true">
-                <VBox spacing="10">
-                    <TableView fx:id="eventTable" prefHeight="200">
+            <!-- Events Section -->
+            <TitledPane text="Mine Events" expanded="true" styleClass="card">
+                <VBox spacing="15">
+                    <TableView fx:id="eventTable" prefHeight="200" styleClass="fluent-table">
                         <columns>
                             <TableColumn fx:id="colTitle" text="Titel"/>
                             <TableColumn fx:id="colStartTime" text="Start"/>
@@ -31,18 +32,18 @@
                     </TableView>
 
                     <HBox spacing="10" alignment="CENTER_RIGHT">
-                        <Button fx:id="btnCreateEvent" text="➕ Opret Event" styleClass="button-primary"/>
-                        <Button fx:id="btnEditEvent" text="✏️ Redigér Event" styleClass="button-primary"/>
-                        <Button fx:id="btnDeleteEvent" text="🗑 Slet Event" styleClass="button-secondary"/>
-                        <Button fx:id="btnAssignCoordinator" text="👥 Tildel Koordinator" styleClass="button-primary"/>
+                        <Button fx:id="btnCreateEvent" text="➕ Opret Event" styleClass="btn-crud-add"/>
+                        <Button fx:id="btnEditEvent" text="✏️ Redigér Event" styleClass="btn-crud-edit"/>
+                        <Button fx:id="btnDeleteEvent" text="🗑 Slet Event" styleClass="btn-crud-delete"/>
+                        <Button fx:id="btnAssignCoordinator" text="👥 Tildel Koordinator" styleClass="btn-crud-assign"/>
                     </HBox>
                 </VBox>
             </TitledPane>
 
-            <!-- Tickets -->
-            <TitledPane text="Billetter til valgt event" expanded="true">
-                <VBox spacing="10">
-                    <TableView fx:id="ticketTable" prefHeight="220">
+            <!-- Tickets Section -->
+            <TitledPane text="Billetter til valgt event" expanded="true" styleClass="card">
+                <VBox spacing="15">
+                    <TableView fx:id="ticketTable" prefHeight="220" styleClass="fluent-table">
                         <columns>
                             <TableColumn fx:id="colTicketId" text="Billet ID"/>
                             <TableColumn fx:id="colUserId" text="Bruger ID"/>
@@ -53,26 +54,26 @@
                     </TableView>
 
                     <HBox spacing="10" alignment="CENTER_RIGHT">
-                        <Button fx:id="btnCreateTicket" text="➕ Tilføj Billet (IRL)"/>
-                        <Button fx:id="btnSendTicket" text="📧 Send Billet som PDF"/>
-                        <Button fx:id="btnDeleteTicket" text="🗑 Slet Billet"/>
+                        <Button fx:id="btnCreateTicket" text="➕ Tilføj Billet (IRL)" styleClass="btn-crud-add"/>
+                        <Button fx:id="btnSendTicket" text="📧 Send Billet som PDF" styleClass="btn-crud-assign"/>
+                        <Button fx:id="btnDeleteTicket" text="🗑 Slet Billet" styleClass="btn-crud-delete"/>
                     </HBox>
                 </VBox>
             </TitledPane>
 
-            <!-- Special Tickets -->
-            <TitledPane text="Specialbilletter" expanded="true">
-                <VBox spacing="10">
+            <!-- Special Tickets Section -->
+            <TitledPane text="Specialbilletter" expanded="true" styleClass="card">
+                <VBox spacing="15">
                     <HBox spacing="10" alignment="CENTER_LEFT">
-                        <Label text="Titel:"/>
-                        <TextField fx:id="txtSpecialTitle" promptText="F.eks. Gratis Øl"/>
+                        <Label text="Titel:" styleClass="body-text"/>
+                        <TextField fx:id="txtSpecialTitle" promptText="F.eks. Gratis Øl" styleClass="form-input"/>
 
-                        <Label text="Event ID:"/>
-                        <TextField fx:id="txtSpecialEventId" promptText="(valgfri)"/>
+                        <Label text="Event ID:" styleClass="body-text"/>
+                        <TextField fx:id="txtSpecialEventId" promptText="(valgfri)" styleClass="form-input"/>
                     </HBox>
 
                     <HBox spacing="10" alignment="CENTER_RIGHT">
-                        <Button fx:id="btnCreateSpecialTicket" text="🎟 Opret Specialbillet"/>
+                        <Button fx:id="btnCreateSpecialTicket" text="🎟 Opret Specialbillet" styleClass="btn-crud-add"/>
                     </HBox>
                 </VBox>
             </TitledPane>

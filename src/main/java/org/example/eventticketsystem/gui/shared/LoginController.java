@@ -74,8 +74,6 @@ public class LoginController {
 
     @FXML
     private void closeApp(ActionEvent event) {
-        SessionContext.getInstance()
-                .reset(); // Reset session on app close
         Node source = (Node) event.getSource();
         Stage stage = (Stage) source.getScene()
                 .getWindow();

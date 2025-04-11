@@ -8,71 +8,107 @@ import javafx.stage.Stage;
 import org.example.eventticketsystem.bll.services.EventCoordinatorService;
 import org.example.eventticketsystem.dal.models.Event;
 import org.example.eventticketsystem.dal.models.Ticket;
+import org.example.eventticketsystem.utils.di.Injectable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@Injectable
 public class CreateTicketDialogController {
-    private static final Logger LOGGER = LoggerFactory.getLogger(CreateTicketDialogController.class);
-    private final EventCoordinatorService coordinatorService;
+    private static final Logger
+            LOGGER =
+            LoggerFactory.getLogger(CreateTicketDialogController.class);
+    private final EventCoordinatorService
+            coordinatorService;
 
     @FXML
-    private TextField txtUserId;
+    private TextField
+            txtUserId;
     @FXML
-    private TextField txtPrice;
+    private TextField
+            txtPrice;
 
-    private boolean ticketCreated = false;
-    private Event event;
+    private boolean
+            ticketCreated =
+            false;
+    private Event
+            event;
 
     public CreateTicketDialogController(EventCoordinatorService coordinatorService) {
-        this.coordinatorService = coordinatorService;
+        this.coordinatorService =
+                coordinatorService;
     }
 
     public void setEvent(Event event) {
-        this.event = event;
+        this.event =
+                event;
     }
 
     @FXML
     public void handleCreate() {
-        String userIdText = txtUserId.getText();
-        String priceText = txtPrice.getText();
+        String
+                userIdText =
+                txtUserId.getText();
+        String
+                priceText =
+                txtPrice.getText();
 
-        if (userIdText.isBlank() || priceText.isBlank()) {
-            showAlert("Fejl", "Alle felter skal udfyldes.");
+        if (userIdText.isBlank() ||
+            priceText.isBlank()) {
+            showAlert("Fejl",
+                    "Alle felter skal udfyldes.");
             return;
         }
 
         try {
-            int userId = Integer.parseInt(userIdText);
-            double price = Double.parseDouble(priceText);
+            int
+                    userId =
+                    Integer.parseInt(userIdText);
+            double
+                    price =
+                    Double.parseDouble(priceText);
 
             // Create a new Ticket object
-            Ticket ticket = new Ticket();
+            Ticket
+                    ticket =
+                    new Ticket();
             ticket.setUserId(userId);
             ticket.setPriceAtPurchase(price);
             ticket.setEventId(event.getId()); // Use eventId from the event object
 
-            boolean created = coordinatorService.createTicket(ticket);
+            boolean
+                    created =
+                    coordinatorService.createTicket(ticket);
             if (created) {
-                ticketCreated = true;
+                ticketCreated =
+                        true;
                 closeDialog();
             } else {
-                showAlert("Fejl", "Kunne ikke oprette billet.");
+                showAlert("Fejl",
+                        "Kunne ikke oprette billet.");
             }
         } catch (NumberFormatException e) {
-            showAlert("Fejl", "Bruger ID og pris skal være gyldige tal.");
+            showAlert("Fejl",
+                    "Bruger ID og pris skal være gyldige tal.");
         }
     }
 
-    private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR, message, ButtonType.OK);
+    private void showAlert(String title,
+                           String message) {
+        Alert
+                alert =
+                new Alert(Alert.AlertType.ERROR,
+                        message,
+                        ButtonType.OK);
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.showAndWait();
     }
 
     private void closeDialog() {
-        Stage stage = (Stage) txtUserId.getScene()
-                .getWindow();
+        Stage
+                stage =
+                (Stage) txtUserId.getScene()
+                        .getWindow();
         stage.close();
     }
 

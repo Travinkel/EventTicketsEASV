@@ -4,6 +4,52 @@ $easv-yellow: #FFBC3D;
 $easv-blue: #009FDA;
 $easv-gray: #464646;
 
+$color-red: #C00D0D;
+$color-yellow: #FFBC3D;
+$color-blue: #009FDA;
+$color-gray: #464646;
+$font-heading: "Skolar Sans Pro Bold";
+$font-body: "Skolar Sans Pro Book";
+
+// ===== CRUD Button Colors =====
+
+// ADD (Create)
+$muted-green: #C3E6CB;
+$green: #28A745;
+$text-on-green: #155724;
+
+// EDIT (Update)
+$muted-blue: #B8DAFF;
+$blue: #007BFF;
+$text-on-blue: #004085;
+
+// DELETE
+$muted-red: #F5C6CB;
+$red: #DC3545;
+$text-on-red: #721C24;
+
+// ASSIGN (Cross-model action — like linking entities)
+$muted-teal: #B2DFDB;
+$teal: #009688;
+$text-on-teal: #004D40;
+
+// HIGHLIGHT (e.g., for important information)
+$muted-purple: #D6C8F3;
+$purple: #6F42C1;
+$text-on-purple: #3F1E74;
+
+
+// ===== Typography Colors =====
+$text-primary: #333333;
+$text-secondary: #555555;
+$text-light: #888888;
+$text-on-dark: #ffffff;
+
+// ===== Orange Buttons (e.g., Assign, Warn, Highlight) =====
+$muted-orange: #FFE5B4; // soft pastel orange
+$orange: #FFA500; // vivid orange
+$text-on-orange: #7B3F00; // dark brown for contras
+
 $it-media: #FFCC00;
 $design: #5799A9;
 $salg-marketing: #E84D0E;
@@ -11,5 +57,23 @@ $salg-marketing: #E84D0E;
 $font-title: "Skolar Sans Pro Bold";
 $font-body: "Skolar Sans Pro Book";
 
+// === Spacing Scale ===
+$space-1: 4px;
+$space-2: 8px;
+$space-3: 12px;
+$space-4: 16px;
+$space-5: 20px;
+$space-6: 24px;
+$space-7: 28px;
+$space-8: 32px;
+
+// === Layout Variables ===
 $radius-default: 12px;
-$shadow-soft: 0px 4px 8px rgba(0, 0, 0, 0.1);
+$radius-small: 8px;
+$radius-large: 20px;
+
+$background-light: #F4F5F7;
+$background-white: #FFFFFF;
+$border-light: rgba(220, 220, 220, 0.6);
+$shadow-default: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 5);
+$shadow-soft: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0.1, 0, 4);

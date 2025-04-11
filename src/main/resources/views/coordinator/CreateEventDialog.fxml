@@ -3,32 +3,35 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
 <VBox xmlns:fx="http://javafx.com/fxml"
       fx:controller="org.example.eventticketsystem.gui.coordinator.CreateEventDialogController"
-      spacing="10" alignment="CENTER">
+      styleClass="rounded-container"
+      spacing="20" alignment="CENTER">
     <padding>
         <Insets top="15" right="15" bottom="15" left="15"/>
     </padding>
 
-    <Label text="Opret Nyt Event" style="-fx-font-size: 18px;"/>
+    <Label text="Opret Nyt Event" styleClass="heading-2"/>
 
-    <GridPane hgap="10" vgap="10">
-        <Label text="Titel:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-        <TextField fx:id="txtTitle" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+    <GridPane hgap="16" vgap="12">
+        <Label text="Titel:" GridPane.rowIndex="0" GridPane.columnIndex="0" styleClass="body-text"/>
+        <TextField fx:id="txtTitle" GridPane.rowIndex="0" GridPane.columnIndex="1" styleClass="form-input"/>
 
-        <Label text="Starttid:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-        <TextField fx:id="txtStartTime" GridPane.rowIndex="1" GridPane.columnIndex="1" promptText="YYYY-MM-DD HH:MM"/>
+        <Label text="Starttid:" GridPane.rowIndex="1" GridPane.columnIndex="0" styleClass="body-text"/>
+        <TextField fx:id="txtStartTime" GridPane.rowIndex="1" GridPane.columnIndex="1"
+                   promptText="YYYY-MM-DD HH:MM" styleClass="form-input"/>
 
-        <Label text="Sluttid:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-        <TextField fx:id="txtEndTime" GridPane.rowIndex="2" GridPane.columnIndex="1" promptText="YYYY-MM-DD HH:MM"/>
+        <Label text="Sluttid:" GridPane.rowIndex="2" GridPane.columnIndex="0" styleClass="body-text"/>
+        <TextField fx:id="txtEndTime" GridPane.rowIndex="2" GridPane.columnIndex="1"
+                   promptText="YYYY-MM-DD HH:MM" styleClass="form-input"/>
 
-        <Label text="Sted:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-        <TextField fx:id="txtLocation" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+        <Label text="Sted:" GridPane.rowIndex="3" GridPane.columnIndex="0" styleClass="body-text"/>
+        <TextField fx:id="txtLocation" GridPane.rowIndex="3" GridPane.columnIndex="1" styleClass="form-input"/>
     </GridPane>
 
     <HBox spacing="10" alignment="CENTER_RIGHT">
-        <Button text="Annuller" onAction="#handleCancel"/>
-        <Button text="Opret" onAction="#handleCreate"/>
+        <Button text="Annuller" onAction="#handleCancel" styleClass="btn-secondary"/>
+        <Button text="Opret" onAction="#handleCreate" styleClass="btn-crud-add"/>
     </HBox>
+
 </VBox>

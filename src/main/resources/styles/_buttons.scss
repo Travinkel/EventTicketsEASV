@@ -1,31 +1,90 @@
-@import 'variables';
+@import "variables";
+@import "mixins";
 
-.button-primary, .btn-primary {
-  background-color: $easv-blue;
-  color: white;
-  font-family: $font-title;
-  border-radius: $radius-default;
-  padding: 10px 20px;
+// === CRUD Buttons ===
+.btn-crud-add {
+  -fx-background-color: $muted-green;
+  -fx-text-fill: $text-on-green;
+  -fx-background-radius: 6px;
+  -fx-font-size: 14px;
+  -fx-padding: 6px 12px;
 
   &:hover {
-    background-color: darken($easv-blue, 10%);
+    -fx-background-color: $green;
   }
 }
 
-.button-secondary, .btn-secondary {
-  background-color: $easv-red;
-  color: white;
-  font-family: $font-title;
-  border-radius: $radius-default;
-  padding: 10px 20px;
+.btn-crud-edit {
+  -fx-background-color: $muted-blue;
+  -fx-text-fill: $text-on-blue;
+  -fx-background-radius: 6px;
+  -fx-font-size: 14px;
+  -fx-padding: 6px 12px;
 
   &:hover {
-    background-color: darken($easv-red, 10%);
+    -fx-background-color: $blue;
   }
 }
 
-.crud-btn-create, .btn-edit, .btn-delete {
-  border-radius: 6px;
-  font-size: 14px;
-  padding: 6px 12px;
+.btn-crud-delete {
+  -fx-background-color: $muted-red;
+  -fx-text-fill: $text-on-red;
+  -fx-background-radius: 6px;
+  -fx-font-size: 14px;
+  -fx-padding: 6px 12px;
+
+  &:hover {
+    -fx-background-color: $red;
+  }
+}
+
+.btn-crud-assign {
+  -fx-background-color: $muted-teal;
+  -fx-text-fill: $text-on-teal;
+  -fx-background-radius: 6px;
+  -fx-font-size: 14px;
+  -fx-padding: 6px 12px;
+
+  &:hover {
+    -fx-background-color: $teal;
+  }
+}
+
+// === Auth Buttons ===
+.btn-login {
+  -fx-background-color: $easv-blue;
+  -fx-text-fill: white;
+  -fx-font-size: 16px;
+  -fx-font-weight: bold;
+  -fx-background-radius: 8px;
+  -fx-padding: 10 20;
+  -fx-cursor: hand;
+}
+
+.btn-login:hover {
+  -fx-background-color: #007AC1; // Slightly darker blue
+}
+
+.btn-logout {
+  -fx-background-color: $muted-red;
+  -fx-text-fill: $text-on-red;
+  -fx-font-size: 14px;
+  -fx-background-radius: 6px;
+  -fx-padding: 8 16;
+  -fx-cursor: hand;
+}
+
+.btn-logout:hover {
+  -fx-background-color: $red;
+}
+
+.btn-secondary {
+  -fx-background-color: #EEEEEE;
+  -fx-text-fill: #333;
+  -fx-padding: 8 16;
+  -fx-background-radius: 6px;
+}
+
+.btn-secondary:hover {
+  -fx-background-color: #DDDDDD;
 }

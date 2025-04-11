@@ -1,0 +1,53 @@
+.card {
+  -fx-background-color: white;
+  -fx-background-radius: $radius-default;
+  -fx-border-radius: $radius-default;
+  -fx-border-color: #DADADA;
+  -fx-border-width: 1;
+  -fx-padding: 30;
+  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 10, 0.2, 0, 4);
+}
+
+.form-input, .input-field {
+  -fx-font-size: 16px;
+  -fx-background-color: #FFFFFF;
+  -fx-border-color: #DADADA;
+  -fx-border-radius: 4;
+  -fx-padding: 8;
+}
+
+.form-input {
+  -fx-font-family: "Skolar Sans Pro Book";
+}
+
+.input-field {
+  -fx-font-family: "Segoe UI";
+  -fx-font-size: 14px;
+}
+
+.fluent-table {
+  -fx-background-color: white;
+  -fx-border-color: #DADADA;
+  -fx-border-width: 1;
+  -fx-table-cell-border-color: #DADADA;
+}
+
+@mixin fluent-button {
+  font-family: "Segoe UI", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+
+  &:hover {
+    filter: brightness(1.05);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+}

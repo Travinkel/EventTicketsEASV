@@ -1,0 +1,14 @@
+@mixin wobble-hover {
+  -fx-transition: all 0.2s ease-in-out;
+  -fx-rotate: 0deg;
+
+  &:hover {
+    -fx-rotate: 1deg;
+    -fx-translate-x: 1px;
+  }
+
+  &:hover:after {
+    -fx-rotate: -1deg;
+    -fx-translate-x: -1px;
+  }
+}

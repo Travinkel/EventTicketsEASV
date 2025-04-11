@@ -1,12 +1,71 @@
-@import 'variables';
+// _typography.scss
 
-.heading, .heading2, .heading-1, .heading-2, .section-title {
-  font-family: $font-title;
-  color: #333;
+.heading-1 {
+  -fx-font-family: $font-heading;
+  -fx-font-size: 28px;
+  -fx-text-fill: $easv-blue;
+  -fx-padding: 24 0 12 0;
+  -fx-font-weight: bold;
 }
 
-.body-text, .form-input {
+.heading-2 {
+  -fx-font-size: 20px;
+  -fx-font-weight: bold;
+  -fx-text-fill: $text-primary;
+  -fx-font-family: $font-heading;
+}
+
+.body-text {
   font-family: $font-body;
   font-size: 16px;
-  color: #333;
+  font-weight: normal;
+  color: $text-primary;
+}
+
+.heading, .heading2, .heading-1, .heading-2 {
+  -fx-font-family: "Skolar Sans Pro Bold";
+  -fx-font-size: 24px;
+  -fx-text-fill: #333333;
+}
+
+.heading, .heading-1, .heading-2 {
+  -fx-font-family: $font-heading;
+  -fx-text-fill: $color-gray;
+}
+
+.heading-1 {
+  -fx-font-size: 28px;
+}
+
+.section-title {
+  -fx-font-size: 16px;
+  -fx-font-family: "Skolar Sans Pro Bold";
+  -fx-text-fill: #333333;
+}
+
+.body-text, .body-light {
+  -fx-font-size: 16px;
+  -fx-text-fill: #333333;
+}
+
+.body-text {
+  -fx-font-family: $font-body;
+  -fx-font-size: 16px;
+  -fx-text-fill: $color-gray;
+}
+
+.body-light {
+  -fx-font-family: "Segoe UI Light";
+}
+
+.status-label {
+  -fx-font-family: "Segoe UI Light";
+  -fx-font-size: 14px;
+  -fx-text-fill: #009FE3;
+}
+
+.admin-name {
+  -fx-font-weight: bold;
+  -fx-font-size: 14px;
+  -fx-text-fill: #333;
 }
